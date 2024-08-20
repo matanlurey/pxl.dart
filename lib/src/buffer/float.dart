@@ -9,7 +9,7 @@ part of '../buffer.dart';
 /// formats.
 ///
 /// The default [format] is [floatRgba].
-final class Float32x4Pixels extends Pixels<Float32x4> {
+final class FloatPixels extends Pixels<Float32x4> {
   /// Creates a new buffer of multi-channel floating point pixel data.
   ///
   /// Both [width] and [height] must be greater than zero.
@@ -17,7 +17,7 @@ final class Float32x4Pixels extends Pixels<Float32x4> {
   /// The [format] defaults to [floatRgba], and if [data] is provided it's
   /// contents must are assumed to be in the same format, and `data.length` must
   /// be equal to `width * height`.
-  factory Float32x4Pixels(
+  factory FloatPixels(
     int width,
     int height, {
     PixelFormat<Float32x4, void> format = floatRgba,
@@ -31,15 +31,14 @@ final class Float32x4Pixels extends Pixels<Float32x4> {
     }
     if (data == null) {
       data = Float32x4List(width * height);
-    } else {
-      RangeError.checkValueInInterval(
+    } else if (data.length != width * height) {
+      throw RangeError.value(
         data.length,
-        0,
-        width * height,
         'data.length',
+        'Must be equal to width * height.',
       );
     }
-    return Float32x4Pixels._(
+    return FloatPixels._(
       data,
       width: width,
       height: height,
@@ -55,17 +54,17 @@ final class Float32x4Pixels extends Pixels<Float32x4> {
   /// ## Example
   ///
   /// ```dart
-  /// final original = Float32x4Pixels(3, 3);
+  /// final original = FloatPixels(3, 3);
   /// final clipped = original.getRegion(Rect.fromLTWH(1, 1, 2, 2));
   ///
-  /// final copy = Float32x4Pixels.from(clipped);
+  /// final copy = FloatPixels.from(clipped);
   /// print(copy.width); // 2
   /// print(copy.height); // 2
   /// ```
-  factory Float32x4Pixels.from(Buffer<Float32x4> buffer) {
+  factory FloatPixels.from(Buffer<Float32x4> buffer) {
     final data = Float32x4List(buffer.length);
     data.setAll(0, buffer.data);
-    return Float32x4Pixels(
+    return FloatPixels(
       buffer.width,
       buffer.height,
       data: data,
@@ -73,7 +72,7 @@ final class Float32x4Pixels extends Pixels<Float32x4> {
     );
   }
 
-  const Float32x4Pixels._(
+  const FloatPixels._(
     this.data, {
     required super.width,
     required super.height,

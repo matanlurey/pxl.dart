@@ -28,12 +28,11 @@ final class IntPixels extends Pixels<int> {
     }
     if (data == null) {
       data = newIntBuffer(bytes: format.bytesPerPixel, length: width * height);
-    } else {
-      RangeError.checkValueInInterval(
+    } else if (data.length != width * height) {
+      throw RangeError.value(
         data.length,
-        0,
-        width * height,
         'data.length',
+        'Must be equal to width * height.',
       );
     }
     return IntPixels._(

@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:pxl/src/blend.dart';
 import 'package:pxl/src/format.dart';
 import 'package:pxl/src/geometry.dart';
 import 'package:pxl/src/internal.dart';
@@ -157,6 +158,38 @@ abstract mixin class Buffer<T> {
   /// ```
   Buffer<T> getRegion(Rect bounds) {
     return _ClippedBuffer(this, bounds.intersect(this.bounds));
+  }
+
+  /// Copies a rectangular region of pixels from the buffer to another buffer.
+  ///
+  /// The [width] and [height] default to the source buffer's dimensions, the
+  /// [source] defaults to the entire source buffer, and the [destination]
+  /// defaults to the top-left corner of the destination buffer, respectively.
+  /// [blend] is the [BlendMode] used to blend the source and destination
+  /// pixels, which defaults to [BlendMode.src], which replaces the destination
+  /// pixel with the source pixel.
+  ///
+  /// If the source dimensions are:
+  ///
+  /// - _larger_ than the destination dimensions, the excess pixels are ignored.
+  /// - _the same buffer_, the behavior is undefined.
+  ///
+  /// If the format of the source and destination buffers are different,
+  /// [PixelFormat.convert] is used.
+  void copyRect<R>(
+    Pixels<R> dst, {
+    Never? blend,
+    Rect? source,
+    Pos? destination,
+  }) {
+    // Pixels.blit(
+    //   this,
+    //   dst,
+    //   blend: blend?.get(dst.format),
+    //   source: source,
+    //   destination: destination,
+    // );
+    throw UnimplementedError();
   }
 }
 

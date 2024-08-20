@@ -6,7 +6,7 @@ part of '../buffer.dart';
 /// lightweight wrapper around the raw bytes represented by a [TypedDataList];
 /// but cannot be extended or implemented (similar to [TypedDataList]).
 ///
-/// In most cases either [IntPixels] or [Float32x4Pixels] will be used directly.
+/// In most cases either [IntPixels] or [FloatPixels] will be used directly.
 abstract final class Pixels<P> with Buffer<P> {
   /// @nodoc
   const Pixels({
@@ -65,7 +65,6 @@ abstract final class Pixels<P> with Buffer<P> {
   /// The [width] and [height] default to the source buffer's dimensions, the
   /// [source] defaults to the entire source buffer, and the [destination]
   /// defaults to the top-left corner of the destination buffer, respectively.
-  ///
   /// [blend] is the function used to blend the source and destination pixels,
   /// which defaults to replacing the destination pixel with the source pixel,
   /// regardless of the source pixel's alpha value.
@@ -77,6 +76,8 @@ abstract final class Pixels<P> with Buffer<P> {
   ///
   /// If the format of the source and destination buffers are different,
   /// [PixelFormat.convert] is used.
+  ///
+  /// See also: [Pixels.copyRect].
   static void blit<S, T>(
     Buffer<S> src,
     Pixels<T> dst, {

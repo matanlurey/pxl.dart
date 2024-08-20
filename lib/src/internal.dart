@@ -1,7 +1,14 @@
+// Allow Dart defines for this file.
+// See <https://dart.dev/guides/environment-declarations> for details.
+// ignore_for_file: do_not_use_environment
+
 import 'dart:typed_data';
 
 /// Whether the current runtime is JavaScript.
 const isJsRuntime = identical(1, 1.0);
+
+/// Whether SIMD optimizations should be used where possible.
+final useSimd = const bool.fromEnvironment('pxl.SIMD');
 
 /// Disables bounds checking for the given function.
 const unsafeNoBoundsChecks = isJsRuntime
