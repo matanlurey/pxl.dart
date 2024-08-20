@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:pxl/pxl.dart';
 
-import 'prelude.dart';
+import 'src/prelude.dart';
 
 void main() {
   test('map', () {
@@ -42,4 +42,27 @@ void main() {
     check(converted.data.elementAt(4)).equals(floatRgba.cyan);
     check(converted.data.elementAt(5)).equals(floatRgba.magenta);
   });
+
+  test('mapIndexed', () {
+    final buffer = IntPixels(
+      1,
+      3,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+      ]),
+    );
+    final converted = buffer.mapIndexed((pos, pixel) {
+      if (pos.x == 0) {
+        return abgr8888.magenta;
+      }
+      return pixel;
+    });
+    check(converted.data.elementAt(0)).equalsHex(abgr8888.magenta);
+    check(converted.data.elementAt(1)).equalsHex(abgr8888.green);
+    check(converted.data.elementAt(2)).equalsHex(abgr8888.blue);
+  });
+
+  test('mapClipped', () {});
 }

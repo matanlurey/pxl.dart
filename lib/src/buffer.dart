@@ -85,6 +85,36 @@ abstract mixin class Buffer<T> {
     return _MapBuffer(this, convert, format);
   }
 
+  /// Returns a lazy buffer that converts pixels with the given function.
+  ///
+  /// The function is called with the position of the pixel in the buffer.
+  ///
+  /// It is expected that the function does not change the representation of the
+  /// pixel data, only the values. For example a function that inverts the red
+  /// channel of an RGB pixel would be acceptable, but a function that converts
+  /// an RGB pixel to an RGBA pixel would not; for that use [mapConvert]
+  /// instead.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final buffer = IntPixels(2, 2, data: Uint32List.fromList([
+  ///   abgr8888.red, abgr8888.green,
+  ///   abgr8888.blue, abgr8888.alpha,
+  /// ]));
+  ///
+  /// // Invert pixels in the top row.
+  /// final converted = buffer.mapIndexed((pos, pixel) {
+  ///   if (pos.y == 0) return pixel ^ 0xFFFFFFFF;
+  ///   return pixel;
+  /// });
+  ///
+  /// print(converted.data); // [0xFF00FFFF, 0xFF00FF00, 0xFF0000FF, 0xFF000000]
+  /// ```
+  Buffer<T> mapIndexed(T Function(Pos, T) convert) {
+    return _MapIndexedBuffer(this, convert);
+  }
+
   /// Returns a lazy buffer that converts pixels to the given [format].
   ///
   /// ## Example
@@ -106,6 +136,48 @@ abstract mixin class Buffer<T> {
       format,
     );
   }
+
+  /// Returns a lazy buffer that clips the buffer to the given [bounds].
+  ///
+  /// The returned buffer will have the same dimensions as the bounds, and will
+  /// only contain pixels that are within the bounds of the original buffer; if
+  /// the bounded rectangle is empty, the returned buffer will be empty.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final buffer = IntPixels(3, 3, data: Uint32List.fromList([
+  ///   abgr8888.red, abgr8888.green, abgr8888.blue,
+  ///   abgr8888.red, abgr8888.green, abgr8888.blue,
+  ///   abgr8888.red, abgr8888.green, abgr8888.blue,
+  /// ]));
+  ///
+  /// final clipped = buffer.getRegion(Rect.fromLTWH(1, 1, 2, 2));
+  /// print(clipped.data); // [0xFF00FF00, 0xFF0000FF]
+  /// ```
+  Buffer<T> getRegion(Rect bounds) {
+    return _ClippedBuffer(this, bounds.intersect(this.bounds));
+  }
+}
+
+abstract final class _Buffer<T> with Buffer<T> {
+  const _Buffer(this._source);
+  final Buffer<T> _source;
+
+  @override
+  PixelFormat<T, void> get format => _source.format;
+
+  @override
+  Iterable<T> get data => _source.data;
+
+  @override
+  int get width => _source.width;
+
+  @override
+  int get height => _source.height;
+
+  @override
+  T getAtUnsafe(Pos pos) => _source.getAtUnsafe(pos);
 }
 
 final class _MapBuffer<S, T> with Buffer<T> {
@@ -127,4 +199,42 @@ final class _MapBuffer<S, T> with Buffer<T> {
 
   @override
   int get height => _source.height;
+}
+
+final class _MapIndexedBuffer<T> extends _Buffer<T> {
+  const _MapIndexedBuffer(super._source, this._convert);
+  final T Function(Pos, T) _convert;
+
+  @override
+  Iterable<T> get data {
+    return Iterable.generate(length, (i) {
+      final pos = Pos(i ~/ width, i % width);
+      return getAtUnsafe(pos);
+    });
+  }
+
+  @override
+  T getAtUnsafe(Pos pos) => _convert(pos, _source.getAtUnsafe(pos));
+}
+
+final class _ClippedBuffer<T> extends _Buffer<T> {
+  const _ClippedBuffer(super._source, this._bounds);
+  final Rect _bounds;
+
+  @override
+  Iterable<T> get data {
+    return Iterable.generate(length, (i) {
+      final pos = Pos(i % width, i ~/ width);
+      return getAtUnsafe(pos);
+    });
+  }
+
+  @override
+  T getAtUnsafe(Pos pos) => _source.getAtUnsafe(pos + _bounds.topLeft);
+
+  @override
+  int get width => _bounds.width;
+
+  @override
+  int get height => _bounds.height;
 }

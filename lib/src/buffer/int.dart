@@ -17,7 +17,7 @@ final class IntPixels extends Pixels<int> {
   factory IntPixels(
     int width,
     int height, {
-    PixelFormat<int, int> format = abgr8888,
+    PixelFormat<int, void> format = abgr8888,
     TypedDataList<int>? data,
   }) {
     if (width < 1) {
@@ -41,6 +41,35 @@ final class IntPixels extends Pixels<int> {
       width: width,
       height: height,
       format: format,
+    );
+  }
+
+  /// Creates a copy of the given buffer with the same pixel data and
+  /// dimensions.
+  ///
+  /// The [format] and [data] is copied from the given buffer.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final original = IntPixels(3, 3);
+  /// final clipped = original.getRegion(Rect.fromLTWH(1, 1, 2, 2));
+  ///
+  /// final copy = IntPixels.from(clipped);
+  /// print(copy.width); // 2
+  /// print(copy.height); // 2
+  /// ```
+  factory IntPixels.from(Buffer<int> buffer) {
+    final data = newIntBuffer(
+      bytes: buffer.format.bytesPerPixel,
+      length: buffer.length,
+    );
+    data.setAll(0, buffer.data);
+    return IntPixels(
+      buffer.width,
+      buffer.height,
+      data: data,
+      format: buffer.format,
     );
   }
 

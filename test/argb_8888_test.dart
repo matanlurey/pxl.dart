@@ -1,6 +1,6 @@
 import 'package:pxl/pxl.dart';
 
-import 'prelude.dart';
+import 'src/prelude.dart';
 
 void main() {
   test('is named', () {

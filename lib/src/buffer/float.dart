@@ -20,7 +20,7 @@ final class Float32x4Pixels extends Pixels<Float32x4> {
   factory Float32x4Pixels(
     int width,
     int height, {
-    PixelFormat<Float32x4, double> format = floatRgba,
+    PixelFormat<Float32x4, void> format = floatRgba,
     Float32x4List? data,
   }) {
     if (width < 1) {
@@ -44,6 +44,32 @@ final class Float32x4Pixels extends Pixels<Float32x4> {
       width: width,
       height: height,
       format: format,
+    );
+  }
+
+  /// Creates a copy of the given buffer with the same pixel data and
+  /// dimensions.
+  ///
+  /// The [format] and [data] is copied from the given buffer.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final original = Float32x4Pixels(3, 3);
+  /// final clipped = original.getRegion(Rect.fromLTWH(1, 1, 2, 2));
+  ///
+  /// final copy = Float32x4Pixels.from(clipped);
+  /// print(copy.width); // 2
+  /// print(copy.height); // 2
+  /// ```
+  factory Float32x4Pixels.from(Buffer<Float32x4> buffer) {
+    final data = Float32x4List(buffer.length);
+    data.setAll(0, buffer.data);
+    return Float32x4Pixels(
+      buffer.width,
+      buffer.height,
+      data: data,
+      format: buffer.format,
     );
   }
 
