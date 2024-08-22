@@ -6,7 +6,7 @@ environment:
   sdk: ^3.5.0
 
 dependencies:
-  lodim: ^0.1.2
+  lodim: ^0.1.3+2
   meta: ^1.15.0
 
 dev_dependencies:

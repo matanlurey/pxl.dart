@@ -45,6 +45,7 @@ abstract final class PixelFormat<P, C> {
   /// ```dart
   /// print(abgr8888.zero); // 0x00000000
   /// print(floatRgba.zero); // [0.0, 0.0, 0.0, 0.0]
+  /// ```
   P get zero;
 
   /// The maximum value for the pixel format.

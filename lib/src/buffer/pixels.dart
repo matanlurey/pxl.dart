@@ -41,14 +41,14 @@ abstract final class Pixels<P> with Buffer<P> {
 
   @override
   @unsafeNoBoundsChecks
-  P getAtUnsafe(Pos pos) => data[_indexAtUnsafe(pos)];
+  P getUnsafe(Pos pos) => data[_indexAtUnsafe(pos)];
 
   /// Sets the pixel at the given position.
   ///
   /// If outside the bounds of the buffer, does nothing.
-  void setAt(Pos pos, P pixel) {
+  void set(Pos pos, P pixel) {
     if (contains(pos)) {
-      setAtUnsafe(pos, pixel);
+      setUnsafe(pos, pixel);
     }
   }
 
@@ -56,60 +56,108 @@ abstract final class Pixels<P> with Buffer<P> {
   ///
   /// If outside the bounds of the buffer, the behavior is undefined.
   @unsafeNoBoundsChecks
-  void setAtUnsafe(Pos pos, P pixel) {
+  void setUnsafe(Pos pos, P pixel) {
     data[_indexAtUnsafe(pos)] = pixel;
   }
 
-  /// Copies a rectangular region of pixels from [src] to [dst].
+  /// Clears the buffer to the [PixelFormat.zero] value.
   ///
-  /// The [width] and [height] default to the source buffer's dimensions, the
-  /// [source] defaults to the entire source buffer, and the [destination]
-  /// defaults to the top-left corner of the destination buffer, respectively.
-  /// [blend] is the function used to blend the source and destination pixels,
-  /// which defaults to replacing the destination pixel with the source pixel,
-  /// regardless of the source pixel's alpha value.
+  /// This is equivalent to calling [fill] with the zero value of the format.
   ///
-  /// If the source dimensions are:
+  /// If a [target] rectangle is provided, only the pixels within that rectangle
+  /// will be cleared, and the rectangle will be clipped to the bounds of the
+  /// buffer. If omitted, the entire buffer will be cleared.
   ///
-  /// - _larger_ than the destination dimensions, the excess pixels are ignored.
-  /// - _the same buffer_, the behavior is undefined.
+  /// ## Example
   ///
-  /// If the format of the source and destination buffers are different,
-  /// [PixelFormat.convert] is used.
+  /// ```dart
+  /// final pixels = IntPixels(2, 2);
+  /// pixels.clear();
+  /// pixels.clear(Rect.fromLTWH(1, 0, 1, 2));
+  /// ```
+  void clear([Rect? target]) {
+    fill(format.zero, target);
+  }
+
+  /// Clears the buffer to the [PixelFormat.zero] value.
   ///
-  /// See also: [Pixels.copyRect].
-  static void blit<S, T>(
-    Buffer<S> src,
-    Pixels<T> dst, {
-    T Function(T, T)? blend,
-    Rect? source,
-    Pos? destination,
-  }) {
-    final Buffer<T> srcConverted;
-    if (identical(src.format, dst.format)) {
-      srcConverted = src as Buffer<T>;
-    } else {
-      srcConverted = src.mapConvert(dst.format);
+  /// This is equivalent to calling [fillUnsafe] with the zero value of the
+  /// format.
+  ///
+  /// If a [target] rectangle is provided, only the pixels within that rectangle
+  /// will be cleared. If the rectangle is outside the bounds of the buffer, the
+  /// behavior is undefined.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final pixels = IntPixels(2, 2);
+  /// pixels.clearUnsafe();
+  /// pixels.clearUnsafe(Rect.fromLTWH(1, 0, 1, 2));
+  /// ```
+  void clearUnsafe([Rect? target]) {
+    fillUnsafe(format.zero, target);
+  }
+
+  /// Fill the buffer with the given pixel.
+  ///
+  /// This is equivalent to calling [set] for every pixel in the buffer.
+  ///
+  /// If a [target] rectangle is provided, only the pixels within that rectangle
+  /// will be filled, and the rectangle will be clipped to the bounds of the
+  /// buffer. If omitted, the entire buffer will be filled.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final pixels = IntPixels(2, 2);
+  /// pixels.fill(0xFFFFFFFF);
+  /// pixels.fill(0x00000000, Rect.fromLTWH(1, 0, 1, 2));
+  /// ```
+  void fill(P pixel, [Rect? target]) {
+    if (target != null) {
+      target = target.intersect(bounds);
     }
+    return fillUnsafe(pixel, target);
+  }
 
-    final srcBounds = source ?? src.bounds;
-    final dstBounds = Rect.fromLTWH(
-      destination?.x ?? 0,
-      destination?.y ?? 0,
-      srcBounds.width,
-      srcBounds.height,
-    ).intersect(dst.bounds);
-
-    for (var y = dstBounds.top; y < dstBounds.bottom; y++) {
-      for (var x = dstBounds.left; x < dstBounds.right; x++) {
-        final dstPos = Pos(x, y);
-        final srcPos = dstPos - dstBounds.topLeft;
-        var output = srcConverted.getAt(srcPos);
-        if (blend != null) {
-          output = blend(output, dst.getAt(dstPos));
-        }
-        dst.setAt(dstPos, output);
-      }
+  /// Fill the buffer with the given pixel **without bounds checking**.
+  ///
+  /// This is equivalent to calling [setUnsafe] for every pixel in the buffer.
+  ///
+  /// If a [target] rectangle is provided, only the pixels within that rectangle
+  /// will be filled. If the rectangle is outside the bounds of the buffer, the
+  /// behavior is undefined.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final pixels = IntPixels(2, 2);
+  /// pixels.fillUnsafe(0xFFFFFFFF);
+  /// pixels.fillUnsafe(0x00000000, Rect.fromLTWH(1, 0, 1, 2));
+  /// ```
+  void fillUnsafe(P pixel, [Rect? target]) {
+    if (target == null) {
+      return data.fillRange(
+        0,
+        data.length,
+        pixel,
+      );
+    }
+    if (target.width == width) {
+      return data.fillRange(
+        target.top * width,
+        target.bottom * width,
+        pixel,
+      );
+    }
+    for (var y = target.top; y < target.bottom; y++) {
+      final x = y * width;
+      data.fillRange(
+        x + target.left,
+        x + target.right,
+        pixel,
+      );
     }
   }
 }

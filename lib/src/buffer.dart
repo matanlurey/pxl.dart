@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:pxl/src/blend.dart';
 import 'package:pxl/src/format.dart';
 import 'package:pxl/src/geometry.dart';
 import 'package:pxl/src/internal.dart';
 
+part 'buffer/blit_ops.dart';
 part 'buffer/float.dart';
 part 'buffer/int.dart';
 part 'buffer/pixels.dart';
@@ -54,12 +54,12 @@ abstract mixin class Buffer<T> {
   /// Returns the pixel at the given position.
   ///
   /// If outside the bounds of the buffer, returns a suitable zero value.
-  T getAt(Pos pos) => contains(pos) ? getAtUnsafe(pos) : format.zero;
+  T get(Pos pos) => contains(pos) ? getUnsafe(pos) : format.zero;
 
   /// Returns the pixel at the given position **without bounds checking**.
   ///
   /// If outside the bounds of the buffer, the behavior is undefined.
-  T getAtUnsafe(Pos pos);
+  T getUnsafe(Pos pos);
 
   /// Returns a lazy buffer buffer that converts pixels with the given function.
   ///
@@ -131,6 +131,9 @@ abstract mixin class Buffer<T> {
   /// print(converted.data); // [0xFFFF0000, 0xFF00FF00, 0xFF0000FF]
   /// ```
   Buffer<R> mapConvert<R>(PixelFormat<R, void> format) {
+    if (identical(this.format, format)) {
+      return this as Buffer<R>;
+    }
     return _MapBuffer(
       this,
       (p) => format.convert(p, from: this.format),
@@ -159,38 +162,6 @@ abstract mixin class Buffer<T> {
   Buffer<T> getRegion(Rect bounds) {
     return _ClippedBuffer(this, bounds.intersect(this.bounds));
   }
-
-  /// Copies a rectangular region of pixels from the buffer to another buffer.
-  ///
-  /// The [width] and [height] default to the source buffer's dimensions, the
-  /// [source] defaults to the entire source buffer, and the [destination]
-  /// defaults to the top-left corner of the destination buffer, respectively.
-  /// [blend] is the [BlendMode] used to blend the source and destination
-  /// pixels, which defaults to [BlendMode.src], which replaces the destination
-  /// pixel with the source pixel.
-  ///
-  /// If the source dimensions are:
-  ///
-  /// - _larger_ than the destination dimensions, the excess pixels are ignored.
-  /// - _the same buffer_, the behavior is undefined.
-  ///
-  /// If the format of the source and destination buffers are different,
-  /// [PixelFormat.convert] is used.
-  void copyRect<R>(
-    Pixels<R> dst, {
-    Never? blend,
-    Rect? source,
-    Pos? destination,
-  }) {
-    // Pixels.blit(
-    //   this,
-    //   dst,
-    //   blend: blend?.get(dst.format),
-    //   source: source,
-    //   destination: destination,
-    // );
-    throw UnimplementedError();
-  }
 }
 
 abstract final class _Buffer<T> with Buffer<T> {
@@ -210,7 +181,7 @@ abstract final class _Buffer<T> with Buffer<T> {
   int get height => _source.height;
 
   @override
-  T getAtUnsafe(Pos pos) => _source.getAtUnsafe(pos);
+  T getUnsafe(Pos pos) => _source.getUnsafe(pos);
 }
 
 final class _MapBuffer<S, T> with Buffer<T> {
@@ -225,7 +196,7 @@ final class _MapBuffer<S, T> with Buffer<T> {
   Iterable<T> get data => _source.data.map(_convert);
 
   @override
-  T getAtUnsafe(Pos pos) => _convert(_source.getAtUnsafe(pos));
+  T getUnsafe(Pos pos) => _convert(_source.getUnsafe(pos));
 
   @override
   int get width => _source.width;
@@ -242,12 +213,12 @@ final class _MapIndexedBuffer<T> extends _Buffer<T> {
   Iterable<T> get data {
     return Iterable.generate(length, (i) {
       final pos = Pos(i ~/ width, i % width);
-      return getAtUnsafe(pos);
+      return getUnsafe(pos);
     });
   }
 
   @override
-  T getAtUnsafe(Pos pos) => _convert(pos, _source.getAtUnsafe(pos));
+  T getUnsafe(Pos pos) => _convert(pos, _source.getUnsafe(pos));
 }
 
 final class _ClippedBuffer<T> extends _Buffer<T> {
@@ -255,15 +226,10 @@ final class _ClippedBuffer<T> extends _Buffer<T> {
   final Rect _bounds;
 
   @override
-  Iterable<T> get data {
-    return Iterable.generate(length, (i) {
-      final pos = Pos(i % width, i ~/ width);
-      return getAtUnsafe(pos);
-    });
-  }
+  Iterable<T> get data => _bounds.positions.map(getUnsafe);
 
   @override
-  T getAtUnsafe(Pos pos) => _source.getAtUnsafe(pos + _bounds.topLeft);
+  T getUnsafe(Pos pos) => _source.getUnsafe(pos + _bounds.topLeft);
 
   @override
   int get width => _bounds.width;
