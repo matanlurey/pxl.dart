@@ -73,10 +73,10 @@ abstract final class Pixels<P> with Buffer<P> {
   /// ```dart
   /// final pixels = IntPixels(2, 2);
   /// pixels.clear();
-  /// pixels.clear(Rect.fromLTWH(1, 0, 1, 2));
+  /// pixels.clear(target: Rect.fromLTWH(1, 0, 1, 2));
   /// ```
-  void clear([Rect? target]) {
-    fill(format.zero, target);
+  void clear({Rect? target}) {
+    fill(format.zero, target: target);
   }
 
   /// Clears the buffer to the [PixelFormat.zero] value.
@@ -93,13 +93,14 @@ abstract final class Pixels<P> with Buffer<P> {
   /// ```dart
   /// final pixels = IntPixels(2, 2);
   /// pixels.clearUnsafe();
-  /// pixels.clearUnsafe(Rect.fromLTWH(1, 0, 1, 2));
+  /// pixels.clearUnsafe(target: Rect.fromLTWH(1, 0, 1, 2));
   /// ```
-  void clearUnsafe([Rect? target]) {
-    fillUnsafe(format.zero, target);
+  @unsafeNoBoundsChecks
+  void clearUnsafe({Rect? target}) {
+    fillUnsafe(format.zero, target: target);
   }
 
-  /// Fill the buffer with the given pixel.
+  /// Fill the buffer with the given [pixel].
   ///
   /// This is equivalent to calling [set] for every pixel in the buffer.
   ///
@@ -112,16 +113,16 @@ abstract final class Pixels<P> with Buffer<P> {
   /// ```dart
   /// final pixels = IntPixels(2, 2);
   /// pixels.fill(0xFFFFFFFF);
-  /// pixels.fill(0x00000000, Rect.fromLTWH(1, 0, 1, 2));
+  /// pixels.fill(0x00000000, target: Rect.fromLTWH(1, 0, 1, 2));
   /// ```
-  void fill(P pixel, [Rect? target]) {
+  void fill(P pixel, {Rect? target}) {
     if (target != null) {
       target = target.intersect(bounds);
     }
-    return fillUnsafe(pixel, target);
+    return fillUnsafe(pixel, target: target);
   }
 
-  /// Fill the buffer with the given pixel **without bounds checking**.
+  /// Fill the buffer with the given [pixel].
   ///
   /// This is equivalent to calling [setUnsafe] for every pixel in the buffer.
   ///
@@ -134,9 +135,10 @@ abstract final class Pixels<P> with Buffer<P> {
   /// ```dart
   /// final pixels = IntPixels(2, 2);
   /// pixels.fillUnsafe(0xFFFFFFFF);
-  /// pixels.fillUnsafe(0x00000000, Rect.fromLTWH(1, 0, 1, 2));
+  /// pixels.fillUnsafe(0x00000000, target: Rect.fromLTWH(1, 0, 1, 2));
   /// ```
-  void fillUnsafe(P pixel, [Rect? target]) {
+  @unsafeNoBoundsChecks
+  void fillUnsafe(P pixel, {Rect? target}) {
     if (target == null) {
       return data.fillRange(
         0,
@@ -159,5 +161,99 @@ abstract final class Pixels<P> with Buffer<P> {
         pixel,
       );
     }
+  }
+
+  /// Fill the buffer with the given [pixels].
+  ///
+  /// If a [target] rectangle is provided, only the pixels within that rectangle
+  /// are filled, and the rectangle will be clipped to the bounds of the buffer.
+  ///
+  /// If the number of pixels in the iterable is less than the number of pixels
+  /// in the target rectangle, the remaining pixels will be filled with the zero
+  /// value of the format. If the number of pixels is greater, the extra pixels
+  /// will be ignored.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final pixels = IntPixels(2, 2);
+  /// pixels.fillWith([0xFFFFFFFF, 0x00000000]);
+  /// pixels.fillWith([0x00000000, 0xFFFFFFFF], target: Rect.fromLTWH(1, 0, 1, 2));
+  /// ```
+  void fillWith(
+    Iterable<P> pixels, {
+    Rect? target,
+  }) {
+    if (target == null) {
+      target = bounds;
+    } else {
+      target = target.intersect(bounds);
+    }
+    if (pixels.length < target.area) {
+      pixels = pixels.followedBy(
+        Iterable.generate(
+          target.area - pixels.length,
+          (_) => format.zero,
+        ),
+      );
+    }
+    return fillWithUnsafe(pixels, target: target);
+  }
+
+  /// Fill the buffer with the given [pixels].
+  ///
+  /// If a [target] rectangle is provided, only the pixels within that rectangle
+  /// are filled. If the rectangle is outside the bounds of the buffer, the
+  /// behavior is undefined.
+  ///
+  /// If the number of pixels in the iterable is less than the number of pixels
+  /// in the target rectangle, or if the number of pixels is greater, the
+  /// behavior is undefined.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final pixels = IntPixels(2, 2);
+  /// pixels.fillWithUnsafe([0xFFFFFFFF, 0x00000000]);
+  /// pixels.fillWithUnsafe([0x00000000, 0xFFFFFFFF], target: Rect.fromLTWH(1, 0, 1, 2));
+  /// ```
+  @unsafeNoBoundsChecks
+  void fillWithUnsafe(
+    Iterable<P> pixels, {
+    Rect? target,
+  }) {
+    if (target == null) {
+      return data.setAll(0, pixels);
+    }
+    var skip = 0;
+    for (var y = target.top; y < target.bottom; y++) {
+      final x = y * width;
+      data.setRange(
+        x + target.left,
+        x + target.right,
+        pixels.skip(skip),
+      );
+      skip += target.width;
+    }
+  }
+
+  @override
+  Iterable<P> getRangeUnsafe(Pos start, Pos end) {
+    final s = _indexAtUnsafe(start);
+    final e = _indexAtUnsafe(end);
+    return data.getRange(s, e + 1);
+  }
+
+  @override
+  Iterable<P> getRectUnsafe(Rect rect) {
+    if (rect.width == width) {
+      return getRangeUnsafe(rect.topLeft, rect.bottomRight);
+    }
+
+    // TODO: Consider creating a custom iterator instead.
+    return Iterable.generate(rect.height, (y) {
+      final x = y * width;
+      return data.getRange(x + rect.left, x + rect.right + 1);
+    }).expand((e) => e);
   }
 }

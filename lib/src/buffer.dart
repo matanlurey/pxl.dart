@@ -4,7 +4,6 @@ import 'package:pxl/src/format.dart';
 import 'package:pxl/src/geometry.dart';
 import 'package:pxl/src/internal.dart';
 
-part 'buffer/blit_ops.dart';
 part 'buffer/float.dart';
 part 'buffer/int.dart';
 part 'buffer/pixels.dart';
@@ -156,11 +155,64 @@ abstract mixin class Buffer<T> {
   ///   abgr8888.red, abgr8888.green, abgr8888.blue,
   /// ]));
   ///
-  /// final clipped = buffer.getRegion(Rect.fromLTWH(1, 1, 2, 2));
+  /// final clipped = buffer.mapClipped(Rect.fromLTWH(1, 1, 2, 2));
   /// print(clipped.data); // [0xFF00FF00, 0xFF0000FF]
   /// ```
-  Buffer<T> getRegion(Rect bounds) {
+  Buffer<T> mapClipped(Rect bounds) {
     return _ClippedBuffer(this, bounds.intersect(this.bounds));
+  }
+
+  /// Returns a lazy iterable of pixels in the buffer from [start] to [end].
+  ///
+  /// The returned iterable will contain all pixels in the buffer that are
+  /// within the rectangle defined by [start] and [end], inclusive.
+  ///
+  /// The provided positions are clamped to the bounds of the buffer, and yield
+  /// no pixels if `start > end`.
+  Iterable<T> getRange(Pos start, Pos end) {
+    final bottomRight = bounds.bottomRight;
+    start = start.clamp(Pos.zero, bottomRight);
+    end = end.clamp(Pos.zero, bottomRight);
+    if (Pos.byRowMajor(start, end) > 0) {
+      return const Iterable.empty();
+    }
+    return getRangeUnsafe(start, end);
+  }
+
+  /// Returns a lazy iterable of pixels in the buffer from [start] to [end].
+  ///
+  /// The returned iterable will contain all pixels in the buffer that are
+  /// within the rectangle defined by [start] and [end], inclusive.
+  ///
+  /// The provided positions must be `(0, 0) <= start <= end < (width, height)`
+  /// or the behavior is undefined.
+  Iterable<T> getRangeUnsafe(Pos start, Pos end) {
+    final iStart = start.y * width + start.x;
+    final iEnd = end.y * width + end.x;
+    return data.skip(iStart).take(iEnd - iStart + 1);
+  }
+
+  /// Returns a lazy iterable of pixels in the rectangle defined by [rect].
+  ///
+  /// The returned iterable will contain all pixels in the buffer that are
+  /// within the rectangle defined by [rect].
+  ///
+  /// The provided rectangle is clamped to the bounds of the buffer and yields
+  /// no pixels if the rectangle is empty.
+  Iterable<T> getRect(Rect rect) => getRectUnsafe(rect.intersect(bounds));
+
+  /// Returns a lazy iterable of pixels in the rectangle defined by [rect].
+  ///
+  /// The returned iterable will contain all pixels in the buffer that are
+  /// within the rectangle defined by [rect].
+  ///
+  /// The provided rectangle must be contained within the bounds of the buffer
+  /// or the behavior is undefined.
+  Iterable<T> getRectUnsafe(Rect rect) {
+    if (rect.width == width) {
+      return getRangeUnsafe(rect.topLeft, rect.bottomRight);
+    }
+    return rect.positions.map(getUnsafe);
   }
 }
 
@@ -226,7 +278,7 @@ final class _ClippedBuffer<T> extends _Buffer<T> {
   final Rect _bounds;
 
   @override
-  Iterable<T> get data => _bounds.positions.map(getUnsafe);
+  Iterable<T> get data => _source.getRect(_bounds);
 
   @override
   T getUnsafe(Pos pos) => _source.getUnsafe(pos + _bounds.topLeft);
