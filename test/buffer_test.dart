@@ -75,7 +75,7 @@ void main() {
         abgr8888.cyan,
       ]),
     );
-    final clipped = buffer.mapClipped(
+    final clipped = buffer.mapRect(
       Rect.fromLTWH(0, 0, 1, 1),
     );
     check(clipped.length).equals(1);

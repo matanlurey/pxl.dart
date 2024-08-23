@@ -20,6 +20,8 @@ part 'buffer/pixels.dart';
 ///
 /// In most cases buffers will be used ephemerally; [Pixels] is an actual
 /// representation of pixel data.
+///
+/// {@category Pixel Formats}
 abstract mixin class Buffer<T> {
   /// @nodoc
   const Buffer();
@@ -159,10 +161,10 @@ abstract mixin class Buffer<T> {
   ///   abgr8888.red, abgr8888.green, abgr8888.blue,
   /// ]));
   ///
-  /// final clipped = buffer.mapClipped(Rect.fromLTWH(1, 1, 2, 2));
+  /// final clipped = buffer.mapRect(Rect.fromLTWH(1, 1, 2, 2));
   /// print(clipped.data); // [0xFF00FF00, 0xFF0000FF]
   /// ```
-  Buffer<T> mapClipped(Rect bounds) {
+  Buffer<T> mapRect(Rect bounds) {
     return _ClippedBuffer(this, bounds.intersect(this.bounds));
   }
 

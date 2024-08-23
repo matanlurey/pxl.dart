@@ -3,11 +3,15 @@ part of '../format.dart';
 /// 32-bit ABGR pixel format with four 8-bit channels.
 ///
 /// This is the package's canonical integer-based pixel format.
+///
+/// {@category Pixel Formats}
 const abgr8888 = Abgr8888._();
 
 /// 32-bit ABGR pixel format with four 8-bit channels.
 ///
 /// For a singleton instance of this class, and further details, see [abgr8888].
+///
+/// {@category Pixel Formats}
 final class Abgr8888 extends Rgba<int, int> {
   const Abgr8888._();
 
@@ -25,6 +29,15 @@ final class Abgr8888 extends Rgba<int, int> {
 
   @override
   int clamp(int pixel) => pixel & max;
+
+  @override
+  double distance(int a, int b) {
+    final dr = getRed(a) - getRed(b);
+    final dg = getGreen(a) - getGreen(b);
+    final db = getBlue(a) - getBlue(b);
+    final da = getAlpha(a) - getAlpha(b);
+    return (dr * dr + dg * dg + db * db + da * da).toDouble();
+  }
 
   @override
   int copyWith(
@@ -79,6 +92,18 @@ final class Abgr8888 extends Rgba<int, int> {
   }
 
   @override
+  int get minRed => 0x00;
+
+  @override
+  int get minGreen => 0x00;
+
+  @override
+  int get minBlue => 0x00;
+
+  @override
+  int get minAlpha => 0x00;
+
+  @override
   int get maxRed => 0xFF;
 
   @override
@@ -89,6 +114,18 @@ final class Abgr8888 extends Rgba<int, int> {
 
   @override
   int get maxAlpha => 0xFF;
+
+  @override
+  int getRed(int pixel) => (pixel >> 24) & 0xFF;
+
+  @override
+  int getGreen(int pixel) => (pixel >> 16) & 0xFF;
+
+  @override
+  int getBlue(int pixel) => (pixel >> 8) & 0xFF;
+
+  @override
+  int getAlpha(int pixel) => pixel & 0xFF;
 
   @override
   int fromAbgr8888(int pixel) => pixel;

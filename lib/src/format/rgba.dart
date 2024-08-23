@@ -10,20 +10,29 @@ part of '../format.dart';
 ///   for common colors.
 ///
 /// In addition, [fromFloatRgba] is implemented using [copyWithNormalized].
-abstract final class Rgba<P, C> extends PixelFormat<P, C> {
+///
+/// {@category Pixel Formats}
+abstract final class Rgba<P, C> extends Rgb<P, C> {
   /// @nodoc
   const Rgba();
 
   /// Creates a new pixel with the given channel values.
   ///
-  /// The [red], [green], [blue], and [alpha] values are optional and default to
-  /// [zero] if not provided
+  /// The [red], [green], [blue], and [alpha] values are optional.
+  ///
+  /// If omitted, the corresponding channel value is set to the minimum value,
+  /// except for the alpha channel which is set to the maximum value by default.
   ///
   /// ## Example
   ///
   /// ```dart
+  /// // Creating a fully opaque red pixel.
+  /// final pixel = abgr8888.create(red: 0xFF);
+  ///
+  /// // Creating a semi-transparent red pixel.
   /// final pixel = abgr8888.create(red: 0xFF, alpha: 0x80);
   /// ```
+  @override
   P create({
     C? red,
     C? green,
@@ -32,12 +41,18 @@ abstract final class Rgba<P, C> extends PixelFormat<P, C> {
   }) {
     return copyWith(
       zero,
-      red: red,
-      green: green,
-      blue: blue,
-      alpha: alpha,
+      red: red ?? minRed,
+      green: green ?? minGreen,
+      blue: blue ?? minBlue,
+      alpha: alpha ?? maxAlpha,
     );
   }
+
+  /// The minimum value for the alpha channel.
+  C get minAlpha;
+
+  /// The maximum value for the alpha channel.
+  C get maxAlpha;
 
   @override
   P copyWith(
@@ -57,63 +72,8 @@ abstract final class Rgba<P, C> extends PixelFormat<P, C> {
     double? alpha,
   });
 
-  /// The maximum value for the red channel.
-  C get maxRed;
-
-  /// The maximum value for the green channel.
-  C get maxGreen;
-
-  /// The maximum value for the blue channel.
-  C get maxBlue;
-
-  /// The maximum value for the alpha channel.
-  C get maxAlpha;
-
-  /// Black color with full transparency.
-  P get black {
-    return copyWith(zero, alpha: maxAlpha);
-  }
-
-  /// White color with full transparency.
-  P get white {
-    return copyWith(
-      max,
-      red: maxRed,
-      green: maxGreen,
-      blue: maxBlue,
-      alpha: maxAlpha,
-    );
-  }
-
-  /// Red color with full transparency.
-  P get red {
-    return copyWith(zero, red: maxRed, alpha: maxAlpha);
-  }
-
-  /// Green color with full transparency.
-  P get green {
-    return copyWith(zero, green: maxGreen, alpha: maxAlpha);
-  }
-
-  /// Blue color with full transparency.
-  P get blue {
-    return copyWith(zero, blue: maxBlue, alpha: maxAlpha);
-  }
-
-  /// Yellow color with full transparency.
-  P get yellow {
-    return copyWith(zero, red: maxRed, green: maxGreen, alpha: maxAlpha);
-  }
-
-  /// Cyan color with full transparency.
-  P get cyan {
-    return copyWith(zero, green: maxGreen, blue: maxBlue, alpha: maxAlpha);
-  }
-
-  /// Magenta color with full transparency.
-  P get magenta {
-    return copyWith(zero, red: maxRed, blue: maxBlue, alpha: maxAlpha);
-  }
+  /// Returns the alpha channel value of the [pixel].
+  C getAlpha(P pixel);
 
   @override
   P fromFloatRgba(Float32x4 pixel) {

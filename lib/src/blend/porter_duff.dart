@@ -11,7 +11,9 @@ part of '../blend.dart';
 /// // Creates a custom blend mode that always returns zero.
 /// final customBlendMode = PorterDuff(PorterDuff.zero, PorterDuff.one);
 /// ```
-final class PorterDuff with BlendMode {
+///
+/// {@category Blending}
+final class PorterDuff implements BlendMode {
   /// Always returns zero (`0.0`).
   static double zero(double srcAlpha, double dstAlpha) => 0;
 
@@ -52,6 +54,9 @@ final class PorterDuff with BlendMode {
     PixelFormat<S, void> srcFormat,
     PixelFormat<T, void> dstFormat,
   ) {
+    if (identical(srcFormat, floatRgba) && identical(dstFormat, floatRgba)) {
+      return _blendFloatRgba as T Function(S src, T dst);
+    }
     return (src, dst) {
       final srcRgba = srcFormat.toFloatRgba(src);
       final dstRgba = dstFormat.toFloatRgba(dst);
@@ -61,33 +66,6 @@ final class PorterDuff with BlendMode {
   }
 
   Float32x4 _blendFloatRgba(Float32x4 src, Float32x4 dst) {
-    return useSimd
-        ? _blendFloat32x4SIMD(src, dst)
-        : _blendFloat32x4Scalar(src, dst);
-  }
-
-  Float32x4 _blendFloat32x4Scalar(Float32x4 src, Float32x4 dst) {
-    final Float32x4(
-      x: sr,
-      y: sg,
-      z: sb,
-      w: sa,
-    ) = src;
-    final Float32x4(
-      x: dr,
-      y: dg,
-      z: db,
-      w: da,
-    ) = dst;
-
-    final r = _src(sa, da) * sr + _dst(sa, da) * dr;
-    final g = _src(sa, da) * sg + _dst(sa, da) * dg;
-    final b = _src(sa, da) * sb + _dst(sa, da) * db;
-    final a = _src(sa, da) * sa + _dst(sa, da) * da;
-    return Float32x4(r, g, b, a);
-  }
-
-  Float32x4 _blendFloat32x4SIMD(Float32x4 src, Float32x4 dst) {
     final srcA = Float32x4.splat(_src(src.w, dst.w));
     final dstA = Float32x4.splat(_dst(src.w, dst.w));
     return src * srcA + dst * dstA;

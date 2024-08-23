@@ -7,9 +7,6 @@ import 'dart:typed_data';
 /// Whether the current runtime is JavaScript.
 const isJsRuntime = identical(1, 1.0);
 
-/// Whether SIMD optimizations should be used where possible.
-final useSimd = const bool.fromEnvironment('pxl.SIMD');
-
 /// Disables bounds checking for the given function.
 const unsafeNoBoundsChecks = isJsRuntime
     ? pragma('dart2js:index-bounds:trust')
@@ -26,4 +23,9 @@ TypedDataList<int> newIntBuffer({required int bytes, required int length}) {
     <= 4 => Uint32List(length),
     _ => throw StateError('Unsupported integer size: $bytes'),
   };
+}
+
+/// Swaps bytes lane 1 & 3 (i.e. bits 16-23 with bits 0-7).
+int swapLane13(int x) {
+  return ((x & 0xff) << 16) | ((x >> 16) & 0xff) | (x & 0xff00ff00);
 }
