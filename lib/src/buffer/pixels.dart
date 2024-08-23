@@ -249,11 +249,195 @@ abstract final class Pixels<P> with Buffer<P> {
     if (rect.width == width) {
       return getRangeUnsafe(rect.topLeft, rect.bottomRight);
     }
+    return _PixelsRectIterable(data, rect);
+  }
 
-    // TODO: Consider creating a custom iterator instead.
-    return Iterable.generate(rect.height, (y) {
-      final x = y * width;
-      return data.getRange(x + rect.left, x + rect.right + 1);
-    }).expand((e) => e);
+  /// Copies the pixel data from a source buffer to `this` buffer.
+  ///
+  /// If a [source] rectangle is provided, only the pixels within that rectangle
+  /// are copied, and the rectangle will be clipped to the bounds of the source
+  /// buffer. If omitted, the entire source buffer will be copied.
+  ///
+  /// If a [target] position is provded, the top-left corner of the source
+  /// rectangle will be copied starting at that position. If omitted, the
+  /// top-left corner of the source rectangle will be copied to the top-left
+  /// corner of the `this` buffer. If there is not sufficient space in the
+  /// target buffer, the source rectangle will be clipped to fit `this`.
+  ///
+  /// The pixels are copied as-is, without any conversion or blending.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final src = IntPixels(2, 2, data: Uint32List.fromList([
+  ///   0xFFFFFFFF, 0x00000000, //
+  ///   0x00000000, 0xFFFFFFFF, //
+  /// ]));
+  ///
+  /// final dst = IntPixels(3, 3);
+  /// dst.copyFrom(src);
+  /// dst.copyFrom(src, source: Rect.fromLTWH(1, 0, 1, 2));
+  /// dst.copyFrom(src, target: Pos(1, 1));
+  /// dst.copyFrom(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
+  /// ```
+  void copyFrom(
+    Buffer<P> from, {
+    Rect? source,
+    Pos? target,
+  }) {
+    if (source == null) {
+      if (target == null) {
+        return copyFromUnsafe(from);
+      }
+      source = from.bounds;
+    } else {
+      source = source.intersect(from.bounds);
+    }
+    target ??= Pos.zero;
+    final clipped = Rect.fromTLBR(
+      target,
+      target + source.size,
+    ).intersect(bounds);
+    if (clipped.isEmpty) {
+      return;
+    }
+    source = Rect.fromLTWH(
+      source.top,
+      source.left,
+      clipped.width,
+      clipped.height,
+    );
+    return copyFromUnsafe(from, source: source, target: target);
+  }
+
+  /// Copies the pixel data from a source buffer to `this` buffer.
+  ///
+  /// If a [source] rectangle is provided, only the pixels within that rectangle
+  /// are copied. If the rectangle is outside the bounds of the source buffer,
+  /// the behavior is undefined.
+  ///
+  /// If a [target] position is provded, the top-left corner of the source
+  /// rectangle will be copied starting at that position. If there is not
+  /// sufficient space in the target buffer, the behavior is undefined.
+  ///
+  /// The pixels are copied as-is, without any conversion or blending.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final src = IntPixels(2, 2, data: Uint32List.fromList([
+  ///   0xFFFFFFFF, 0x00000000, //
+  ///   0x00000000, 0xFFFFFFFF, //
+  /// ]));
+  ///
+  /// final dst = IntPixels(3, 3);
+  /// dst.copyFromUnsafe(src);
+  /// dst.copyFromUnsafe(src, source: Rect.fromLTWH(1, 0, 1, 2));
+  /// dst.copyFromUnsafe(src, target: Pos(1, 1));
+  /// dst.copyFromUnsafe(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
+  /// ```
+  @unsafeNoBoundsChecks
+  void copyFromUnsafe(
+    Buffer<P> from, {
+    Rect? source,
+    Pos? target,
+  }) {
+    if (from is Pixels<P>) {
+      _copyFromUnsafeFast(from, source: source, target: target);
+    } else {
+      _copyFromUnsafeSlow(from, source: source, target: target);
+    }
+  }
+
+  void _copyFromUnsafeSlow(
+    Buffer<P> from, {
+    Rect? source,
+    Pos? target,
+  }) {
+    // Use the slow path if the source is not a framebuffer.
+    final pixels = source == null ? from.data : from.getRectUnsafe(source);
+    fillWithUnsafe(
+      pixels,
+      target: target == null
+          ? null
+          : Rect.fromTLBR(
+              target,
+              target + from.bounds.size - const Pos(1, 1),
+            ),
+    );
+  }
+
+  void _copyFromUnsafeFast(
+    Pixels<P> from, {
+    Rect? source,
+    Pos? target,
+  }) {
+    // Use the fast path if the source is a framebuffer.
+    if (source == null) {
+      final index = target == null ? 0 : _indexAtUnsafe(target);
+      return data.setAll(index, from.data);
+    }
+
+    // Use multiple setRange calls if the source is a framebuffer.
+    target ??= Pos.zero;
+    final src = from.data;
+    final dst = this.data;
+    var srcIdx = from._indexAtUnsafe(source.topLeft);
+    var dstIdx = _indexAtUnsafe(target);
+    for (var y = source.top; y < source.bottom; y++) {
+      dst.setRange(
+        dstIdx,
+        dstIdx + source.width,
+        src.getRange(srcIdx, srcIdx + source.width),
+      );
+      srcIdx += from.width;
+      dstIdx += width;
+    }
+  }
+}
+
+final class _PixelsRectIterable<T> extends Iterable<T> {
+  const _PixelsRectIterable(this._data, this._bounds);
+  final TypedDataList<T> _data;
+  final Rect _bounds;
+
+  @override
+  int get length => _bounds.area;
+
+  @override
+  Iterator<T> get iterator {
+    final startIdx = _bounds.top * _bounds.width + _bounds.left;
+    final endIdx = (_bounds.bottom - 1) * _bounds.width + _bounds.right - 1;
+    return _PixelsRectIterator(_data, _bounds, startIdx - 1, endIdx);
+  }
+}
+
+final class _PixelsRectIterator<T> implements Iterator<T> {
+  _PixelsRectIterator(this._data, this._bounds, this._start, this._end);
+  final TypedDataList<T> _data;
+  final Rect _bounds;
+  final int _end;
+
+  int _start;
+
+  @override
+  @unsafeNoBoundsChecks
+  T get current => _data[_start];
+
+  @override
+  bool moveNext() {
+    // Imagine we are at B, in the rectangle {B, C, F, G}
+    // B -> C -> F -> G
+    //
+    // A B C D
+    // E F G H
+    // I J K L
+    //
+    // If we are at the end of the row, move to the next row
+    _start++;
+    if (_start % _bounds.width == _bounds.right) {
+      _start += _bounds.width - _bounds.width;
+    }
+    return _start <= _end;
   }
 }

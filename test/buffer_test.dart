@@ -64,5 +64,85 @@ void main() {
     check(converted.data.elementAt(2)).equalsHex(abgr8888.blue);
   });
 
-  test('mapClipped', () {});
+  test('mapClipped', () {
+    final buffer = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final clipped = buffer.mapClipped(
+      Rect.fromLTWH(0, 0, 1, 1),
+    );
+    check(clipped.length).equals(1);
+    check(clipped.data).deepEquals([abgr8888.red]);
+  });
+
+  test('getRange', () {
+    final pixels = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final buffer = pixels.map((p) => p);
+    final range = buffer.getRange(Pos(1, 0), Pos(0, 1));
+    check(range).deepEquals([abgr8888.green, abgr8888.blue]);
+  });
+
+  test('getRange out of range returns nothing', () {
+    final pixels = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final buffer = pixels.map((p) => p);
+    final range = buffer.getRange(Pos(1, 2), Pos(2, 1));
+    check(range).isEmpty();
+  });
+
+  test('getRect', () {
+    final pixels = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final buffer = pixels.map((p) => p);
+    final rect = buffer.getRect(Rect.fromLTWH(0, 0, 1, 1));
+    check(rect).deepEquals([abgr8888.red]);
+  });
+
+  test('getRect, full width', () {
+    final pixels = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final buffer = pixels.map((p) => p);
+    final rect = buffer.getRect(Rect.fromLTWH(0, 0, 2, 1));
+    check(rect).deepEquals([abgr8888.red, abgr8888.green]);
+  });
 }

@@ -129,6 +129,311 @@ void main() {
     });
   });
 
+  test('fill', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fill(0xFFFFFFFF);
+    check(pixels.data).deepEquals([
+      0xFFFFFFFF,
+      0xFFFFFFFF,
+      0xFFFFFFFF,
+      0xFFFFFFFF,
+    ]);
+  });
+
+  test('fill (rect)', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fill(0xFFFFFFFF, target: Rect.fromLTWH(1, 1, 1, 1));
+    check(pixels.data).deepEquals([
+      0x00000000,
+      0x00000000,
+      0x00000000,
+      0xFFFFFFFF,
+    ]);
+  });
+
+  test('fill (rect, partial, full width)', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fill(0xFFFFFFFF, target: Rect.fromLTWH(0, 0, 2, 1));
+    check(pixels.data).deepEquals([
+      0xFFFFFFFF,
+      0xFFFFFFFF,
+      0x00000000,
+      0x00000000,
+    ]);
+  });
+
+  test('fill (rect, partial)', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fill(0xFFFFFFFF, target: Rect.fromLTWH(0, 0, 1, 1));
+    check(pixels.data).deepEquals([
+      0xFFFFFFFF,
+      0x00000000,
+      0x00000000,
+      0x00000000,
+    ]);
+  });
+
+  test('fill (rect, clamped)', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fill(0xFFFFFFFF, target: Rect.fromLTWH(1, 1, 2, 2));
+    check(pixels.data).deepEquals([
+      0x00000000,
+      0x00000000,
+      0x00000000,
+      0xFFFFFFFF,
+    ]);
+  });
+
+  test('clear', () {
+    final pixels = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList(
+        [
+          0xFFFFFFFF,
+          0xFFFFFFFF,
+          0xFFFFFFFF,
+          0xFFFFFFFF,
+        ],
+      ),
+    );
+    pixels.clear();
+    check(pixels.data).deepEquals([
+      0x00000000,
+      0x00000000,
+      0x00000000,
+      0x00000000,
+    ]);
+  });
+
+  test('clear (rect)', () {
+    final pixels = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList(
+        [
+          0xFFFFFFFF,
+          0xFFFFFFFF,
+          0xFFFFFFFF,
+          0xFFFFFFFF,
+        ],
+      ),
+    );
+    pixels.clear(target: Rect.fromLTWH(1, 1, 1, 1));
+    check(pixels.data).deepEquals([
+      0xFFFFFFFF,
+      0xFFFFFFFF,
+      0xFFFFFFFF,
+      0x00000000,
+    ]);
+  });
+
+  test('fillWith', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fillWith([0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF]);
+    check(pixels.data).deepEquals([
+      0xFFFFFFFF,
+      0xFFFFFFFF,
+      0xFFFFFFFF,
+      0xFFFFFFFF,
+    ]);
+  });
+
+  test('fillWith (rect)', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fillWith(
+      [0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF],
+      target: Rect.fromLTWH(1, 1, 1, 1),
+    );
+    check(pixels.data).deepEquals([
+      0x00000000,
+      0x00000000,
+      0x00000000,
+      0xFFFFFFFF,
+    ]);
+  });
+
+  test('fillWith (rect, partial)', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fillWith(
+      [0xFFFFFFFF, 0xFFFFFFFF],
+      target: Rect.fromLTWH(0, 0, 1, 1),
+    );
+    check(pixels.data).deepEquals([
+      0xFFFFFFFF,
+      0x00000000,
+      0x00000000,
+      0x00000000,
+    ]);
+  });
+
+  test('fillWith (rect, clamped)', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fillWith(
+      [0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF],
+      target: Rect.fromLTWH(1, 1, 2, 2),
+    );
+    check(pixels.data).deepEquals([
+      0x00000000,
+      0x00000000,
+      0x00000000,
+      0xFFFFFFFF,
+    ]);
+  });
+
+  test('fillWith (rect, insufficient data)', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fillWith(
+      [0xFFFFFFFF],
+      target: Rect.fromLTWH(0, 0, 2, 2),
+    );
+    check(pixels.data).deepEquals([
+      0xFFFFFFFF,
+      0x00000000,
+      0x00000000,
+      0x00000000,
+    ]);
+  });
+
+  test('fillWith (rect, too much data)', () {
+    final pixels = IntPixels(2, 2);
+    pixels.fillWith(
+      [0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF],
+      target: Rect.fromLTWH(1, 1, 1, 1),
+    );
+    check(pixels.data).deepEquals([
+      0x00000000,
+      0x00000000,
+      0x00000000,
+      0xFFFFFFFF,
+    ]);
+  });
+
+  test('getRange', () {
+    final pixels = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final range = pixels.getRange(Pos(1, 0), Pos(0, 1));
+    check(range).deepEquals([abgr8888.green, abgr8888.blue]);
+  });
+
+  test('copyFrom (full, buffer -> pixels)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    ).map((p) => p);
+    final dst = IntPixels(2, 2);
+    dst.copyFrom(src);
+
+    check(dst.data).deepEquals([
+      abgr8888.red,
+      abgr8888.green,
+      abgr8888.blue,
+      abgr8888.cyan,
+    ]);
+  });
+
+  test('copyFrom (full, pixels -> pixels)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final dst = IntPixels(2, 2);
+    dst.copyFrom(src);
+
+    check(dst.data).deepEquals([
+      abgr8888.red,
+      abgr8888.green,
+      abgr8888.blue,
+      abgr8888.cyan,
+    ]);
+  });
+
+  test('copyFrom (partial, buffer -> pixels)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    ).map((p) => p);
+    final dst = IntPixels(2, 2);
+    dst.copyFrom(src, target: Pos(1, 1));
+
+    check(dst.data).deepEquals([
+      abgr8888.zero,
+      abgr8888.zero,
+      abgr8888.zero,
+      abgr8888.red,
+    ]);
+  });
+
+  test('copyFrom (partial, pixels -> pixels)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final dst = IntPixels(2, 2);
+    dst.copyFrom(src, target: Pos(1, 1));
+
+    check(dst.data).deepEquals([
+      abgr8888.zero,
+      abgr8888.zero,
+      abgr8888.zero,
+      abgr8888.red,
+    ]);
+  });
+
+  test('copyFrom (partial source, buffer -> pixels)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    ).map((p) => p);
+    final dst = IntPixels(2, 2);
+    dst.copyFrom(src, source: Rect.fromLTWH(1, 1, 1, 1));
+
+    check(dst.data).deepEquals([
+      abgr8888.cyan,
+      abgr8888.zero,
+      abgr8888.zero,
+      abgr8888.zero,
+    ]);
+  });
+
   // group('blit', () {
   //   test('copy in same format', () {
   //     final src = IntPixels(

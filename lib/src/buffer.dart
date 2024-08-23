@@ -4,8 +4,11 @@ import 'package:pxl/src/format.dart';
 import 'package:pxl/src/geometry.dart';
 import 'package:pxl/src/internal.dart';
 
-part 'buffer/float.dart';
-part 'buffer/int.dart';
+part 'buffer/clipped.dart';
+part 'buffer/indexed.dart';
+part 'buffer/map.dart';
+part 'buffer/pixels_float.dart';
+part 'buffer/pixels_int.dart';
 part 'buffer/pixels.dart';
 
 /// A 2-dimensional _view_ of pixel data [T] in memory.
@@ -210,7 +213,7 @@ abstract mixin class Buffer<T> {
   /// or the behavior is undefined.
   Iterable<T> getRectUnsafe(Rect rect) {
     if (rect.width == width) {
-      return getRangeUnsafe(rect.topLeft, rect.bottomRight);
+      return getRangeUnsafe(rect.topLeft, rect.bottomRight - const Pos(1, 1));
     }
     return rect.positions.map(getUnsafe);
   }
@@ -224,7 +227,7 @@ abstract final class _Buffer<T> with Buffer<T> {
   PixelFormat<T, void> get format => _source.format;
 
   @override
-  Iterable<T> get data => _source.data;
+  Iterable<T> get data;
 
   @override
   int get width => _source.width;
@@ -234,58 +237,4 @@ abstract final class _Buffer<T> with Buffer<T> {
 
   @override
   T getUnsafe(Pos pos) => _source.getUnsafe(pos);
-}
-
-final class _MapBuffer<S, T> with Buffer<T> {
-  const _MapBuffer(this._source, this._convert, this.format);
-  final Buffer<S> _source;
-  final T Function(S) _convert;
-
-  @override
-  final PixelFormat<T, void> format;
-
-  @override
-  Iterable<T> get data => _source.data.map(_convert);
-
-  @override
-  T getUnsafe(Pos pos) => _convert(_source.getUnsafe(pos));
-
-  @override
-  int get width => _source.width;
-
-  @override
-  int get height => _source.height;
-}
-
-final class _MapIndexedBuffer<T> extends _Buffer<T> {
-  const _MapIndexedBuffer(super._source, this._convert);
-  final T Function(Pos, T) _convert;
-
-  @override
-  Iterable<T> get data {
-    return Iterable.generate(length, (i) {
-      final pos = Pos(i ~/ width, i % width);
-      return getUnsafe(pos);
-    });
-  }
-
-  @override
-  T getUnsafe(Pos pos) => _convert(pos, _source.getUnsafe(pos));
-}
-
-final class _ClippedBuffer<T> extends _Buffer<T> {
-  const _ClippedBuffer(super._source, this._bounds);
-  final Rect _bounds;
-
-  @override
-  Iterable<T> get data => _source.getRect(_bounds);
-
-  @override
-  T getUnsafe(Pos pos) => _source.getUnsafe(pos + _bounds.topLeft);
-
-  @override
-  int get width => _bounds.width;
-
-  @override
-  int get height => _bounds.height;
 }
