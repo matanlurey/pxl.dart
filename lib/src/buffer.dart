@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:pxl/src/blend.dart';
 import 'package:pxl/src/format.dart';
 import 'package:pxl/src/geometry.dart';
 import 'package:pxl/src/internal.dart';

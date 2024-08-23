@@ -14,6 +14,31 @@ abstract final class Rgba<P, C> extends PixelFormat<P, C> {
   /// @nodoc
   const Rgba();
 
+  /// Creates a new pixel with the given channel values.
+  ///
+  /// The [red], [green], [blue], and [alpha] values are optional and default to
+  /// [zero] if not provided
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final pixel = abgr8888.create(red: 0xFF, alpha: 0x80);
+  /// ```
+  P create({
+    C? red,
+    C? green,
+    C? blue,
+    C? alpha,
+  }) {
+    return copyWith(
+      zero,
+      red: red,
+      green: green,
+      blue: blue,
+      alpha: alpha,
+    );
+  }
+
   @override
   P copyWith(
     P pixel, {

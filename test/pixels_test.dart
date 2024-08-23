@@ -434,107 +434,47 @@ void main() {
     ]);
   });
 
-  // group('blit', () {
-  //   test('copy in same format', () {
-  //     final src = IntPixels(
-  //       2,
-  //       2,
-  //       data: Uint32List.fromList([
-  //         abgr8888.red, abgr8888.green, //
-  //         abgr8888.blue, abgr8888.cyan, //
-  //       ]),
-  //     );
+  test('blit (full, buffer -> pixels)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.copyWithNormalized(abgr8888.red, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.green, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.blue, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.cyan, alpha: 0.5),
+      ]),
+    );
+    final dst = IntPixels(2, 2);
+    dst.blit(src.map((p) => p));
 
-  //     final dst = IntPixels(2, 2);
-  //     Pixels.blit(src, dst);
+    check(dst.data).deepEquals([
+      0xff00007f,
+      0x00ff007f,
+      0x0000ff7f,
+      0x00ffff7f,
+    ]);
+  });
 
-  //     check(dst.data).deepEquals(src.data);
-  //   });
+  test('blit (full, pixels -> pixels)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.copyWithNormalized(abgr8888.red, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.green, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.blue, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.cyan, alpha: 0.5),
+      ]),
+    );
+    final dst = IntPixels(2, 2);
+    dst.blit(src);
 
-  //   test('copy in different format', () {
-  //     final src = FloatPixels(
-  //       2,
-  //       2,
-  //       data: Float32x4List.fromList([
-  //         floatRgba.red, floatRgba.green, //
-  //         floatRgba.blue, floatRgba.cyan, //
-  //       ]),
-  //     );
-
-  //     final dst = IntPixels(2, 2);
-  //     Pixels.blit(src, dst);
-
-  //     check(dst.data).deepEquals([
-  //       abgr8888.red, abgr8888.green, //
-  //       abgr8888.blue, abgr8888.cyan, //
-  //     ]);
-  //   });
-
-  //   test('copy with blend', () {
-  //     final src = IntPixels(
-  //       2,
-  //       2,
-  //       data: Uint32List.fromList([
-  //         abgr8888.red, abgr8888.green, //
-  //         abgr8888.blue, abgr8888.cyan, //
-  //       ]),
-  //     );
-
-  //     final dst = IntPixels(2, 2, data: Uint32List.fromList([0, 0, 0, 0]));
-  //     Pixels.blit(src, dst, blend: (s, d) => s + 1);
-
-  //     check(dst.data).deepEquals([
-  //       abgr8888.red + 1, abgr8888.green + 1, //
-  //       abgr8888.blue + 1, abgr8888.cyan + 1, //
-  //     ]);
-  //   });
-
-  //   test('copy to a smaller destination', () {
-  //     final src = IntPixels(
-  //       2,
-  //       2,
-  //       data: Uint32List.fromList([
-  //         abgr8888.red, abgr8888.green, //
-  //         abgr8888.blue, abgr8888.cyan, //
-  //       ]),
-  //     );
-
-  //     final dst = IntPixels(1, 1);
-  //     Pixels.blit(src, dst);
-
-  //     check(dst.data).deepEquals([abgr8888.red]);
-  //   });
-
-  //   test('copy to a larger destination', () {
-  //     final src = IntPixels(
-  //       1,
-  //       1,
-  //       data: Uint32List.fromList([abgr8888.red]),
-  //     );
-
-  //     final dst = IntPixels(2, 2);
-  //     Pixels.blit(src, dst);
-
-  //     check(dst.data).deepEquals([
-  //       abgr8888.red, abgr8888.zero, //
-  //       abgr8888.zero, abgr8888.zero, //
-  //     ]);
-  //   });
-
-  //   test('copy to an offset destination', () {
-  //     final src = IntPixels(
-  //       1,
-  //       1,
-  //       data: Uint32List.fromList([abgr8888.red]),
-  //     );
-
-  //     final dst = IntPixels(2, 2, data: Uint32List.fromList([0, 0, 0, 0]));
-  //     Pixels.blit(src, dst, destination: Pos(1, 1));
-
-  //     check(dst.data).deepEquals([
-  //       abgr8888.zero, abgr8888.zero, //
-  //       abgr8888.zero, abgr8888.red, //
-  //     ]);
-  //   });
-  // });
+    check(dst.data).deepEquals([
+      0xff00007f,
+      0x00ff007f,
+      0x0000ff7f,
+      0x00ffff7f,
+    ]);
+  });
 }

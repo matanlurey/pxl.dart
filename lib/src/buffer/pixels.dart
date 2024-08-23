@@ -7,7 +7,7 @@ part of '../buffer.dart';
 /// but cannot be extended or implemented (similar to [TypedDataList]).
 ///
 /// In most cases either [IntPixels] or [FloatPixels] will be used directly.
-abstract final class Pixels<P> with Buffer<P> {
+abstract final class Pixels<T> with Buffer<T> {
   /// @nodoc
   const Pixels({
     required this.format,
@@ -26,10 +26,10 @@ abstract final class Pixels<P> with Buffer<P> {
   /// [1]: https://pub.dev/documentation/web/latest/web/ImageData/ImageData.html
   /// [2]: https://api.dart.dev/stable/3.5.1/dart-isolate/TransferableTypedData-class.html
   @override
-  TypedDataList<P> get data;
+  TypedDataList<T> get data;
 
   @override
-  final PixelFormat<P, void> format;
+  final PixelFormat<T, void> format;
 
   @override
   final int width;
@@ -41,12 +41,12 @@ abstract final class Pixels<P> with Buffer<P> {
 
   @override
   @unsafeNoBoundsChecks
-  P getUnsafe(Pos pos) => data[_indexAtUnsafe(pos)];
+  T getUnsafe(Pos pos) => data[_indexAtUnsafe(pos)];
 
   /// Sets the pixel at the given position.
   ///
   /// If outside the bounds of the buffer, does nothing.
-  void set(Pos pos, P pixel) {
+  void set(Pos pos, T pixel) {
     if (contains(pos)) {
       setUnsafe(pos, pixel);
     }
@@ -56,7 +56,7 @@ abstract final class Pixels<P> with Buffer<P> {
   ///
   /// If outside the bounds of the buffer, the behavior is undefined.
   @unsafeNoBoundsChecks
-  void setUnsafe(Pos pos, P pixel) {
+  void setUnsafe(Pos pos, T pixel) {
     data[_indexAtUnsafe(pos)] = pixel;
   }
 
@@ -115,7 +115,7 @@ abstract final class Pixels<P> with Buffer<P> {
   /// pixels.fill(0xFFFFFFFF);
   /// pixels.fill(0x00000000, target: Rect.fromLTWH(1, 0, 1, 2));
   /// ```
-  void fill(P pixel, {Rect? target}) {
+  void fill(T pixel, {Rect? target}) {
     if (target != null) {
       target = target.intersect(bounds);
     }
@@ -138,7 +138,7 @@ abstract final class Pixels<P> with Buffer<P> {
   /// pixels.fillUnsafe(0x00000000, target: Rect.fromLTWH(1, 0, 1, 2));
   /// ```
   @unsafeNoBoundsChecks
-  void fillUnsafe(P pixel, {Rect? target}) {
+  void fillUnsafe(T pixel, {Rect? target}) {
     if (target == null) {
       return data.fillRange(
         0,
@@ -181,7 +181,7 @@ abstract final class Pixels<P> with Buffer<P> {
   /// pixels.fillWith([0x00000000, 0xFFFFFFFF], target: Rect.fromLTWH(1, 0, 1, 2));
   /// ```
   void fillWith(
-    Iterable<P> pixels, {
+    Iterable<T> pixels, {
     Rect? target,
   }) {
     if (target == null) {
@@ -219,7 +219,7 @@ abstract final class Pixels<P> with Buffer<P> {
   /// ```
   @unsafeNoBoundsChecks
   void fillWithUnsafe(
-    Iterable<P> pixels, {
+    Iterable<T> pixels, {
     Rect? target,
   }) {
     if (target == null) {
@@ -238,14 +238,14 @@ abstract final class Pixels<P> with Buffer<P> {
   }
 
   @override
-  Iterable<P> getRangeUnsafe(Pos start, Pos end) {
+  Iterable<T> getRangeUnsafe(Pos start, Pos end) {
     final s = _indexAtUnsafe(start);
     final e = _indexAtUnsafe(end);
     return data.getRange(s, e + 1);
   }
 
   @override
-  Iterable<P> getRectUnsafe(Rect rect) {
+  Iterable<T> getRectUnsafe(Rect rect) {
     if (rect.width == width) {
       return getRangeUnsafe(rect.topLeft, rect.bottomRight);
     }
@@ -281,7 +281,7 @@ abstract final class Pixels<P> with Buffer<P> {
   /// dst.copyFrom(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
   /// ```
   void copyFrom(
-    Buffer<P> from, {
+    Buffer<T> from, {
     Rect? source,
     Pos? target,
   }) {
@@ -338,11 +338,11 @@ abstract final class Pixels<P> with Buffer<P> {
   /// ```
   @unsafeNoBoundsChecks
   void copyFromUnsafe(
-    Buffer<P> from, {
+    Buffer<T> from, {
     Rect? source,
     Pos? target,
   }) {
-    if (from is Pixels<P>) {
+    if (from is Pixels<T>) {
       _copyFromUnsafeFast(from, source: source, target: target);
     } else {
       _copyFromUnsafeSlow(from, source: source, target: target);
@@ -350,7 +350,7 @@ abstract final class Pixels<P> with Buffer<P> {
   }
 
   void _copyFromUnsafeSlow(
-    Buffer<P> from, {
+    Buffer<T> from, {
     Rect? source,
     Pos? target,
   }) {
@@ -368,7 +368,7 @@ abstract final class Pixels<P> with Buffer<P> {
   }
 
   void _copyFromUnsafeFast(
-    Pixels<P> from, {
+    Pixels<T> from, {
     Rect? source,
     Pos? target,
   }) {
@@ -392,6 +392,161 @@ abstract final class Pixels<P> with Buffer<P> {
       );
       srcIdx += from.width;
       dstIdx += width;
+    }
+  }
+
+  /// Blits, or copies with blending, the pixel data from a source buffer to
+  /// `this` buffer.
+  ///
+  /// If a [source] rectangle is provided, only the pixels within that rectangle
+  /// are copied, and the rectangle will be clipped to the bounds of the source
+  /// buffer. If omitted, the entire source buffer will be copied.
+  ///
+  /// If a [target] position is provided, the top-left corner of the source
+  /// rectangle will be copied starting at that position. If omitted, the
+  /// top-left corner of the source rectangle will be copied to the top-left
+  /// corner of the `this` buffer. If there is not sufficient space in the
+  /// target buffer, the source rectangle will be clipped to fit `this`.
+  ///
+  /// If a [blend] mode is provided, the pixels will be blended using that mode.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final src = IntPixels(2, 2, data: Uint32List.fromList([
+  ///   0xFFFFFFFF, 0x00000000, //
+  ///   0x00000000, 0xFFFFFFFF, //
+  /// ]));
+  ///
+  /// final dst = IntPixels(3, 3);
+  /// dst.blit(src);
+  /// dst.blit(src, source: Rect.fromLTWH(1, 0, 1, 2));
+  /// dst.blit(src, target: Pos(1, 1));
+  /// dst.blit(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
+  /// ```
+  void blit<S>(
+    Buffer<S> from, {
+    Rect? source,
+    Pos? target,
+    BlendMode blend = BlendMode.srcOver,
+  }) {
+    if (source == null) {
+      if (target == null) {
+        return blitUnsafe(from, blend: blend);
+      }
+      source = from.bounds;
+    } else {
+      source = source.intersect(from.bounds);
+    }
+    target ??= Pos.zero;
+    final clipped = Rect.fromTLBR(
+      target,
+      target + source.size,
+    ).intersect(bounds);
+    if (clipped.isEmpty) {
+      return;
+    }
+    source = Rect.fromLTWH(
+      source.top,
+      source.left,
+      clipped.width,
+      clipped.height,
+    );
+    return blitUnsafe(from, source: source, target: target, blend: blend);
+  }
+
+  /// Blits, or copies with blending, the pixel data from a source buffer to
+  /// `this` buffer.
+  ///
+  /// If a [source] rectangle is provided, only the pixels within that rectangle
+  /// are copied. If the rectangle is outside the bounds of the source buffer,
+  /// the behavior is undefined.
+  ///
+  /// If a [target] position is provided, the top-left corner of the source
+  /// rectangle will be copied starting at that position. If there is not
+  /// sufficient space in the target buffer, the behavior is undefined.
+  ///
+  /// If a [blend] mode is provided, the pixels will be blended using that mode.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final src = IntPixels(2, 2, data: Uint32List.fromList([
+  ///   0xFFFFFFFF, 0x00000000, //
+  ///   0x00000000, 0xFFFFFFFF, //
+  /// ]));
+  ///
+  /// final dst = IntPixels(3, 3);
+  /// dst.blitUnsafe(src);
+  /// dst.blitUnsafe(src, source: Rect.fromLTWH(1, 0, 1, 2));
+  /// dst.blitUnsafe(src, target: Pos(1, 1));
+  /// dst.blitUnsafe(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
+  /// ```
+  void blitUnsafe<S>(
+    Buffer<S> from, {
+    Rect? source,
+    Pos? target,
+    BlendMode blend = BlendMode.srcOver,
+  }) {
+    target ??= Pos.zero;
+    final sRect = source ?? from.bounds;
+    final tRect = Rect.fromTLBR(
+      target,
+      target + sRect.size,
+    ).intersect(bounds);
+    if (tRect.isEmpty) {
+      return;
+    }
+    source = Rect.fromLTWH(
+      sRect.top,
+      sRect.left,
+      tRect.width,
+      tRect.height,
+    );
+    final fn = blend.getBlend(from.format, format);
+    if (from is Pixels<S>) {
+      _blitUnsafeFast(from, source: source, target: tRect, blend: fn);
+    } else {
+      _blitUnsafeSlow(from, source: source, target: tRect, blend: fn);
+    }
+  }
+
+  void _blitUnsafeSlow<S>(
+    Buffer<S> from, {
+    required T Function(S src, T dst) blend,
+    required Rect source,
+    required Rect target,
+  }) {
+    final src = source.positions.iterator;
+    final dst = target.positions.iterator;
+    while (src.moveNext() && dst.moveNext()) {
+      setUnsafe(
+        dst.current,
+        blend(
+          from.getUnsafe(src.current),
+          getUnsafe(dst.current),
+        ),
+      );
+    }
+  }
+
+  void _blitUnsafeFast<S>(
+    Pixels<S> from, {
+    required T Function(S src, T dst) blend,
+    required Rect source,
+    required Rect target,
+  }) {
+    final src = from.data;
+    final dst = this.data;
+    var srcIdx = from._indexAtUnsafe(source.topLeft);
+    var dstIdx = _indexAtUnsafe(target.topLeft);
+    for (var y = source.top; y < source.bottom; y++) {
+      for (var x = source.left; x < source.right; x++) {
+        dst[dstIdx] = blend(src[srcIdx], dst[dstIdx]);
+        srcIdx++;
+        dstIdx++;
+      }
+      dstIdx += width - source.width;
     }
   }
 }
