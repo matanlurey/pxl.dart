@@ -1,13 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
-import 'package:pxl/src/internal.dart';
 
 part 'format/abgr8888.dart';
 part 'format/float_rgba.dart';
 part 'format/indexed.dart';
 part 'format/rgb.dart';
-part 'format/rgb888.dart';
 part 'format/rgba.dart';
 part 'format/system8.dart';
 

@@ -16,9 +16,9 @@ void main() {
       ]),
     );
     final converted = buffer.map((pixel) => pixel ^ 0xFFFFFFFF);
-    check(converted.data.elementAt(0)).equalsHex(0x00FFFF00);
-    check(converted.data.elementAt(1)).equalsHex(0xFF00FF00);
-    check(converted.data.elementAt(2)).equalsHex(0xFFFF0000);
+    check(converted.data.elementAt(0)).equalsHex(0x0000ffff);
+    check(converted.data.elementAt(1)).equalsHex(0x00ff00ff);
+    check(converted.data.elementAt(2)).equalsHex(0x00ffff00);
   });
 
   test('mapConvert', () {

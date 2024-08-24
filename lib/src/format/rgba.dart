@@ -16,6 +16,9 @@ abstract final class Rgba<P, C> extends Rgb<P, C> {
   /// @nodoc
   const Rgba();
 
+  @override
+  P get black => create();
+
   /// Creates a new pixel with the given channel values.
   ///
   /// The [red], [green], [blue], and [alpha] values are optional.

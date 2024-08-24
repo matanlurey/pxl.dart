@@ -13,35 +13,35 @@ void main() {
     });
 
     test('[0] = black (#000000 in RGB)', () {
-      check(system8[0]).equalsHex(0x000000);
+      check(system8[0]).equalsHex(abgr8888.black);
     });
 
     test('[1] = red (#FF0000 in RGB)', () {
-      check(system8[1]).equalsHex(0xFF0000);
+      check(system8[1]).equalsHex(abgr8888.red);
     });
 
     test('[2] = green (#00FF00 in RGB)', () {
-      check(system8[2]).equalsHex(0x00FF00);
+      check(system8[2]).equalsHex(abgr8888.green);
     });
 
     test('[3] = blue (#0000FF in RGB)', () {
-      check(system8[3]).equalsHex(0x0000FF);
+      check(system8[3]).equalsHex(abgr8888.blue);
     });
 
     test('[4] = yellow (#FFFF00 in RGB)', () {
-      check(system8[4]).equalsHex(0xFFFF00);
+      check(system8[4]).equalsHex(abgr8888.yellow);
     });
 
     test('[5] = cyan (#00FFFF in RGB)', () {
-      check(system8[5]).equalsHex(0x00FFFF);
+      check(system8[5]).equalsHex(abgr8888.cyan);
     });
 
     test('[6] = magenta (#FF00FF in RGB)', () {
-      check(system8[6]).equalsHex(0xFF00FF);
+      check(system8[6]).equalsHex(abgr8888.magenta);
     });
 
     test('[7] = white (#FFFFFF in RGB)', () {
-      check(system8[7]).equalsHex(0xFFFFFF);
+      check(system8[7]).equalsHex(abgr8888.white);
     });
 
     test('zero is 0', () {
@@ -73,7 +73,7 @@ void main() {
     });
 
     test('convert(<orange red>) == red (1)', () {
-      check(system8.convert(0xFF4500, from: rgb888)).equals(1);
+      check(system8.convert(0xFFFF4500, from: abgr8888)).equals(1);
     });
   });
 }

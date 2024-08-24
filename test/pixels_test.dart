@@ -449,10 +449,10 @@ void main() {
     dst.blit(src.map((p) => p));
 
     check(dst.data).deepEquals([
-      0xff00007f,
-      0x00ff007f,
-      0x0000ff7f,
-      0x00ffff7f,
+      0x7fff0000,
+      0x7f00ff00,
+      0x7f0000ff,
+      0x7f00ffff,
     ]);
   });
 
@@ -471,10 +471,10 @@ void main() {
     dst.blit(src);
 
     check(dst.data).deepEquals([
-      0xff00007f,
-      0x00ff007f,
-      0x0000ff7f,
-      0x00ffff7f,
+      0x7fff0000,
+      0x7f00ff00,
+      0x7f0000ff,
+      0x7f00ffff,
     ]);
   });
 }

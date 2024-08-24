@@ -18,16 +18,16 @@ part of '../format.dart';
 /// {@category Pixel Formats}
 final system8 = IndexedFormat.bits8(
   [
-    rgb888.black,
-    rgb888.red,
-    rgb888.green,
-    rgb888.blue,
-    rgb888.yellow,
-    rgb888.cyan,
-    rgb888.magenta,
-    rgb888.white,
+    abgr8888.black,
+    abgr8888.red,
+    abgr8888.green,
+    abgr8888.blue,
+    abgr8888.yellow,
+    abgr8888.cyan,
+    abgr8888.magenta,
+    abgr8888.white,
   ],
-  format: rgb888,
+  format: abgr8888,
   name: 'SYSTEM_8',
 );
 
@@ -47,11 +47,11 @@ final system256 = IndexedFormat.bits8(
     // Ensure we generate 256 unique colors
     if (i >= 216) {
       final gray = (i - 216) * (255 / 40).floor();
-      return rgb888.create(red: gray, green: gray, blue: gray);
+      return abgr8888.create(red: gray, green: gray, blue: gray);
     } else {
-      return rgb888.create(red: r, green: g, blue: b);
+      return abgr8888.create(red: r, green: g, blue: b);
     }
   }),
-  format: rgb888,
+  format: abgr8888,
   name: 'SYSTEM_256',
 );
