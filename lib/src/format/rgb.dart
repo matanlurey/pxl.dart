@@ -48,6 +48,32 @@ abstract final class Rgb<P, C> extends PixelFormat<P, C> {
     C? blue,
   });
 
+  /// Creates a new pixel with the given channel values normalized to the range
+  /// `[0.0, 1.0]`.
+  ///
+  /// The [red], [green], and [blue] values are optional.
+  ///
+  /// If omitted, the corresponding channel value is set to `0.0`.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// // Creating a full red pixel.
+  /// final pixel = rgb.createNormalized(red: 1.0);
+  /// ```
+  P createNormalized({
+    double red = 0.0,
+    double green = 0.0,
+    double blue = 0.0,
+  }) {
+    return copyWithNormalized(
+      zero,
+      red: red,
+      green: green,
+      blue: blue,
+    );
+  }
+
   @override
   P copyWithNormalized(
     P pixel, {

@@ -48,6 +48,22 @@ abstract final class Rgba<P, C> extends Rgb<P, C> {
     );
   }
 
+  @override
+  P createNormalized({
+    double red = 0.0,
+    double green = 0.0,
+    double blue = 0.0,
+    double alpha = 1.0,
+  }) {
+    return copyWithNormalized(
+      zero,
+      red: red,
+      green: green,
+      blue: blue,
+      alpha: alpha,
+    );
+  }
+
   /// The minimum value for the alpha channel.
   C get minAlpha;
 
