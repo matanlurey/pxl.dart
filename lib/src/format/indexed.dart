@@ -51,10 +51,9 @@ final class IndexedFormat<P> extends PixelFormat<int, void> {
     int? zero,
     int? max,
   }) {
-    final list = List.of(palette);
-    if (list.length > 256) {
+    if (palette.length > 256) {
       throw ArgumentError.value(
-        list.length,
+        palette.length,
         'palette.length',
         'Must be less than or equal to 256 for 8-bit indexed format.',
       );
@@ -84,10 +83,9 @@ final class IndexedFormat<P> extends PixelFormat<int, void> {
     int? zero,
     int? max,
   }) {
-    final list = List.of(palette);
-    if (list.length > 65536) {
+    if (palette.length > 65536) {
       throw ArgumentError.value(
-        list.length,
+        palette.length,
         'palette.length',
         'Must be less than or equal to 65536 for 16-bit indexed format.',
       );
@@ -117,10 +115,10 @@ final class IndexedFormat<P> extends PixelFormat<int, void> {
     int? zero,
     int? max,
   }) {
-    final list = List.of(palette);
-    if (list.length > 4294967296) {
+    // This, if each value is a 32-bit integer, is 16 GiB, and likely to OOM.
+    if (palette.length > 4294967296) {
       throw ArgumentError.value(
-        list.length,
+        palette.length,
         'palette.length',
         'Must be less than or equal to 4294967296 for 32-bit indexed format.',
       );
@@ -184,6 +182,11 @@ final class IndexedFormat<P> extends PixelFormat<int, void> {
 
   @override
   double distance(int a, int b) => (a - b).abs().toDouble();
+
+  @override
+  double compare(int a, int b) {
+    return _format.compare(_palette[a], _palette[b]);
+  }
 
   /// Converts a pixel in the [abgr8888] pixel format to `this` pixel format.
   ///

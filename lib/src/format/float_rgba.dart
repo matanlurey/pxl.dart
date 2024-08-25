@@ -39,6 +39,9 @@ final class FloatRgba extends Rgba<Float32x4, double> {
   }
 
   @override
+  double compare(Float32x4 a, Float32x4 b) => distance(a, b) / 4.0;
+
+  @override
   Float32x4 copyWith(
     Float32x4 pixel, {
     double? red,

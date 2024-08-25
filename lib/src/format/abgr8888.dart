@@ -23,7 +23,7 @@ const abgr8888 = Abgr8888._();
 ///
 /// {@category Pixel Formats}
 final class Abgr8888 extends _Rgba8x4Int {
-  const Abgr8888._() : super.fromRgbaOffsets(16, 8, 0, 24);
+  const Abgr8888._() : super.fromOffsets(a: 24, b: 16, g: 8, r: 0);
 
   @override
   String get name => 'ABGR8888';

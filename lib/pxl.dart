@@ -1,7 +1,7 @@
 /// Fixed-size buffer of [Pixels], with customizable [PixelFormat]s,
 /// [BlendMode]s, and more.
 ///
-/// - Create and manipulate in-memory [IntPixels] or [FloatPixels] buffers
+/// - Create and manipulate in-memory [IntPixels] or [Float32x4Pixels] buffers
 /// - Define and convert between [PixelFormat]s.
 /// - Palette-based indexed pixel formats with [IndexedFormat].
 /// - Buffer-to-buffer blitting with automatic format conversion and

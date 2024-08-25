@@ -8,8 +8,8 @@ part 'format/argb8888.dart';
 part 'format/float_rgba.dart';
 part 'format/indexed.dart';
 part 'format/rgb.dart';
+part 'format/rgb888.dart';
 part 'format/rgba.dart';
-part 'format/rgba8888.dart';
 part 'format/system8.dart';
 part 'format/system256.dart';
 
@@ -48,6 +48,22 @@ abstract base mixin class PixelFormat<P, C> {
   /// pixel format to define. For example, both [abgr8888] and [floatRgba] use
   /// cartesian distance to compare pixels.
   double distance(P a, P b);
+
+  /// Compares two pixels in the pixel format.
+  ///
+  /// The result is `0.0` if the pixels are equal, and `1.0` if they are
+  /// completely different.
+  ///
+  /// A typical implementation for an RGBA pixel format might be something like:
+  ///
+  /// ```dart
+  /// final r = (getRed(a) - getRed(b)).abs();
+  /// final g = (getGreen(a) - getGreen(b)).abs();
+  /// final b = (getBlue(a) - getBlue(b)).abs();
+  /// final a = (getAlpha(a) - getAlpha(b)).abs();
+  /// return (r + g + b + a) / 4.0;
+  /// ```
+  double compare(P a, P b);
 
   /// The zero, or minimum, value for the pixel format.
   ///

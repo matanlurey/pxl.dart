@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:pxl/pxl.dart';
 
-import 'src/prelude.dart';
+import '../src/prelude.dart';
 
 void main() {
   test('is named', () {
@@ -261,5 +261,21 @@ void main() {
         floatRgba.convert(abgr8888.red, from: abgr8888),
       ).equals(floatRgba.red);
     });
+  });
+
+  test('bytesPerPixel', () {
+    check(floatRgba).has((a) => a.bytesPerPixel, 'bytesPerPixel').equals(16);
+  });
+
+  test('distance', () {
+    check(floatRgba.distance(floatRgba.red, floatRgba.green)).equals(2.0);
+  });
+
+  test('compare', () {
+    check(floatRgba.compare(floatRgba.red, floatRgba.green)).equals(0.5);
+  });
+
+  test('minAlpha is 0', () {
+    check(floatRgba).has((a) => a.minAlpha, 'minAlpha').equals(0.0);
   });
 }

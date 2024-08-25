@@ -26,7 +26,7 @@ import 'package:pxl/pxl.dart';
 /// - Interlacing is not supported.
 /// - Only a single `IDAT` chunk is written.
 /// - Only 8-bit color depth is supported.
-/// - Pixel formats are converted to [rgba8888] before encoding.
+/// - Pixel formats are converted to [abgr8888] before encoding.
 /// - No additional metadata or chunks are supported.
 ///
 /// ## Alternatives
@@ -38,17 +38,22 @@ import 'package:pxl/pxl.dart';
 /// [1]: https://api.flutter.dev/flutter/dart-ui/instantiateImageCodec.html
 /// [2]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob
 /// [3]: https://pub.dev/documentation/image/latest/image/PngEncoder-class.html
+///
+/// {@category Output and Comparison}
 const uncompressedPngEncoder = UncompressedPngEncoder._();
 
 /// Encodes a buffer of pixel data as an uncompressed RGBA PNG image with 8-bit
 /// color depth.
 ///
 /// A singleton instance of this class is available as [uncompressedPngEncoder].
+///
+/// {@category Output and Comparison}
 final class UncompressedPngEncoder extends Converter<Buffer<void>, List<int>> {
   const UncompressedPngEncoder._();
 
   /// The maximum resolution we support is 8192x8192.
   static const _maxResolution = 0x2000;
+  static const _pngNativeFormat = abgr8888;
 
   @override
   Uint8List convert(Buffer<void> input) {
@@ -66,7 +71,7 @@ final class UncompressedPngEncoder extends Converter<Buffer<void>, List<int>> {
       'input.height',
     );
 
-    return _encodeUncompressedPng(input.mapConvert(rgba8888));
+    return _encodeUncompressedPng(input.mapConvert(_pngNativeFormat));
   }
 }
 
@@ -83,7 +88,7 @@ final _pngSignature = Uint8List(8)
 
 Uint8List _encodeUncompressedPng(Buffer<int> pixels) {
   assert(
-    pixels.format == rgba8888,
+    pixels.format == abgr8888,
     'Unsupported pixel format: ${pixels.format}',
   );
   final output = BytesBuilder(copy: false);
@@ -171,13 +176,9 @@ Uint8List _encodeUncompressedPng(Buffer<int> pixels) {
 }
 
 extension on BytesBuilder {
-  /// Adds a 32-bit word to the buffer in the given [endian] order.
-  void addWord(int word, [Endian endian = Endian.big]) {
-    if (endian == Endian.big) {
-      _addWordBigEndian(word);
-    } else {
-      _addWordLittleEndian(word);
-    }
+  /// Adds a 32-bit word to the buffer in big-endian byte order.
+  void addWord(int word) {
+    _addWordBigEndian(word);
   }
 
   void _addWordBigEndian(int word) {
@@ -185,13 +186,6 @@ extension on BytesBuilder {
     addByte(word >> 16 & 0xFF);
     addByte(word >> 8 & 0xFF);
     addByte(word & 0xFF);
-  }
-
-  void _addWordLittleEndian(int word) {
-    addByte(word & 0xFF);
-    addByte(word >> 8 & 0xFF);
-    addByte(word >> 16 & 0xFF);
-    addByte(word >> 24 & 0xFF);
   }
 }
 

@@ -106,16 +106,18 @@ abstract final class Rgba<P, C> extends Rgb<P, C> {
   }
 }
 
-abstract final class _Rgba8x4Int extends Rgba<int, int> {
-  const _Rgba8x4Int.fromRgbaOffsets(
-    int r,
-    int g,
-    int b,
-    int a,
-  )   : _maskAlpha = 0xFF << a,
+abstract final class _Rgba8x4Int extends Rgba<int, int> with _Rgb8Int {
+  const _Rgba8x4Int.fromOffsets({
+    required int r,
+    required int g,
+    required int b,
+    required int a,
+  })  : // coverage:ignore-start
+        _maskAlpha = 0xFF << a,
         _maskRed = 0xFF << r,
         _maskGreen = 0xFF << g,
         _maskBlue = 0xFF << b,
+        // coverage:ignore-end
         _offsetAlpha = a,
         _offsetRed = r,
         _offsetGreen = g,
@@ -136,15 +138,7 @@ abstract final class _Rgba8x4Int extends Rgba<int, int> {
 
   @override
   @nonVirtual
-  int get zero => 0x00000000;
-
-  @override
-  @nonVirtual
   int get max => 0xFFFFFFFF;
-
-  @override
-  @nonVirtual
-  int clamp(int pixel) => pixel & max;
 
   @override
   @nonVirtual
@@ -176,31 +170,7 @@ abstract final class _Rgba8x4Int extends Rgba<int, int> {
 
   @override
   @nonVirtual
-  int get minRed => 0x00;
-
-  @override
-  @nonVirtual
-  int get minGreen => 0x00;
-
-  @override
-  @nonVirtual
-  int get minBlue => 0x00;
-
-  @override
-  @nonVirtual
   int get minAlpha => 0x00;
-
-  @override
-  @nonVirtual
-  int get maxRed => 0xFF;
-
-  @override
-  @nonVirtual
-  int get maxGreen => 0xFF;
-
-  @override
-  @nonVirtual
-  int get maxBlue => 0xFF;
 
   @override
   @nonVirtual
@@ -260,4 +230,24 @@ abstract final class _Rgba8x4Int extends Rgba<int, int> {
   @override
   @nonVirtual
   int getAlpha(int pixel) => (pixel >> _offsetAlpha) & 0xFF;
+
+  @override
+  int fromAbgr8888(int pixel) {
+    return create(
+      red: abgr8888.getRed(pixel),
+      green: abgr8888.getGreen(pixel),
+      blue: abgr8888.getBlue(pixel),
+      alpha: abgr8888.getAlpha(pixel),
+    );
+  }
+
+  @override
+  int toAbgr8888(int pixel) {
+    return abgr8888.create(
+      red: getRed(pixel),
+      green: getGreen(pixel),
+      blue: getBlue(pixel),
+      alpha: getAlpha(pixel),
+    );
+  }
 }

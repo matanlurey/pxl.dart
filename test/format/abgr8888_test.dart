@@ -1,6 +1,6 @@
 import 'package:pxl/pxl.dart';
 
-import 'src/prelude.dart';
+import '../src/prelude.dart';
 
 void main() {
   test('is named', () {
@@ -24,7 +24,7 @@ void main() {
     });
 
     test('0xffff0000', () {
-      check(abgr8888.fromAbgr8888(0xffff0000)).equalsHex(abgr8888.red);
+      check(abgr8888.fromAbgr8888(0xff0000ff)).equalsHex(abgr8888.red);
       check(abgr8888.create(red: 0xff)).equalsHex(abgr8888.red);
     });
 
@@ -34,7 +34,7 @@ void main() {
     });
 
     test('0xff0000ff', () {
-      check(abgr8888.fromAbgr8888(0xff0000ff)).equalsHex(abgr8888.blue);
+      check(abgr8888.fromAbgr8888(0xffff0000)).equalsHex(abgr8888.blue);
       check(abgr8888.create(blue: 0xff)).equalsHex(abgr8888.blue);
     });
   });
@@ -49,7 +49,7 @@ void main() {
     });
 
     test('changes blue channel', () {
-      check(abgr8888.copyWith(0x12345678, blue: 0x9A)).equalsHex(0x1234569a);
+      check(abgr8888.copyWith(0x12345678, blue: 0x9A)).equalsHex(0x129a5678);
     });
 
     test('changes green channel', () {
@@ -57,7 +57,7 @@ void main() {
     });
 
     test('changes red channel', () {
-      check(abgr8888.copyWith(0x12345678, red: 0x9A)).equalsHex(0x129a5678);
+      check(abgr8888.copyWith(0x12345678, red: 0x9A)).equalsHex(0x1234569a);
     });
   });
 
@@ -75,7 +75,7 @@ void main() {
     test('changes blue channel', () {
       check(
         abgr8888.copyWithNormalized(0x12345678, blue: 0.5),
-      ).equalsHex(0x1234567f);
+      ).equalsHex(0x127f5678);
     });
 
     test('changes green channel', () {
@@ -87,7 +87,7 @@ void main() {
     test('changes red channel', () {
       check(
         abgr8888.copyWithNormalized(0x12345678, red: 0.5),
-      ).equalsHex(0x127f5678);
+      ).equalsHex(0x1234567f);
     });
   });
 
@@ -239,5 +239,16 @@ void main() {
         abgr8888.convert(floatRgba.red, from: floatRgba),
       ).equalsHex(abgr8888.red);
     });
+  });
+
+  test('createNormalized', () {
+    check(abgr8888.createNormalized(blue: 0.5)).equalsHex(0xff7f0000);
+    check(abgr8888.createNormalized(alpha: 0.5)).equalsHex(0x7f000000);
+    check(abgr8888.createNormalized(red: 0.5)).equalsHex(0xff00007f);
+    check(abgr8888.createNormalized(green: 0.5)).equalsHex(0xff007f00);
+  });
+
+  test('minAlpha', () {
+    check(abgr8888.minAlpha).equals(0);
   });
 }

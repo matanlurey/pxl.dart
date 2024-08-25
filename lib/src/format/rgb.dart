@@ -155,3 +155,41 @@ abstract final class Rgb<P, C> extends PixelFormat<P, C> {
     );
   }
 }
+
+base mixin _Rgb8Int on Rgb<int, int> {
+  @override
+  @nonVirtual
+  double compare(int a, int b) => distance(a, b) / max;
+
+  @override
+  @nonVirtual
+  int clamp(int pixel) => pixel & max;
+
+  @override
+  @nonVirtual
+  int get zero => 0x0;
+
+  @override
+  @nonVirtual
+  int get minRed => 0x00;
+
+  @override
+  @nonVirtual
+  int get minGreen => 0x00;
+
+  @override
+  @nonVirtual
+  int get minBlue => 0x00;
+
+  @override
+  @nonVirtual
+  int get maxRed => 0xFF;
+
+  @override
+  @nonVirtual
+  int get maxGreen => 0xFF;
+
+  @override
+  @nonVirtual
+  int get maxBlue => 0xFF;
+}

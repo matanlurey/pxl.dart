@@ -35,6 +35,11 @@ void main() {
       check(dst.data[3]).equals(0xFFFFFFFF);
     });
 
+    test('creates a pixel from a format with a non-zero zero', () {
+      final pixels = IntPixels(1, 1, format: const _NonZeroZeroPixel());
+      check(pixels.get(Pos(0, 0))).equals(const _NonZeroZeroPixel().zero);
+    });
+
     test('width cannot be less than 1', () {
       check(() => IntPixels(0, 1)).throws<ArgumentError>();
     });
@@ -67,9 +72,9 @@ void main() {
     });
   });
 
-  group('FloatPixels', () {
+  group('Float32x4Pixels', () {
     test('creates a buffer', () {
-      final pixels = FloatPixels(3, 2);
+      final pixels = Float32x4Pixels(3, 2);
       check(pixels).has((a) => a.width, 'width').equals(3);
       check(pixels).has((a) => a.height, 'height').equals(2);
       check(pixels).has((a) => a.format, 'format').equals(floatRgba);
@@ -80,7 +85,7 @@ void main() {
     });
 
     test('from a buffer', () {
-      final src = FloatPixels(
+      final src = Float32x4Pixels(
         2,
         2,
         data: Float32x4List.fromList([
@@ -88,42 +93,48 @@ void main() {
           floatRgba.blue, floatRgba.cyan, //
         ]),
       );
-      final dst = FloatPixels.from(src);
+      final dst = Float32x4Pixels.from(src);
       check(dst.data[0]).equals(src.data[0]);
       check(dst.data[1]).equals(src.data[1]);
       check(dst.data[2]).equals(src.data[2]);
       check(dst.data[3]).equals(src.data[3]);
     });
 
+    test('creates a pixel from a format with a non-zero zero', () {
+      final pixels =
+          Float32x4Pixels(1, 1, format: const _NonZeroFloat32x4Pixel());
+      check(pixels.get(Pos(0, 0))).equals(const _NonZeroFloat32x4Pixel().zero);
+    });
+
     test('width cannot be less than 1', () {
-      check(() => FloatPixels(0, 1)).throws<ArgumentError>();
+      check(() => Float32x4Pixels(0, 1)).throws<ArgumentError>();
     });
 
     test('height cannot be less than 1', () {
-      check(() => FloatPixels(1, 0)).throws<ArgumentError>();
+      check(() => Float32x4Pixels(1, 0)).throws<ArgumentError>();
     });
 
     test('data length must match width * height', () {
       check(
-        () => FloatPixels(1, 1, data: Float32x4List(2)),
+        () => Float32x4Pixels(1, 1, data: Float32x4List(2)),
       ).throws<RangeError>();
     });
 
     test('get out of bounds returns zero', () {
-      final pixels = FloatPixels(1, 1);
+      final pixels = Float32x4Pixels(1, 1);
       check(pixels.get(Pos(1, 0))).equals(Float32x4.zero());
       check(pixels.get(Pos(0, 1))).equals(Float32x4.zero());
     });
 
     test('set out of bounds does nothing', () {
-      final pixels = FloatPixels(1, 1);
+      final pixels = Float32x4Pixels(1, 1);
       pixels.set(Pos(1, 0), Float32x4(1.0, 1.0, 1.0, 1.0));
       pixels.set(Pos(0, 1), Float32x4(1.0, 1.0, 1.0, 1.0));
       check(pixels.data).every((a) => a.equals(Float32x4.zero()));
     });
 
     test('get/set in bounds', () {
-      final pixels = FloatPixels(1, 1);
+      final pixels = Float32x4Pixels(1, 1);
       pixels.set(Pos(0, 0), Float32x4(1.0, 1.0, 1.0, 1.0));
       check(pixels.get(Pos(0, 0))).equals(Float32x4(1.0, 1.0, 1.0, 1.0));
     });
@@ -198,6 +209,28 @@ void main() {
       ),
     );
     pixels.clear();
+    check(pixels.data).deepEquals([
+      0x00000000,
+      0x00000000,
+      0x00000000,
+      0x00000000,
+    ]);
+  });
+
+  test('clearUnsafe', () {
+    final pixels = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList(
+        [
+          0xFFFFFFFF,
+          0xFFFFFFFF,
+          0xFFFFFFFF,
+          0xFFFFFFFF,
+        ],
+      ),
+    );
+    pixels.clearUnsafe();
     check(pixels.data).deepEquals([
       0x00000000,
       0x00000000,
@@ -324,6 +357,44 @@ void main() {
     check(range).deepEquals([abgr8888.green, abgr8888.blue]);
   });
 
+  group('getRectUnsafe', () {
+    test('full', () {
+      final pixels = IntPixels(
+        2,
+        2,
+        data: Uint32List.fromList([
+          abgr8888.red,
+          abgr8888.green,
+          abgr8888.blue,
+          abgr8888.cyan,
+        ]),
+      );
+      final rect = pixels.getRectUnsafe(Rect.fromLTWH(0, 0, 2, 2));
+      check(rect).deepEquals([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]);
+    });
+
+    test('partial, multiple rows', () {
+      final pixels = IntPixels(
+        2,
+        2,
+        data: Uint32List.fromList([
+          abgr8888.red,
+          abgr8888.green,
+          abgr8888.blue,
+          abgr8888.cyan,
+        ]),
+      );
+      final rect = pixels.getRectUnsafe(Rect.fromLTWH(0, 0, 1, 2));
+      check(rect.length).equals(2);
+      check(rect.toList()).deepEquals([abgr8888.red, abgr8888.blue]);
+    });
+  });
+
   test('copyFrom (full, buffer -> pixels)', () {
     final src = IntPixels(
       2,
@@ -359,6 +430,28 @@ void main() {
     );
     final dst = IntPixels(2, 2);
     dst.copyFrom(src);
+
+    check(dst.data).deepEquals([
+      abgr8888.red,
+      abgr8888.green,
+      abgr8888.blue,
+      abgr8888.cyan,
+    ]);
+  });
+
+  test('copyFromUnsafe (full, pixels -> pixels, different target)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final dst = IntPixels(2, 2);
+    dst.copyFromUnsafe(src, target: Pos(0, 0));
 
     check(dst.data).deepEquals([
       abgr8888.red,
@@ -449,10 +542,10 @@ void main() {
     dst.blit(src.map((p) => p));
 
     check(dst.data).deepEquals([
-      0x7fff0000,
-      0x7f00ff00,
       0x7f0000ff,
-      0x7f00ffff,
+      0x7f00ff00,
+      0x7fff0000,
+      0x7fffff00,
     ]);
   });
 
@@ -471,10 +564,102 @@ void main() {
     dst.blit(src);
 
     check(dst.data).deepEquals([
-      0x7fff0000,
-      0x7f00ff00,
       0x7f0000ff,
-      0x7f00ffff,
+      0x7f00ff00,
+      0x7fff0000,
+      0x7fffff00,
     ]);
   });
+
+  test('blit (full, pixels -> pixels, set target)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.copyWithNormalized(abgr8888.red, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.green, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.blue, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.cyan, alpha: 0.5),
+      ]),
+    );
+    final dst = IntPixels(2, 2);
+    dst.blit(src, target: Pos.zero);
+
+    check(dst.data).deepEquals([
+      0x7f0000ff,
+      0x7f00ff00,
+      0x7fff0000,
+      0x7fffff00,
+    ]);
+  });
+
+  test('blit (partial via target, pixels -> pixels)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.copyWithNormalized(abgr8888.red, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.green, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.blue, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.cyan, alpha: 0.5),
+      ]),
+    );
+    final dst = IntPixels(2, 2);
+    dst.blit(src, target: Pos(1, 1));
+
+    check(dst.data).deepEquals([
+      0x00000000,
+      0x00000000,
+      0x00000000,
+      0x7f0000ff,
+    ]);
+  });
+
+  test('blit (partial via source, pixels -> pixels)', () {
+    final src = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.copyWithNormalized(abgr8888.red, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.green, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.blue, alpha: 0.5),
+        abgr8888.copyWithNormalized(abgr8888.cyan, alpha: 0.5),
+      ]),
+    );
+    final dst = IntPixels(2, 2);
+    dst.blit(src, source: Rect.fromLTWH(1, 1, 1, 1));
+
+    check(dst.data).deepEquals([
+      0x7fffff00,
+      0x00000000,
+      0x00000000,
+      0x00000000,
+    ]);
+  });
+}
+
+final class _NonZeroZeroPixel extends PixelFormat<int, void> {
+  const _NonZeroZeroPixel();
+
+  @override
+  int get zero => 100;
+
+  @override
+  int get bytesPerPixel => 1;
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+final class _NonZeroFloat32x4Pixel extends PixelFormat<Float32x4, void> {
+  const _NonZeroFloat32x4Pixel();
+
+  @override
+  Float32x4 get zero => Float32x4(0.5, 0.5, 0.5, 0.5);
+
+  @override
+  int get bytesPerPixel => 16;
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

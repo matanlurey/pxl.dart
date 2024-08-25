@@ -16,9 +16,9 @@ void main() {
       ]),
     );
     final converted = buffer.map((pixel) => pixel ^ 0xFFFFFFFF);
-    check(converted.data.elementAt(0)).equalsHex(0x0000ffff);
+    check(converted.data.elementAt(0)).equalsHex(0x00ffff00);
     check(converted.data.elementAt(1)).equalsHex(0x00ff00ff);
-    check(converted.data.elementAt(2)).equalsHex(0x00ffff00);
+    check(converted.data.elementAt(2)).equalsHex(0x0000ffff);
   });
 
   test('mapConvert', () {
@@ -80,6 +80,81 @@ void main() {
     );
     check(clipped.length).equals(1);
     check(clipped.data).deepEquals([abgr8888.red]);
+    check(clipped.get(Pos(0, 0))).equals(abgr8888.red);
+  });
+
+  test('mapClipped cannot be an empty rectangle', () {
+    final buffer = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    check(
+      () => buffer.mapRect(Rect.fromLTWH(1, 1, 0, 0)),
+    ).throws<ArgumentError>();
+  });
+
+  test('mapClipped cannot intersect to an empty rectangle', () {
+    final buffer = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    check(
+      () => buffer.mapRect(Rect.fromLTWH(2, 2, 4, 4)),
+    ).throws<ArgumentError>();
+  });
+
+  group('compare', () {
+    test('different width returns difference = 1.0', () {
+      final a = IntPixels(2, 2);
+      final b = IntPixels(3, 2);
+      final diff = a.compare(b);
+      check(diff.difference).equals(1.0);
+    });
+
+    test('different height returns difference = 1.0', () {
+      final a = IntPixels(2, 2);
+      final b = IntPixels(2, 3);
+      final diff = a.compare(b);
+      check(diff.difference).equals(1.0);
+      check(diff.toString()).contains('1.0');
+    });
+
+    test('different data returns difference = 1.0', () {
+      final a = IntPixels(2, 2, data: Uint32List.fromList([0, 0, 0, 0]));
+      final b = IntPixels(2, 2, data: Uint32List.fromList([1, 1, 1, 1]));
+      final diff = a.compare(b);
+      check(diff.difference).equals(1.0);
+      check(diff.isIdentical).isFalse();
+      check(diff.isDifferent).isTrue();
+    });
+
+    test('identical data returns difference = 0.0', () {
+      final a = IntPixels(2, 2, data: Uint32List.fromList([0, 0, 0, 0]));
+      final b = IntPixels(2, 2, data: Uint32List.fromList([0, 0, 0, 0]));
+      final diff = a.compare(b);
+      check(diff.difference).equals(0.0);
+      check(diff.isIdentical).isTrue();
+      check(diff.isDifferent).isFalse();
+    });
+
+    test('different data returns difference = 0.5', () {
+      final a = IntPixels(2, 2, data: Uint32List.fromList([0, 0, 0, 0]));
+      final b = IntPixels(2, 2, data: Uint32List.fromList([0, 1, 0, 1]));
+      final diff = a.compare(b);
+      check(diff.difference).equals(0.5);
+    });
   });
 
   test('getRange', () {
@@ -144,5 +219,20 @@ void main() {
     final buffer = pixels.map((p) => p);
     final rect = buffer.getRect(Rect.fromLTWH(0, 0, 2, 1));
     check(rect).deepEquals([abgr8888.red, abgr8888.green]);
+  });
+
+  test('buffer.format is pixels.format', () {
+    final buffer = IntPixels(2, 2).mapRect(Rect.fromLTWH(1, 1, 1, 1));
+    check(buffer.format).identicalTo(abgr8888);
+  });
+
+  test('buffer.getUnsafe maps to pixels.getUnsafe', () {
+    final pixels = IntPixels(2, 2);
+    pixels.data[0] = 0;
+    pixels.data[1] = 1;
+    pixels.data[2] = 2;
+    pixels.data[3] = 3;
+    final buffer = pixels.map((p) => p);
+    check(buffer.getUnsafe(Pos(1, 1))).equals(pixels.getUnsafe(Pos(1, 1)));
   });
 }

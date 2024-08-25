@@ -6,6 +6,7 @@ import 'package:pxl/src/geometry.dart';
 import 'package:pxl/src/internal.dart';
 
 part 'buffer/clipped.dart';
+part 'buffer/compare.dart';
 part 'buffer/indexed.dart';
 part 'buffer/map.dart';
 part 'buffer/pixels_float.dart';
@@ -23,9 +24,6 @@ part 'buffer/pixels.dart';
 ///
 /// {@category Buffers}
 abstract base mixin class Buffer<T> {
-  /// @nodoc
-  const Buffer();
-
   /// Format of the pixel data in the buffer.
   PixelFormat<T, void> get format;
 
@@ -40,12 +38,6 @@ abstract base mixin class Buffer<T> {
 
   /// Length of the buffer in pixels.
   int get length => width * height;
-
-  /// Returns whether the buffer is empty.
-  bool get isEmpty => length == 0;
-
-  /// Returns whether the buffer is not empty.
-  bool get isNotEmpty => length != 0;
 
   /// Returns whether the given position is within the bounds of the buffer.
   bool contains(Pos pos) => bounds.contains(pos);
@@ -65,6 +57,11 @@ abstract base mixin class Buffer<T> {
   ///
   /// If outside the bounds of the buffer, the behavior is undefined.
   T getUnsafe(Pos pos);
+
+  /// Compares the buffer to another buffer and returns the result.
+  ComparisonResult<T> compare(Buffer<T> other, {double epsilon = 1e-10}) {
+    return ComparisonResult._compare(this, other, epsilon: epsilon);
+  }
 
   /// Returns a lazy buffer buffer that converts pixels with the given function.
   ///
@@ -128,7 +125,7 @@ abstract base mixin class Buffer<T> {
   /// ## Example
   ///
   /// ```dart
-  /// final buffer = FloatPixels(1, 3, data: Float32x4List.fromList([
+  /// final buffer = Float32x4Pixels(1, 3, data: Float32x4List.fromList([
   ///   floatRgba.red,
   ///   floatRgba.green,
   ///   floatRgba.blue,
@@ -151,8 +148,8 @@ abstract base mixin class Buffer<T> {
   /// Returns a lazy buffer that clips the buffer to the given [bounds].
   ///
   /// The returned buffer will have the same dimensions as the bounds, and will
-  /// only contain pixels that are within the bounds of the original buffer; if
-  /// the bounded rectangle is empty, the returned buffer will be empty.
+  /// only contain pixels that are within the bounds of the original buffer; the
+  /// resulting buffer must not be empty.
   ///
   /// ## Example
   ///
@@ -167,7 +164,11 @@ abstract base mixin class Buffer<T> {
   /// print(clipped.data); // [0xFF00FF00, 0xFF0000FF]
   /// ```
   Buffer<T> mapRect(Rect bounds) {
-    return _ClippedBuffer(this, bounds.intersect(this.bounds));
+    final result = bounds.intersect(this.bounds);
+    if (result.isEmpty) {
+      throw ArgumentError.value(bounds, 'bounds', 'region must be non-empty');
+    }
+    return _ClippedBuffer(this, result);
   }
 
   /// Returns a lazy iterable of pixels in the buffer from [start] to [end].
@@ -239,7 +240,4 @@ abstract final class _Buffer<T> with Buffer<T> {
 
   @override
   int get height => _source.height;
-
-  @override
-  T getUnsafe(Pos pos) => _source.getUnsafe(pos);
 }

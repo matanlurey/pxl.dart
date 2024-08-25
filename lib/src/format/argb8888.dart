@@ -23,7 +23,7 @@ const argb8888 = Argb8888._();
 ///
 /// {@category Pixel Formats}
 final class Argb8888 extends _Rgba8x4Int {
-  const Argb8888._() : super.fromRgbaOffsets(0, 8, 16, 24);
+  const Argb8888._() : super.fromOffsets(a: 24, r: 16, g: 8, b: 0);
 
   @override
   String get name => 'ARGB8888';

@@ -6,7 +6,7 @@ part of '../buffer.dart';
 /// lightweight wrapper around the raw bytes represented by a [TypedDataList];
 /// but cannot be extended or implemented (similar to [TypedDataList]).
 ///
-/// In most cases either [IntPixels] or [FloatPixels] will be used directly.
+/// In most cases either [IntPixels] or [Float32x4Pixels] will be used directly.
 ///
 /// {@category Buffers}
 /// {@category Blending}
@@ -249,10 +249,15 @@ abstract final class Pixels<T> with Buffer<T> {
 
   @override
   Iterable<T> getRectUnsafe(Rect rect) {
-    if (rect.width == width) {
-      return getRangeUnsafe(rect.topLeft, rect.bottomRight);
-    }
-    return _PixelsRectIterable(data, rect);
+    // TODO: Consider a custom Iterable.
+    return Iterable.generate(
+      rect.height,
+      (y) {
+        final start = _indexAtUnsafe(Pos(rect.left, rect.top + y));
+        final end = start + rect.width;
+        return data.getRange(start, end);
+      },
+    ).expand((e) => e);
   }
 
   /// Copies the pixel data from a source buffer to `this` buffer.
@@ -553,51 +558,5 @@ abstract final class Pixels<T> with Buffer<T> {
       }
       dstIdx += width - source.width;
     }
-  }
-}
-
-final class _PixelsRectIterable<T> extends Iterable<T> {
-  const _PixelsRectIterable(this._data, this._bounds);
-  final TypedDataList<T> _data;
-  final Rect _bounds;
-
-  @override
-  int get length => _bounds.area;
-
-  @override
-  Iterator<T> get iterator {
-    final startIdx = _bounds.top * _bounds.width + _bounds.left;
-    final endIdx = (_bounds.bottom - 1) * _bounds.width + _bounds.right - 1;
-    return _PixelsRectIterator(_data, _bounds, startIdx - 1, endIdx);
-  }
-}
-
-final class _PixelsRectIterator<T> implements Iterator<T> {
-  _PixelsRectIterator(this._data, this._bounds, this._start, this._end);
-  final TypedDataList<T> _data;
-  final Rect _bounds;
-  final int _end;
-
-  int _start;
-
-  @override
-  @unsafeNoBoundsChecks
-  T get current => _data[_start];
-
-  @override
-  bool moveNext() {
-    // Imagine we are at B, in the rectangle {B, C, F, G}
-    // B -> C -> F -> G
-    //
-    // A B C D
-    // E F G H
-    // I J K L
-    //
-    // If we are at the end of the row, move to the next row
-    _start++;
-    if (_start % _bounds.width == _bounds.right) {
-      _start += _bounds.width - _bounds.width;
-    }
-    return _start <= _end;
   }
 }

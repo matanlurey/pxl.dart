@@ -17,7 +17,9 @@ TypedDataList<int> newIntBuffer({required int bytes, required int length}) {
     <= 1 => Uint8List(length),
     <= 2 => Uint16List(length),
     <= 4 => Uint32List(length),
+    // coverage:ignore-start
     _ => throw StateError('Unsupported integer size: $bytes'),
+    // coverage:ignore-end
   };
 }
 

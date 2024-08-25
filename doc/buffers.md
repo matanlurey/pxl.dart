@@ -23,12 +23,12 @@ final class MyBuffer extends Buffer<int> {
 In most cases, a concrete [Pixels][] instance will be used to represent pixel
 data, which is a buffer that can be read from _and written to_ and guarantees
 fast access to linearly stored pixel data. For example, the [IntPixels][] class
-stores pixel data as a list of integers, and [FloatPixels][] stores pixel data
+stores pixel data as a list of integers, and [Float32x4Pixels][] stores pixel data
 as a 32x4 matrix of floating-point values.
 
 [Pixels]: ../pxl/Pixels-class.html
 [IntPixels]: ../pxl/IntPixels-class.html
-[FloatPixels]: ../pxl/FloatPixels-class.html
+[Float32x4Pixels]: ../pxl/Float32x4Pixels-class.html
 
 ```dart
 // Creating a 320x240 pixel buffer with the default `abgr8888` format.
@@ -87,11 +87,11 @@ final abgr8888Pixels = IntPixels(320, 240);
 final rgba8888Buffer = abgr8888Pixels.mapConvert(rgba8888);
 ```
 
-To copy the actual data, use [IntPixels.from][] or [FloatPixels.from][]:
+To copy the actual data, use [IntPixels.from][] or [Float32x4Pixels.from][]:
 
 ```dart
 final rgba8888Pixels = IntPixels.from(abgr8888Pixels);
 ```
 
 [IntPixels.from]: ../pxl/IntPixels/IntPixels.from.html
-[FloatPixels.from]: ../pxl/FloatPixels/FloatPixels.from.html
+[Float32x4Pixels.from]: ../pxl/Float32x4Pixels/Float32x4Pixels.from.html
