@@ -90,10 +90,15 @@ or the behavior is undefined.</p>
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 Iterable&lt;T&gt; getRectUnsafe(Rect rect) {
-  if (rect.width == width) {
-    return getRangeUnsafe(rect.topLeft, rect.bottomRight);
-  }
-  return _PixelsRectIterable(data, rect);
+  &#47;&#47; TODO: Consider a custom Iterable.
+  return Iterable.generate(
+    rect.height,
+    (y) {
+      final start = _indexAtUnsafe(Pos(rect.left, rect.top + y));
+      final end = start + rect.width;
+      return data.getRange(start, end);
+    },
+  ).expand((e) =&gt; e);
 }</code></pre>
 </section>
 

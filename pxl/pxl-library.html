@@ -71,7 +71,7 @@
   <p>Fixed-size buffer of <a href="../pxl/Pixels-class.html">Pixels</a>, with customizable <a href="../pxl/PixelFormat-class.html">PixelFormat</a>s,
 <a href="../pxl/BlendMode-class.html">BlendMode</a>s, and more.</p>
 <ul>
-<li>Create and manipulate in-memory <a href="../pxl/IntPixels-class.html">IntPixels</a> or <a href="../pxl/FloatPixels-class.html">FloatPixels</a> buffers</li>
+<li>Create and manipulate in-memory <a href="../pxl/IntPixels-class.html">IntPixels</a> or <a href="../pxl/Float32x4Pixels-class.html">Float32x4Pixels</a> buffers</li>
 <li>Define and convert between <a href="../pxl/PixelFormat-class.html">PixelFormat</a>s.</li>
 <li>Palette-based indexed pixel formats with <a href="../pxl/IndexedFormat-class.html">IndexedFormat</a>.</li>
 <li>Buffer-to-buffer blitting with automatic format conversion and
@@ -124,8 +124,16 @@
   A 2-dimensional <em>view</em> of pixel data <code>T</code> in memory.
 </dd>
 
-          <dt id="FloatPixels">
-  <span class="name "><a href="../pxl/FloatPixels-class.html">FloatPixels</a></span> 
+          <dt id="ComparisonResult">
+  <span class="name "><a href="../pxl/ComparisonResult-class.html">ComparisonResult</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> 
+
+</dt>
+<dd>
+  The result of a pixel comparison test.
+</dd>
+
+          <dt id="Float32x4Pixels">
+  <span class="name "><a href="../pxl/Float32x4Pixels-class.html">Float32x4Pixels</a></span> 
     <span class="category buffers cp-0 linked" title="This is part of the Buffers topic."><a href="../topics/Buffers-topic.html">Buffers</a></span>
 
 </dt>
@@ -197,6 +205,15 @@
   Base API for pixel formats that have red, green, and blue channels.
 </dd>
 
+          <dt id="Rgb888">
+  <span class="name "><a href="../pxl/Rgb888-class.html">Rgb888</a></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  24-bit<code>^1</code> RGB pixel format with three 8-bit channels.
+</dd>
+
           <dt id="Rgba">
   <span class="name "><a href="../pxl/Rgba-class.html">Rgba</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span></span> 
     <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
@@ -206,17 +223,9 @@
   Base API for pixel formats that have red, green, blue, and alpha channels.
 </dd>
 
-          <dt id="Rgba8888">
-  <span class="name "><a href="../pxl/Rgba8888-class.html">Rgba8888</a></span> 
-    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
-
-</dt>
-<dd>
-  32-bit RGBA pixel format with four 8-bit channels.
-</dd>
-
           <dt id="UncompressedPngEncoder">
   <span class="name "><a href="../pxl/UncompressedPngEncoder-class.html">UncompressedPngEncoder</a></span> 
+    <span class="category output-and-comparison cp-3 linked" title="This is part of the Output and Comparison topic."><a href="../topics/Output and Comparison-topic.html">Output&nbsp;and&nbsp;Comparison</a></span>
 
 </dt>
 <dd>
@@ -274,15 +283,15 @@ color depth.
 
 </dd>
 
-          <dt id="rgba8888" class="constant">
-    <span class="name "><a href="../pxl/rgba8888-constant.html">rgba8888</a></span>
-  <span class="signature">&#8594; const <a href="../pxl/Argb8888-class.html">Argb8888</a></span>
+          <dt id="rgb888" class="constant">
+    <span class="name "><a href="../pxl/rgb888-constant.html">rgb888</a></span>
+  <span class="signature">&#8594; const <a href="../pxl/Rgb888-class.html">Rgb888</a></span>
   
     <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
 
 </dt>
 <dd>
-  32-bit RGBA pixel format with four 8-bit channels.
+  24-bit<code>^1</code> RGB pixel format with three 8-bit channels.
   
 
 </dd>
@@ -291,6 +300,7 @@ color depth.
     <span class="name "><a href="../pxl/uncompressedPngEncoder-constant.html">uncompressedPngEncoder</a></span>
   <span class="signature">&#8594; const <a href="../pxl/UncompressedPngEncoder-class.html">UncompressedPngEncoder</a></span>
   
+    <span class="category output-and-comparison cp-3 linked" title="This is part of the Output and Comparison topic."><a href="../topics/Output and Comparison-topic.html">Output&nbsp;and&nbsp;Comparison</a></span>
 
 </dt>
 <dd>
@@ -398,6 +408,7 @@ color depth.
         <li><a href="../topics/Buffers-topic.html">Buffers</a></li>
         <li><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></li>
         <li><a href="../topics/Blending-topic.html">Blending</a></li>
+        <li><a href="../topics/Output and Comparison-topic.html">Output&nbsp;and&nbsp;Comparison</a></li>
       <li class="section-title">Libraries</li>
       <li><a href="../pxl/pxl-library.html">pxl</a></li>
 </ol>

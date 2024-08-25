@@ -70,7 +70,7 @@
 <p><a href="../pxl/Pixels-class.html">Pixels</a> is a concrete representation of pixel data in memory, and is a
 lightweight wrapper around the raw bytes represented by a <a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/TypedDataList-class.html">TypedDataList</a>;
 but cannot be extended or implemented (similar to <a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/TypedDataList-class.html">TypedDataList</a>).</p>
-<p>In most cases either <a href="../pxl/IntPixels-class.html">IntPixels</a> or <a href="../pxl/FloatPixels-class.html">FloatPixels</a> will be used directly.</p>
+<p>In most cases either <a href="../pxl/IntPixels-class.html">IntPixels</a> or <a href="../pxl/Float32x4Pixels-class.html">Float32x4Pixels</a> will be used directly.</p>
 </section>
 
 
@@ -89,7 +89,7 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 
           <dt>Implementers</dt>
           <dd><ul class="comma-separated clazz-relationships">
-              <li><a href="../pxl/FloatPixels-class.html">FloatPixels</a></li>
+              <li><a href="../pxl/Float32x4Pixels-class.html">Float32x4Pixels</a></li>
               <li><a href="../pxl/IntPixels-class.html">IntPixels</a></li>
           </ul></dd>
 
@@ -164,30 +164,6 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 <dd>
   Height of the buffer in pixels.
   <div class="features"><span class="feature">final</span></div>
-
-</dd>
-
-        <dt id="isEmpty" class="property inherited">
-  <span class="name"><a href="../pxl/Buffer/isEmpty.html">isEmpty</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/bool-class.html">bool</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  Returns whether the buffer is empty.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="isNotEmpty" class="property inherited">
-  <span class="name"><a href="../pxl/Buffer/isNotEmpty.html">isNotEmpty</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/bool-class.html">bool</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  Returns whether the buffer is not empty.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -286,6 +262,19 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 <dd>
   Clears the buffer to the <a href="../pxl/PixelFormat/zero.html">PixelFormat.zero</a> value.
   
+
+</dd>
+
+        <dt id="compare" class="callable inherited">
+  <span class="name"><a href="../pxl/Buffer/compare.html">compare</a></span><span class="signature">(<wbr><span class="parameter" id="compare-param-other"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">other</span>, {</span><span class="parameter" id="compare-param-epsilon"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span> <span class="parameter-name">epsilon</span> = <span class="default-value">1e-10</span></span>})
+    <span class="returntype parameter">&#8594; <a href="../pxl/ComparisonResult-class.html">ComparisonResult</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Compares the buffer to another buffer and returns the result.
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 

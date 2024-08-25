@@ -91,10 +91,9 @@ valid range of the palette; if omitted, they default to <code>0</code> and
   int? zero,
   int? max,
 }) {
-  final list = List.of(palette);
-  if (list.length &gt; 256) {
+  if (palette.length &gt; 256) {
     throw ArgumentError.value(
-      list.length,
+      palette.length,
       &#39;palette.length&#39;,
       &#39;Must be less than or equal to 256 for 8-bit indexed format.&#39;,
     );

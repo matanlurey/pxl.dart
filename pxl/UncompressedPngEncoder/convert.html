@@ -100,7 +100,7 @@ Uint8List convert(Buffer&lt;void&gt; input) {
     &#39;input.height&#39;,
   );
 
-  return _encodeUncompressedPng(input.mapConvert(rgba8888));
+  return _encodeUncompressedPng(input.mapConvert(_pngNativeFormat));
 }</code></pre>
 </section>
 

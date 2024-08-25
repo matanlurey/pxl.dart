@@ -73,7 +73,7 @@ implemented.</p>
 <p>In most cases, a concrete <a href="../pxl/Pixels-class.html">Pixels</a> instance will be used to represent pixel
 data, which is a buffer that can be read from <em>and written to</em> and guarantees
 fast access to linearly stored pixel data. For example, the <a href="../pxl/IntPixels-class.html">IntPixels</a> class
-stores pixel data as a list of integers, and <a href="../pxl/FloatPixels-class.html">FloatPixels</a> stores pixel data
+stores pixel data as a list of integers, and <a href="../pxl/Float32x4Pixels-class.html">Float32x4Pixels</a> stores pixel data
 as a 32x4 matrix of floating-point values.</p>
 <pre class="language-dart"><code class="language-dart">// Creating a 320x240 pixel buffer with the default `abgr8888` format.
 final pixels = new IntPixels(320, 240);
@@ -109,7 +109,7 @@ as needed.</p>
 <pre class="language-dart"><code class="language-dart">final abgr8888Pixels = IntPixels(320, 240);
 final rgba8888Buffer = abgr8888Pixels.mapConvert(rgba8888);
 </code></pre>
-<p>To copy the actual data, use <a href="../pxl/IntPixels/IntPixels.from.html">IntPixels.from</a> or <a href="../pxl/FloatPixels/FloatPixels.from.html">FloatPixels.from</a>:</p>
+<p>To copy the actual data, use <a href="../pxl/IntPixels/IntPixels.from.html">IntPixels.from</a> or <a href="../pxl/Float32x4Pixels/Float32x4Pixels.from.html">Float32x4Pixels.from</a>:</p>
 <pre class="language-dart"><code class="language-dart">final rgba8888Pixels = IntPixels.from(abgr8888Pixels);
 </code></pre>
 </section>
@@ -129,8 +129,8 @@ final rgba8888Buffer = abgr8888Pixels.mapConvert(rgba8888);
   A 2-dimensional <em>view</em> of pixel data <code>T</code> in memory.
 </dd>
 
-      <dt id="FloatPixels">
-  <span class="name "><a href="../pxl/FloatPixels-class.html">FloatPixels</a></span> 
+      <dt id="Float32x4Pixels">
+  <span class="name "><a href="../pxl/Float32x4Pixels-class.html">Float32x4Pixels</a></span> 
     <span class="category buffers cp-0 linked" title="This is part of the Buffers topic."><a href="../topics/Buffers-topic.html">Buffers</a></span>
 
 </dt>
@@ -228,6 +228,7 @@ final rgba8888Buffer = abgr8888Pixels.mapConvert(rgba8888);
         <li><a href="../topics/Buffers-topic.html">Buffers</a></li>
         <li><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></li>
         <li><a href="../topics/Blending-topic.html">Blending</a></li>
+        <li><a href="../topics/Output and Comparison-topic.html">Output&nbsp;and&nbsp;Comparison</a></li>
       <li class="section-title">Libraries</li>
       <li><a href="../pxl/pxl-library.html">pxl</a></li>
 </ol>
@@ -240,7 +241,7 @@ final rgba8888Buffer = abgr8888Pixels.mapConvert(rgba8888);
 
     <li class="section-title"><a href="../topics/Buffers-topic.html#classes">Classes</a></li>
       <li><a href="../pxl/Buffer-class.html">Buffer</a></li>
-      <li><a href="../pxl/FloatPixels-class.html">FloatPixels</a></li>
+      <li><a href="../pxl/Float32x4Pixels-class.html">Float32x4Pixels</a></li>
       <li><a href="../pxl/IntPixels-class.html">IntPixels</a></li>
       <li><a href="../pxl/Pixels-class.html">Pixels</a></li>
 

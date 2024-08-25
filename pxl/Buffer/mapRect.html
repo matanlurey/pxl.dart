@@ -74,8 +74,8 @@
 <section class="desc markdown">
   <p>Returns a lazy buffer that clips the buffer to the given <code>bounds</code>.</p>
 <p>The returned buffer will have the same dimensions as the bounds, and will
-only contain pixels that are within the bounds of the original buffer; if
-the bounded rectangle is empty, the returned buffer will be empty.</p>
+only contain pixels that are within the bounds of the original buffer; the
+resulting buffer must not be empty.</p>
 <h2 id="example">Example</h2>
 <pre class="language-dart"><code class="language-dart">final buffer = IntPixels(3, 3, data: Uint32List.fromList([
   abgr8888.red, abgr8888.green, abgr8888.blue,
@@ -93,7 +93,11 @@ print(clipped.data); // [0xFF00FF00, 0xFF0000FF]
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Buffer&lt;T&gt; mapRect(Rect bounds) {
-  return _ClippedBuffer(this, bounds.intersect(this.bounds));
+  final result = bounds.intersect(this.bounds);
+  if (result.isEmpty) {
+    throw ArgumentError.value(bounds, &#39;bounds&#39;, &#39;region must be non-empty&#39;);
+  }
+  return _ClippedBuffer(this, result);
 }</code></pre>
 </section>
 
