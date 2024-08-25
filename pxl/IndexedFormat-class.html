@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the IndexedFormat class from the pxl library, for the Dart programming language.">
+  <title>IndexedFormat class - pxl library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">pxl</a></li>
+    <li><a href="../pxl/pxl-library.html">pxl.dart</a></li>
+    <li class="self-crumb">IndexedFormat<span class="signature">&lt;<wbr><span class="type-parameter">P</span>&gt;</span> class</li>
+  </ol>
+  <div class="self-name">IndexedFormat</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="pxl&#47;pxl-library-sidebar.html"
+    data-below-sidebar="pxl&#47;IndexedFormat-class-sidebar.html">
+    <div>
+<h1><span class="kind-class">IndexedFormat&lt;<wbr><span class="type-parameter">P</span>&gt;</span> class 
+    <a href="https://dart.dev/language/class-modifiers#final" class="feature feature-final" title="This class can neither be extended, implemented, nor mixed in.">final</a>
+ 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+</h1></div>
+
+    
+<section class="desc markdown">
+  <p>A pixel format that uses a predefined <em>palette</em> to index colors.</p>
+<p>Given a linear list of colors, an indexed pixel format uses a single integer
+value to represent a color in the palette. This is useful for reducing the
+memory footprint of images, especially when the number of unique colors is
+small.</p>
+<h2 id="example">Example</h2>
+<pre class="language-dart"><code class="language-dart">// Creating a simple system palette with 8 colors.
+final palette = [
+  abgr8888.create(red: 0xFF, green: 0x00, blue: 0x00),
+  abgr8888.create(red: 0x00, green: 0xFF, blue: 0x00),
+  abgr8888.create(red: 0x00, green: 0x00, blue: 0xFF),
+  abgr8888.create(red: 0xFF, green: 0xFF, blue: 0x00),
+  abgr8888.create(red: 0xFF, green: 0x00, blue: 0xFF),
+  abgr8888.create(red: 0x00, green: 0xFF, blue: 0xFF),
+  abgr8888.create(red: 0xFF, green: 0xFF, blue: 0xFF),
+  abgr8888.create(red: 0x00, green: 0x00, blue: 0x00),
+];
+
+// Creating an 8-bit indexed pixel format with the palette.
+final indexed = IndexedFormat.bits8(palette, format: abgr8888);
+
+// Converting a color to an index.
+final index = indexed.fromAbgr8888(abgr8888.create(red: 0xFF, green: 0x00, blue: 0x00));
+
+// Converting an index to a color.
+final color = indexed.toAbgr8888(index);
+</code></pre>
+<p>See <a href="../pxl/system8.html">system8</a> for a predefined palette of common RGB colors.</p>
+</section>
+
+
+    <section>
+      <dl class="dl-horizontal">
+        
+  <dt>Inheritance</dt>
+  <dd>
+    <ul class="gt-separated dark clazz-relationships">
+      <li><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object-class.html">Object</a></li>
+        <li><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>, <span class="type-parameter">void</span>&gt;</span></li>
+      <li>IndexedFormat</li>
+    </ul>
+  </dd>
+
+        
+        
+
+
+
+        
+
+
+      </dl>
+    </section>
+
+    
+  <section class="summary offset-anchor" id="constructors">
+    <h2>Constructors</h2>
+
+    <dl class="constructor-summary-list">
+        <dt id="IndexedFormat.bits16" class="callable">
+          <span class="name"><a href="../pxl/IndexedFormat/IndexedFormat.bits16.html">IndexedFormat.bits16</a></span><span class="signature">(<span class="parameter" id="bits16-param-palette"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>&gt;</span></span> <span class="parameter-name">palette</span>, {</span><span class="parameter" id="bits16-param-format"><span>required</span> <span class="type-annotation"><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">void</span>&gt;</span></span> <span class="parameter-name">format</span>, </span><span class="parameter" id="bits16-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="bits16-param-zero"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">zero</span>, </span><span class="parameter" id="bits16-param-max"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">max</span></span>})</span>
+        </dt>
+        <dd>
+          Creates an 16-bit indexed pixel format with the given <code>palette</code>.
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+        <dt id="IndexedFormat.bits32" class="callable">
+          <span class="name"><a href="../pxl/IndexedFormat/IndexedFormat.bits32.html">IndexedFormat.bits32</a></span><span class="signature">(<span class="parameter" id="bits32-param-palette"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>&gt;</span></span> <span class="parameter-name">palette</span>, {</span><span class="parameter" id="bits32-param-format"><span>required</span> <span class="type-annotation"><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">void</span>&gt;</span></span> <span class="parameter-name">format</span>, </span><span class="parameter" id="bits32-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="bits32-param-zero"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">zero</span>, </span><span class="parameter" id="bits32-param-max"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">max</span></span>})</span>
+        </dt>
+        <dd>
+          Creates an 32-bit indexed pixel format with the given <code>palette</code>.
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+        <dt id="IndexedFormat.bits8" class="callable">
+          <span class="name"><a href="../pxl/IndexedFormat/IndexedFormat.bits8.html">IndexedFormat.bits8</a></span><span class="signature">(<span class="parameter" id="bits8-param-palette"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>&gt;</span></span> <span class="parameter-name">palette</span>, {</span><span class="parameter" id="bits8-param-format"><span>required</span> <span class="type-annotation"><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">void</span>&gt;</span></span> <span class="parameter-name">format</span>, </span><span class="parameter" id="bits8-param-name"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">name</span>, </span><span class="parameter" id="bits8-param-zero"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">zero</span>, </span><span class="parameter" id="bits8-param-max"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">max</span></span>})</span>
+        </dt>
+        <dd>
+          Creates an 8-bit indexed pixel format with the given <code>palette</code>.
+            <div class="constructor-modifier features">factory</div>
+        </dd>
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-properties">
+    <h2>Properties</h2>
+    <dl class="properties">
+        <dt id="bytesPerPixel" class="property">
+  <span class="name"><a href="../pxl/IndexedFormat/bytesPerPixel.html">bytesPerPixel</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  Number of bytes required to store a single pixel in memory.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="hashCode" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  The hash code for this object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="length" class="property">
+  <span class="name"><a href="../pxl/IndexedFormat/length.html">length</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  Length of the palette.
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="max" class="property">
+  <span class="name"><a href="../pxl/IndexedFormat/max.html">max</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  The maximum value for the pixel format.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="name" class="property">
+  <span class="name"><a href="../pxl/IndexedFormat/name.html">name</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a></span>
+  
+
+</dt>
+<dd>
+  Human-readable name or description of the pixel format.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="runtimeType" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/Type-class.html">Type</a></span>
+  
+
+</dt>
+<dd class="inherited">
+  A representation of the runtime type of the object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="zero" class="property">
+  <span class="name"><a href="../pxl/IndexedFormat/zero.html">zero</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  
+
+</dt>
+<dd>
+  The zero, or minimum, value for the pixel format.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="instance-methods">
+    <h2>Methods</h2>
+    <dl class="callables">
+        <dt id="clamp" class="callable">
+  <span class="name"><a href="../pxl/IndexedFormat/clamp.html">clamp</a></span><span class="signature">(<wbr><span class="parameter" id="clamp-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Clamps a <code>pixel</code> to the valid range of values for the pixel format.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="convert" class="callable inherited">
+  <span class="name"><a href="../pxl/PixelFormat/convert.html">convert</a></span><span class="signature">&lt;<wbr><span class="type-parameter">R</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="convert-param-pixel"><span class="type-annotation">R</span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="convert-param-from"><span>required</span> <span class="type-annotation"><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter">R</span>, <span class="type-parameter">void</span>&gt;</span></span> <span class="parameter-name">from</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Converts a pixel <code>from</code> one another format <em>to</em> <code>this</code> format.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="copyWith" class="callable">
+  <span class="name"><a href="../pxl/IndexedFormat/copyWith.html">copyWith</a></span><span class="signature">(<wbr><span class="parameter" id="copyWith-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns a copy of the <code>pixel</code>.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="copyWithNormalized" class="callable">
+  <span class="name"><a href="../pxl/IndexedFormat/copyWithNormalized.html">copyWithNormalized</a></span><span class="signature">(<wbr><span class="parameter" id="copyWithNormalized-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns a copy of the <code>pixel</code> with normalized values.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="distance" class="callable">
+  <span class="name"><a href="../pxl/IndexedFormat/distance.html">distance</a></span><span class="signature">(<wbr><span class="parameter" id="distance-param-a"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">a</span>, </span><span class="parameter" id="distance-param-b"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">b</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns the distance between two pixels in the pixel format.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="fromAbgr8888" class="callable">
+  <span class="name"><a href="../pxl/IndexedFormat/fromAbgr8888.html">fromAbgr8888</a></span><span class="signature">(<wbr><span class="parameter" id="fromAbgr8888-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Converts a pixel in the <a href="../pxl/abgr8888-constant.html">abgr8888</a> pixel format to <code>this</code> pixel format.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="fromFloatRgba" class="callable">
+  <span class="name"><a href="../pxl/IndexedFormat/fromFloatRgba.html">fromFloatRgba</a></span><span class="signature">(<wbr><span class="parameter" id="fromFloatRgba-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Converts a pixel in the <a href="../pxl/floatRgba-constant.html">floatRgba</a> pixel format to <code>this</code> pixel format.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="noSuchMethod" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+    <span class="returntype parameter">&#8594; dynamic</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Invoked when a nonexistent method or property is accessed.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="toAbgr8888" class="callable">
+  <span class="name"><a href="../pxl/IndexedFormat/toAbgr8888.html">toAbgr8888</a></span><span class="signature">(<wbr><span class="parameter" id="toAbgr8888-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Converts a pixel in <code>this</code> pixel format to the <a href="../pxl/abgr8888-constant.html">abgr8888</a> pixel format.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="toFloatRgba" class="callable">
+  <span class="name"><a href="../pxl/IndexedFormat/toFloatRgba.html">toFloatRgba</a></span><span class="signature">(<wbr><span class="parameter" id="toFloatRgba-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Float32x4-class.html">Float32x4</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Converts a pixel in <code>this</code> pixel format to the <a href="../pxl/floatRgba-constant.html">floatRgba</a> pixel format.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="toString" class="callable inherited">
+  <span class="name"><a href="../pxl/PixelFormat/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  A string representation of this object.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+    
+  <section
+      class="summary offset-anchor"
+      id="operators">
+    <h2>Operators</h2>
+    <dl class="callables">
+        <dt id="operator ==" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/bool-class.html">bool</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  The equality operator.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="operator []" class="callable">
+  <span class="name"><a href="../pxl/IndexedFormat/operator_get.html">operator []</a></span><span class="signature">(<wbr><span class="parameter" id="[]-param-index"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">index</span></span>)
+    <span class="returntype parameter">&#8594; P</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns the color in the palette at the given <code>index</code>.
+  
+
+</dd>
+
+    </dl>
+  </section>
+    
+    
+    
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">pxl</a></li>
+    <li><a href="../pxl/pxl-library.html">pxl</a></li>
+    <li class="self-crumb">IndexedFormat<span class="signature">&lt;<wbr><span class="type-parameter">P</span>&gt;</span> class</li>
+</ol>
+
+
+    <h5>pxl library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    pxl
+      0.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

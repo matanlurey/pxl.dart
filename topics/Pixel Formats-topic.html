@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="Pixel Formats topic docs, for the Dart programming language.">
+  <title>Pixel Formats topic - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">pxl</a></li>
+    <li class="self-crumb">Pixel Formats topic</li>
+  </ol>
+  <div class="self-name">Pixel Formats</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+<div id="dartdoc-main-content" class="main-content">
+  <h1><span class="kind-category">Pixel Formats</span> topic</h1>
+  
+<section class="desc markdown">
+  <p>A <a href="../pxl/PixelFormat-class.html">PixelFormat</a> is a description of how pixel data is stored in memory. It
+includes a set of standard properties and rules for how to interpret the data,
+such as how many bytes are used to store each pixel, canonical (<code>zero</code> or <code>max</code>)
+values, and conversion rules to and from other formats.</p>
+<p>Pxl ships with a number of built-in pixel formats, and can be extended with
+additional formats:</p>
+<pre class="language-dart"><code class="language-dart">const myFormat = const MyFormat._();
+
+//                         Pixel data type    Channel data type
+//                                       v    v
+final class MyFormat extends PixelFormat&lt;int, int&gt; {
+  const MyFormat._();
+
+  @override
+  int get bytesPerPixel =&gt; 4;
+
+  @override
+  int get zero =&gt; 0;
+
+  // ... rest of the class implementation
+}
+</code></pre>
+<h2 id="integer-pixel-formats">Integer pixel formats</h2>
+<p>All integer formats use the ABGR 32-bit format as a common intermediate for
+conversions; channels that are larger or smaller than 8 bits are scaled to fit
+within the 8-bit range. For example a 4-bit channel value of <code>0x0F</code> would be
+scaled to <code>0xFF</code> when converting to 8-bit.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Bits per pixel</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../pxl/abgr8888-constant.html">abgr8888</a></td>
+<td>32</td>
+<td>4 channels @ 8 bits each</td>
+</tr>
+<tr>
+<td><a href="../pxl/argb8888-constant.html">argb8888</a></td>
+<td>32</td>
+<td>4 channels @ 8 bits each</td>
+</tr>
+<tr>
+<td><a href="../pxl/rgba8888-constant.html">rgba8888</a></td>
+<td>32</td>
+<td>4 channels @ 8 bits each</td>
+</tr>
+</tbody>
+</table>
+<h2 id="floating-point-pixel-formats">Floating-point pixel formats</h2>
+<p>All floating-point formats use the RGBA 128-bit format as a common intermediate
+for conversions; channels that are larger or smaller than 32 bits are scaled to
+fit within the 32-bit range. When converting to packed integer formats, data is
+normalized to the range <code>[0.0, 1.0]</code> and then scaled to fit within the integer
+range.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Bits per pixel</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../pxl/floatRgba-constant.html">floatRgba</a></td>
+<td>128</td>
+<td>Red, Green, Blue, Alpha</td>
+</tr>
+</tbody>
+</table>
+<h2 id="indexed-pixel-formats">Indexed pixel formats</h2>
+<p><a href="../pxl/IndexedFormat-class.html">IndexedFormat</a>s use a palette to map pixel values to colors.</p>
+<p>The palette is stored as a separate array of colors, and the pixel data is
+stored as indices into the palette.</p>
+<pre class="language-dart"><code class="language-dart">// Example of a 1-bit indexed format.
+final mono1 = IndexedPixelFormat.bits8(
+  const [0xFF000000, 0xFFFFFFFF],
+  format: abgr8888,
+);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Bits per pixel</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../pxl/system8.html">system8</a></td>
+<td>8</td>
+<td>8 colors.</td>
+</tr>
+<tr>
+<td><a href="../pxl/system256.html">system256</a></td>
+<td>8</td>
+<td>256 colors (216 RGB + 40 grayscale).</td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+
+  <section class="summary offset-anchor" id="classes">
+    <h2>Classes</h2>
+
+    <dl>
+      <dt id="Abgr8888">
+  <span class="name "><a href="../pxl/Abgr8888-class.html">Abgr8888</a></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  32-bit ABGR pixel format with four 8-bit channels.
+</dd>
+
+      <dt id="Argb8888">
+  <span class="name "><a href="../pxl/Argb8888-class.html">Argb8888</a></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  32-bit ARGB pixel format with four 8-bit channels.
+</dd>
+
+      <dt id="FloatRgba">
+  <span class="name "><a href="../pxl/FloatRgba-class.html">FloatRgba</a></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  A 128-bit floating-point RGBA pixel format with four 32-bit channels.
+</dd>
+
+      <dt id="IndexedFormat">
+  <span class="name "><a href="../pxl/IndexedFormat-class.html">IndexedFormat</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>&gt;</span></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  A pixel format that uses a predefined <em>palette</em> to index colors.
+</dd>
+
+      <dt id="PixelFormat">
+  <span class="name "><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  Describes the organization and characteristics of pixel data <code>P</code> in memory.
+</dd>
+
+      <dt id="Rgb">
+  <span class="name "><a href="../pxl/Rgb-class.html">Rgb</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  Base API for pixel formats that have red, green, and blue channels.
+</dd>
+
+      <dt id="Rgba">
+  <span class="name "><a href="../pxl/Rgba-class.html">Rgba</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  Base API for pixel formats that have red, green, blue, and alpha channels.
+</dd>
+
+      <dt id="Rgba8888">
+  <span class="name "><a href="../pxl/Rgba8888-class.html">Rgba8888</a></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  32-bit RGBA pixel format with four 8-bit channels.
+</dd>
+
+    </dl>
+  </section>
+
+
+
+  <section class="summary offset-anchor" id="constants">
+    <h2>Constants</h2>
+
+    <dl class="properties">
+      <dt id="abgr8888" class="constant">
+    <span class="name "><a href="../pxl/abgr8888-constant.html">abgr8888</a></span>
+  <span class="signature">&#8594; const <a href="../pxl/Abgr8888-class.html">Abgr8888</a></span>
+  
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  32-bit ABGR pixel format with four 8-bit channels.
+  
+
+</dd>
+
+      <dt id="argb8888" class="constant">
+    <span class="name "><a href="../pxl/argb8888-constant.html">argb8888</a></span>
+  <span class="signature">&#8594; const <a href="../pxl/Argb8888-class.html">Argb8888</a></span>
+  
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  32-bit ARGB pixel format with four 8-bit channels.
+  
+
+</dd>
+
+      <dt id="floatRgba" class="constant">
+    <span class="name "><a href="../pxl/floatRgba-constant.html">floatRgba</a></span>
+  <span class="signature">&#8594; const <a href="../pxl/FloatRgba-class.html">FloatRgba</a></span>
+  
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  A 128-bit floating-point RGBA pixel format with four 32-bit channels.
+  
+
+</dd>
+
+      <dt id="rgba8888" class="constant">
+    <span class="name "><a href="../pxl/rgba8888-constant.html">rgba8888</a></span>
+  <span class="signature">&#8594; const <a href="../pxl/Argb8888-class.html">Argb8888</a></span>
+  
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  32-bit RGBA pixel format with four 8-bit channels.
+  
+
+</dd>
+
+    </dl>
+  </section>
+
+  <section class="summary offset-anchor" id="properties">
+    <h2>Properties</h2>
+
+    <dl class="properties">
+      <dt id="system256" class="property">
+  <span class="name"><a href="../pxl/system256.html">system256</a></span>
+  <span class="signature">&#8594; <a href="../pxl/IndexedFormat-class.html">IndexedFormat</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  A simple 256-color system palette of common RGB colors.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+      <dt id="system8" class="property">
+  <span class="name"><a href="../pxl/system8.html">system8</a></span>
+  <span class="signature">&#8594; <a href="../pxl/IndexedFormat-class.html">IndexedFormat</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>&gt;</span></span>
+  
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  A simple 8-color system palette of common RGB colors.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+    </dl>
+  </section>
+
+
+
+
+
+</div> <!-- /.main-content -->
+
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">pxl</a></li>
+    <li class="self-crumb">Pixel Formats topic</li>
+</ol>
+
+
+  <h5><span class="package-name">pxl</span> <span class="package-kind">package</span></h5>
+  <ol>
+      <li class="section-title">Topics</li>
+        <li><a href="../topics/Buffers-topic.html">Buffers</a></li>
+        <li><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></li>
+        <li><a href="../topics/Blending-topic.html">Blending</a></li>
+      <li class="section-title">Libraries</li>
+      <li><a href="../pxl/pxl-library.html">pxl</a></li>
+</ol>
+
+</div>
+
+<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  <h5>Pixel Formats topic</h5>
+  <ol>
+
+    <li class="section-title"><a href="../topics/Pixel Formats-topic.html#classes">Classes</a></li>
+      <li><a href="../pxl/Abgr8888-class.html">Abgr8888</a></li>
+      <li><a href="../pxl/Argb8888-class.html">Argb8888</a></li>
+      <li><a href="../pxl/FloatRgba-class.html">FloatRgba</a></li>
+      <li><a href="../pxl/IndexedFormat-class.html">IndexedFormat</a></li>
+      <li><a href="../pxl/PixelFormat-class.html">PixelFormat</a></li>
+      <li><a href="../pxl/Rgb-class.html">Rgb</a></li>
+      <li><a href="../pxl/Rgba-class.html">Rgba</a></li>
+      <li><a href="../pxl/Rgba8888-class.html">Rgba8888</a></li>
+
+
+
+
+    <li class="section-title"><a href="../topics/Pixel Formats-topic.html#constants">Constants</a></li>
+      <li><a href="../pxl/abgr8888-constant.html">abgr8888</a></li>
+      <li><a href="../pxl/argb8888-constant.html">argb8888</a></li>
+      <li><a href="../pxl/floatRgba-constant.html">floatRgba</a></li>
+      <li><a href="../pxl/rgba8888-constant.html">rgba8888</a></li>
+
+    <li class="section-title"><a href="../topics/Pixel Formats-topic.html#properties">Properties</a></li>
+      <li><a href="../pxl/system256.html">system256</a></li>
+      <li><a href="../pxl/system8.html">system8</a></li>
+
+
+
+
+</ol>
+
+</div>
+<!--/sidebar-offcanvas-right-->
+</main>
+
+<footer>
+  <span class="no-break">
+    pxl
+      0.0.0
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
