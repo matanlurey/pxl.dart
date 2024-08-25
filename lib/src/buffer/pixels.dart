@@ -9,6 +9,7 @@ part of '../buffer.dart';
 /// In most cases either [IntPixels] or [FloatPixels] will be used directly.
 ///
 /// {@category Buffers}
+/// {@category Blending}
 abstract final class Pixels<T> with Buffer<T> {
   /// @nodoc
   const Pixels({

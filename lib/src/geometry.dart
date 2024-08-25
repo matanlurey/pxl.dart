@@ -5,6 +5,8 @@ import 'package:lodim/lodim.dart' as lodim;
 /// This type is a re-export of [lodim.Pos].
 ///
 /// See <https://pub.dev/packages/lodim> for more details.
+///
+/// {@category Buffers}
 typedef Pos = lodim.Pos;
 
 /// An immutable 2D fixed-point rectangle.
@@ -12,4 +14,6 @@ typedef Pos = lodim.Pos;
 /// This type is a re-export of [lodim.Rect].
 ///
 /// See <https://pub.dev/packages/lodim> for more details.
+///
+/// {@category Buffers}
 typedef Rect = lodim.Rect;

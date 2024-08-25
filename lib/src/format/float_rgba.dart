@@ -103,15 +103,7 @@ final class FloatRgba extends Rgba<Float32x4, double> {
   double getAlpha(Float32x4 pixel) => pixel.w;
 
   @override
-  Float32x4 fromAbgr8888(int pixel) {
-    final p = Float32x4(
-      abgr8888.getRed(pixel).toDouble(),
-      abgr8888.getGreen(pixel).toDouble(),
-      abgr8888.getBlue(pixel).toDouble(),
-      abgr8888.getAlpha(pixel).toDouble(),
-    );
-    return p / Float32x4.splat(0xFF);
-  }
+  Float32x4 fromAbgr8888(int pixel) => abgr8888.toFloatRgba(pixel);
 
   @override
   int toAbgr8888(Float32x4 pixel) {

@@ -21,8 +21,8 @@ part 'buffer/pixels.dart';
 /// In most cases buffers will be used ephemerally; [Pixels] is an actual
 /// representation of pixel data.
 ///
-/// {@category Pixel Formats}
-abstract mixin class Buffer<T> {
+/// {@category Buffers}
+abstract base mixin class Buffer<T> {
   /// @nodoc
   const Buffer();
 
@@ -122,6 +122,8 @@ abstract mixin class Buffer<T> {
   }
 
   /// Returns a lazy buffer that converts pixels to the given [format].
+  ///
+  /// If `this.format == format`, the buffer is returned as-is.
   ///
   /// ## Example
   ///

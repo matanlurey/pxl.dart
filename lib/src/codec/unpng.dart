@@ -24,8 +24,9 @@ import 'package:pxl/pxl.dart';
 /// - The maximum resolution supported is 8192x8192.
 /// - No compression is performed.
 /// - Interlacing is not supported.
-/// - Only RGBA color type is supported.
+/// - Only a single `IDAT` chunk is written.
 /// - Only 8-bit color depth is supported.
+/// - Pixel formats are converted to [rgba8888] before encoding.
 /// - No additional metadata or chunks are supported.
 ///
 /// ## Alternatives
@@ -43,14 +44,14 @@ const uncompressedPngEncoder = UncompressedPngEncoder._();
 /// color depth.
 ///
 /// A singleton instance of this class is available as [uncompressedPngEncoder].
-final class UncompressedPngEncoder extends Converter<Pixels<int>, List<int>> {
+final class UncompressedPngEncoder extends Converter<Buffer<void>, List<int>> {
   const UncompressedPngEncoder._();
 
   /// The maximum resolution we support is 8192x8192.
   static const _maxResolution = 0x2000;
 
   @override
-  Uint8List convert(Buffer<int> input) {
+  Uint8List convert(Buffer<void> input) {
     // Verify the resolution
     RangeError.checkValueInInterval(
       input.width,
@@ -65,8 +66,7 @@ final class UncompressedPngEncoder extends Converter<Pixels<int>, List<int>> {
       'input.height',
     );
 
-    // Encode the PNG.
-    return _encodeUncompressedPng(input);
+    return _encodeUncompressedPng(input.mapConvert(rgba8888));
   }
 }
 
@@ -81,24 +81,20 @@ final _pngSignature = Uint8List(8)
   ..[6] = 0x1A
   ..[7] = 0x0A;
 
-Uint8List _encodeUncompressedPng<T>(Buffer<T> pixels) {
+Uint8List _encodeUncompressedPng(Buffer<int> pixels) {
+  assert(
+    pixels.format == rgba8888,
+    'Unsupported pixel format: ${pixels.format}',
+  );
   final output = BytesBuilder(copy: false);
 
   // Write the PNG signature (https://www.w3.org/TR/png-3/#3PNGsignature).
   output.add(_pngSignature);
 
-  // Writes a word to the output buffer in big-endian order.
-  void writeWord(int value) {
-    output.addByte(value >> 24 & 0xFF);
-    output.addByte(value >> 16 & 0xFF);
-    output.addByte(value >> 8 & 0xFF);
-    output.addByte(value & 0xFF);
-  }
-
   // Writes a chunk to the PNG buffer.
   void writeChunk(String type, Uint8List data) {
     // Write the length of the data.
-    writeWord(data.length);
+    output.addWord(data.length);
 
     // Store the current offset for the checksum.
     final offset = output.length;
@@ -111,7 +107,7 @@ Uint8List _encodeUncompressedPng<T>(Buffer<T> pixels) {
 
     // Compute and write a CRC32 checksum excluding the length.
     final view = Uint8List.view(output.toBytes().buffer, offset);
-    writeWord(_crc32(view));
+    output.addWord(_crc32(view));
   }
 
   // Write the IHDR chunk (https://www.w3.org/TR/png-3/#11IHDR).
@@ -146,17 +142,10 @@ Uint8List _encodeUncompressedPng<T>(Buffer<T> pixels) {
   for (var y = 0; y < pixels.height; y++) {
     // Write the row data.
     final row = Uint8List(baseStride);
-    for (var x = 0; x < pixels.width; x++) {
-      final offset = x * 4;
-      final pixel = abgr8888.convert(
-        pixels.getUnsafe(Pos(x, y)),
-        from: pixels.format,
-      );
-      row[offset + 0] = abgr8888.getRed(pixel);
-      row[offset + 1] = abgr8888.getGreen(pixel);
-      row[offset + 2] = abgr8888.getBlue(pixel);
-      row[offset + 3] = abgr8888.getAlpha(pixel);
-    }
+
+    // Copy the pixel data into the row buffer. It's already in RGBA format.
+    final dat = row.buffer.asUint32List();
+    dat.setRange(0, pixels.width, pixels.data, y * pixels.width);
 
     // Update the Adler-32 checksum for the filter type and row data.
     adlerSum = _adler32(const [0], adlerSum);
@@ -172,16 +161,38 @@ Uint8List _encodeUncompressedPng<T>(Buffer<T> pixels) {
   idat.addByte(0x08);
   idat.addByte(0x30);
   idat.addByte(0x00);
-  idat.addByte(adlerSum >> 24 & 0xFF);
-  idat.addByte(adlerSum >> 16 & 0xFF);
-  idat.addByte(adlerSum >> 8 & 0xFF);
-  idat.addByte(adlerSum & 0xFF);
+  idat.addWord(adlerSum);
   writeChunk('IDAT', idat.toBytes());
 
   // Write the IEND chunk (https://www.w3.org/TR/png-3/#11IEND).
   writeChunk('IEND', Uint8List(0));
 
   return output.toBytes();
+}
+
+extension on BytesBuilder {
+  /// Adds a 32-bit word to the buffer in the given [endian] order.
+  void addWord(int word, [Endian endian = Endian.big]) {
+    if (endian == Endian.big) {
+      _addWordBigEndian(word);
+    } else {
+      _addWordLittleEndian(word);
+    }
+  }
+
+  void _addWordBigEndian(int word) {
+    addByte(word >> 24 & 0xFF);
+    addByte(word >> 16 & 0xFF);
+    addByte(word >> 8 & 0xFF);
+    addByte(word & 0xFF);
+  }
+
+  void _addWordLittleEndian(int word) {
+    addByte(word & 0xFF);
+    addByte(word >> 8 & 0xFF);
+    addByte(word >> 16 & 0xFF);
+    addByte(word >> 24 & 0xFF);
+  }
 }
 
 /// A table of lazily computed CRC-32 values for all 8-bit unsigned integers.

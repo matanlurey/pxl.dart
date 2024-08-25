@@ -9,6 +9,7 @@ part 'format/float_rgba.dart';
 part 'format/indexed.dart';
 part 'format/rgb.dart';
 part 'format/rgba.dart';
+part 'format/rgba8888.dart';
 part 'format/system8.dart';
 part 'format/system256.dart';
 
@@ -19,12 +20,9 @@ part 'format/system256.dart';
 /// of pixels. Several built-in pixel formats are provided, such as [abgr8888]
 /// and [floatRgba].
 ///
-/// > [!TIP]
-/// > While the API evolves, it is not possible to create custom pixel formats.
-///
 /// /// {@category Pixel Formats}
 @immutable
-abstract final class PixelFormat<P, C> {
+abstract base mixin class PixelFormat<P, C> {
   /// @nodoc
   const PixelFormat();
 
