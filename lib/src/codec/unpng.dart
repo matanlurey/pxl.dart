@@ -70,14 +70,22 @@ final class UncompressedPngEncoder extends Converter<Pixels<int>, List<int>> {
   }
 }
 
+/// <https://www.w3.org/TR/png-3/#3PNGsignature>.
+final _pngSignature = Uint8List(8)
+  ..[0] = 0x89
+  ..[1] = 0x50
+  ..[2] = 0x4E
+  ..[3] = 0x47
+  ..[4] = 0x0D
+  ..[5] = 0x0A
+  ..[6] = 0x1A
+  ..[7] = 0x0A;
+
 Uint8List _encodeUncompressedPng<T>(Buffer<T> pixels) {
-  final output = BytesBuilder();
+  final output = BytesBuilder(copy: false);
 
   // Write the PNG signature (https://www.w3.org/TR/png-3/#3PNGsignature).
-  output.add(const [
-    0x89, 0x50, 0x4E, 0x47, //
-    0x0D, 0x0A, 0x1A, 0x0A, //
-  ]);
+  output.add(_pngSignature);
 
   // Writes a word to the output buffer in big-endian order.
   void writeWord(int value) {
@@ -118,23 +126,21 @@ Uint8List _encodeUncompressedPng<T>(Buffer<T> pixels) {
   writeChunk('IHDR', ihdr);
 
   // Write the IDAT chunk (https://www.w3.org/TR/png-3/#11IDAT).
-  final idat = BytesBuilder()
-    ..addByte(0x08) // CMF (0x08 means 8-bit window size)
+  final idat = BytesBuilder(copy: false)
+    ..addByte(0x78) //  CMF (0x78 means 32K window size)
     ..addByte(0x01); // FLG (0x01 means no preset dictionary)
 
   // Hard-coded for 8-bit RGBA pixels.
   final baseStride = pixels.width * 4;
   final rowMagicLength = baseStride + 1;
 
-  final rowMagicHeader = ByteData(3 + 2 + 2 + 1);
-  // Uncompressed deflate block
-  rowMagicHeader.setUint8(0, 0x02);
-  rowMagicHeader.setUint8(1, 0x08);
-  rowMagicHeader.setUint8(2, 0x00);
-  rowMagicHeader.setUint16(3, rowMagicLength, Endian.little);
-  rowMagicHeader.setUint16(5, rowMagicLength ^ 0xFFFF, Endian.little);
-  // Filter type 0 (None)
-  rowMagicHeader.setUint8(7, 0x00);
+  final rowMagicHeader = Uint8List(8)
+    ..[0] = 0x02
+    ..[1] = 0x08
+    ..[2] = 0x00
+    ..buffer.asByteData().setUint16(3, rowMagicLength, Endian.little)
+    ..buffer.asByteData().setUint16(5, rowMagicLength ^ 0xFFFF, Endian.little)
+    ..[7] = 0x00;
 
   var adlerSum = 1;
   for (var y = 0; y < pixels.height; y++) {
@@ -152,13 +158,13 @@ Uint8List _encodeUncompressedPng<T>(Buffer<T> pixels) {
       row[offset + 3] = abgr8888.getAlpha(pixel);
     }
 
-    // Write the header and row data.
-    idat.add(rowMagicHeader.buffer.asUint8List());
-    idat.add(row);
-
-    // Update the Adler-32 checksum for each.
-    adlerSum = _adler32(rowMagicHeader.buffer.asUint8List(), adlerSum);
+    // Update the Adler-32 checksum for the filter type and row data.
+    adlerSum = _adler32(const [0], adlerSum);
     adlerSum = _adler32(row, adlerSum);
+
+    // Write the header and row data.
+    idat.add(rowMagicHeader);
+    idat.add(row);
   }
 
   // Add the final deflate block of zero length, plus adler32 checksum.
@@ -166,8 +172,10 @@ Uint8List _encodeUncompressedPng<T>(Buffer<T> pixels) {
   idat.addByte(0x08);
   idat.addByte(0x30);
   idat.addByte(0x00);
-  idat.add((Uint32List(1)..[0] = adlerSum).buffer.asUint8List());
-
+  idat.addByte(adlerSum >> 24 & 0xFF);
+  idat.addByte(adlerSum >> 16 & 0xFF);
+  idat.addByte(adlerSum >> 8 & 0xFF);
+  idat.addByte(adlerSum & 0xFF);
   writeChunk('IDAT', idat.toBytes());
 
   // Write the IEND chunk (https://www.w3.org/TR/png-3/#11IEND).
@@ -202,14 +210,12 @@ int _crc32(Uint8List bytes) {
   return crc ^ 0xFFFFFFFF;
 }
 
-/// Computes the next Adler-32 checksum value.
-int _adler32(Iterable<int> bytes, [int adler = 1]) {
-  const mod = 65521;
-  var a = adler & 0xFFFF;
-  var b = adler >> 16;
-  for (final byte in bytes) {
-    a = (a + byte) % mod;
-    b = (b + a) % mod;
+int _adler32(List<int> bytes, int seed) {
+  var a = seed & 0xFFFF;
+  var b = (seed >> 16) & 0xFFFF;
+  for (final y in bytes) {
+    a = (a + y) % 65521;
+    b = (b + a) % 65521;
   }
   return (b << 16) | a;
 }

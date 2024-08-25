@@ -1,7 +1,3 @@
-// Allow Dart defines for this file.
-// See <https://dart.dev/guides/environment-declarations> for details.
-// ignore_for_file: do_not_use_environment
-
 import 'dart:typed_data';
 
 /// Whether the current runtime is JavaScript.
