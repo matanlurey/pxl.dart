@@ -6,6 +6,8 @@ part of '../buffer.dart';
 /// between 8 and 32 bits of data.
 ///
 /// The default [format] is [abgr8888].
+///
+/// {@category Buffers}
 final class IntPixels extends Pixels<int> {
   /// Creates a new buffer of integer-based pixel data.
   ///
@@ -28,6 +30,9 @@ final class IntPixels extends Pixels<int> {
     }
     if (data == null) {
       data = newIntBuffer(bytes: format.bytesPerPixel, length: width * height);
+      if (format.zero != 0) {
+        data.fillRange(0, data.length, format.zero);
+      }
     } else if (data.length != width * height) {
       throw RangeError.value(
         data.length,

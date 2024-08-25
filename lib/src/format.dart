@@ -1,10 +1,17 @@
 import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
+import 'package:pxl/src/internal.dart';
 
 part 'format/abgr8888.dart';
+part 'format/argb8888.dart';
 part 'format/float_rgba.dart';
+part 'format/indexed.dart';
+part 'format/rgb.dart';
 part 'format/rgba.dart';
+part 'format/rgba8888.dart';
+part 'format/system8.dart';
+part 'format/system256.dart';
 
 /// Describes the organization and characteristics of pixel data [P] in memory.
 ///
@@ -13,10 +20,9 @@ part 'format/rgba.dart';
 /// of pixels. Several built-in pixel formats are provided, such as [abgr8888]
 /// and [floatRgba].
 ///
-/// > [!TIP]
-/// > While the API evolves, it is not possible to create custom pixel formats.
+/// /// {@category Pixel Formats}
 @immutable
-abstract final class PixelFormat<P, C> {
+abstract base mixin class PixelFormat<P, C> {
   /// @nodoc
   const PixelFormat();
 
@@ -35,6 +41,13 @@ abstract final class PixelFormat<P, C> {
 
   /// Number of bytes required to store a single pixel in memory.
   int get bytesPerPixel;
+
+  /// Returns the distance between two pixels in the pixel format.
+  ///
+  /// What constitutes distance is not defined by this method, and is up to the
+  /// pixel format to define. For example, both [abgr8888] and [floatRgba] use
+  /// cartesian distance to compare pixels.
+  double distance(P a, P b);
 
   /// The zero, or minimum, value for the pixel format.
   ///

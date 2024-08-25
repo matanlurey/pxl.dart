@@ -9,6 +9,8 @@ part of '../buffer.dart';
 /// formats.
 ///
 /// The default [format] is [floatRgba].
+///
+/// {@category Buffers}
 final class FloatPixels extends Pixels<Float32x4> {
   /// Creates a new buffer of multi-channel floating point pixel data.
   ///
@@ -31,6 +33,9 @@ final class FloatPixels extends Pixels<Float32x4> {
     }
     if (data == null) {
       data = Float32x4List(width * height);
+      if (format.zero.equal(Float32x4.zero()).signMask != 0) {
+        data.fillRange(0, data.length, format.zero);
+      }
     } else if (data.length != width * height) {
       throw RangeError.value(
         data.length,

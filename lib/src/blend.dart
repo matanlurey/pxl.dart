@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
 import 'package:pxl/src/format.dart';
-import 'package:pxl/src/internal.dart';
 
 part 'blend/porter_duff.dart';
 
@@ -18,24 +17,9 @@ part 'blend/porter_duff.dart';
 /// on the canvas. The algorithm then returns a new color that is the result of
 /// blending the two colors.
 ///
-/// ## SIMD
-///
-/// Some blend modes can optionally use [SIMD optimizations][] by setting the
-/// `pxl.SIMD` Dart compilation environment variable:
-///
-/// [SIMD optimizations]: https://en.wikipedia.org/wiki/SIMD
-///
-/// ```sh
-/// dart compile -Dpxl.SIMD=true
-/// ```
-///
-/// This will use the [Float32x4] class to perform the blending calculations,
-/// which can be faster than using scalar but should be tested for performance
-/// and correctness.
-///
-/// See <https://dart.dev/guides/environment-declarations> for more details.
+/// {@category Blending}
 @immutable
-abstract mixin class BlendMode {
+abstract interface class BlendMode {
   /// Destination pixels covered by the source are cleared to 0.
   static const BlendMode clear = PorterDuff(
     PorterDuff.zero,

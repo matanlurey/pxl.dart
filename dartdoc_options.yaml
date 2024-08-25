@@ -1,0 +1,18 @@
+# Format: https://github.com/dart-lang/dartdoc#dartdoc_optionsyaml.
+
+dartdoc:
+  categories:
+    "Buffers":
+      markdown: doc/buffers.md
+    "Pixel Formats":
+      markdown: doc/formats.md
+    "Blending":
+      markdown: doc/blending.md
+    "Output and Comparison":
+      markdown: doc/output.md
+
+  categoryOrder:
+    - "Buffers"
+    - "Pixel Formats"
+    - "Blending"
+    - "Output and Comparison"

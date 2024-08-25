@@ -3,12 +3,16 @@ part of '../format.dart';
 /// A 128-bit floating-point RGBA pixel format with four 32-bit channels.
 ///
 /// This is the package's canonical floating-point pixel format.
+///
+/// {@category Pixel Formats}
 const floatRgba = FloatRgba._();
 
 /// A 128-bit floating-point RGBA pixel format with four 32-bit channels.
 ///
 /// For a singleton instance of this class, and further details, see
 /// [floatRgba].
+///
+/// {@category Pixel Formats}
 final class FloatRgba extends Rgba<Float32x4, double> {
   const FloatRgba._();
 
@@ -28,6 +32,13 @@ final class FloatRgba extends Rgba<Float32x4, double> {
   Float32x4 clamp(Float32x4 pixel) => pixel.clamp(zero, max);
 
   @override
+  double distance(Float32x4 a, Float32x4 b) {
+    var d = a - b;
+    d *= d;
+    return d.x + d.y + d.z + d.w;
+  }
+
+  @override
   Float32x4 copyWith(
     Float32x4 pixel, {
     double? red,
@@ -36,10 +47,10 @@ final class FloatRgba extends Rgba<Float32x4, double> {
     double? alpha,
   }) {
     final output = Float32x4(
-      red ?? pixel.x,
-      green ?? pixel.y,
-      blue ?? pixel.z,
-      alpha ?? pixel.w,
+      red ?? getRed(pixel),
+      green ?? getGreen(pixel),
+      blue ?? getBlue(pixel),
+      alpha ?? getAlpha(pixel),
     );
     return output.clamp(zero, max);
   }
@@ -56,6 +67,18 @@ final class FloatRgba extends Rgba<Float32x4, double> {
   }
 
   @override
+  double get minRed => 0.0;
+
+  @override
+  double get minGreen => 0.0;
+
+  @override
+  double get minBlue => 0.0;
+
+  @override
+  double get minAlpha => 0.0;
+
+  @override
   double get maxRed => 1.0;
 
   @override
@@ -68,13 +91,19 @@ final class FloatRgba extends Rgba<Float32x4, double> {
   double get maxAlpha => 1.0;
 
   @override
-  Float32x4 fromAbgr8888(int pixel) {
-    final a = (pixel & 0xFF) / 0xFF;
-    final b = ((pixel >> 8) & 0xFF) / 0xFF;
-    final g = ((pixel >> 16) & 0xFF) / 0xFF;
-    final r = ((pixel >> 24) & 0xFF) / 0xFF;
-    return Float32x4(r, g, b, a);
-  }
+  double getRed(Float32x4 pixel) => pixel.x;
+
+  @override
+  double getGreen(Float32x4 pixel) => pixel.y;
+
+  @override
+  double getBlue(Float32x4 pixel) => pixel.z;
+
+  @override
+  double getAlpha(Float32x4 pixel) => pixel.w;
+
+  @override
+  Float32x4 fromAbgr8888(int pixel) => abgr8888.toFloatRgba(pixel);
 
   @override
   int toAbgr8888(Float32x4 pixel) {

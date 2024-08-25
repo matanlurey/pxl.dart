@@ -7,6 +7,9 @@ part of '../buffer.dart';
 /// but cannot be extended or implemented (similar to [TypedDataList]).
 ///
 /// In most cases either [IntPixels] or [FloatPixels] will be used directly.
+///
+/// {@category Buffers}
+/// {@category Blending}
 abstract final class Pixels<T> with Buffer<T> {
   /// @nodoc
   const Pixels({
@@ -264,7 +267,8 @@ abstract final class Pixels<T> with Buffer<T> {
   /// corner of the `this` buffer. If there is not sufficient space in the
   /// target buffer, the source rectangle will be clipped to fit `this`.
   ///
-  /// The pixels are copied as-is, without any conversion or blending.
+  /// The pixels are copied as-is, **without any conversion or blending**; see
+  /// [blit] for converting and blending pixel data.
   ///
   /// ## Example
   ///
@@ -320,7 +324,8 @@ abstract final class Pixels<T> with Buffer<T> {
   /// rectangle will be copied starting at that position. If there is not
   /// sufficient space in the target buffer, the behavior is undefined.
   ///
-  /// The pixels are copied as-is, without any conversion or blending.
+  /// The pixels are copied as-is, **without any conversion or blending**; see
+  /// [blit] for converting and blending pixel data.
   ///
   /// ## Example
   ///
