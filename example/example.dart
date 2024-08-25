@@ -6,7 +6,7 @@ import 'dart:math' as math;
 import 'package:pxl/pxl.dart';
 
 void main() {
-  const imageWidth = 256;
+  const imageWidth = 680;
   const imageHeight = 256;
   final image = IntPixels(imageWidth, imageHeight);
 
@@ -24,7 +24,7 @@ void main() {
 
   // Draw a pixelated yellow sun
   final sunCenter = Pos.floor(imageWidth / 2, imageHeight / 4);
-  const sunRadius = 32;
+  const sunRadius = 128;
   for (var y = sunCenter.y - sunRadius; y <= sunCenter.y + sunRadius; y++) {
     for (var x = sunCenter.x - sunRadius; x <= sunCenter.x + sunRadius; x++) {
       final distance = sunCenter.distanceTo(Pos(x, y));
@@ -40,7 +40,7 @@ void main() {
 
   // Draw some pixelated clouds
   final rng = math.Random();
-  for (var i = 0; i < 32; i++) {
+  for (var i = 0; i < 64; i++) {
     final cloudX = rng.nextInt(imageWidth - 10);
     final cloudY = rng.nextInt(imageHeight ~/ 2 - 5);
     final cloudWidth = rng.nextInt(10) + 5;

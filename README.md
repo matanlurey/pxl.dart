@@ -34,7 +34,7 @@ import 'package:pxl/pxl.dart';
 
 ## Features
 
-![Example](https://github.com/user-attachments/assets/5d8a97c5-d9d8-4c60-852c-bfd043f1634b)
+![Example](https://github.com/user-attachments/assets/91c33e94-707e-40e0-a420-cd51ac74dbed)
 
 - Create and manipulate in-memory integer or floating-point pixel buffers.
 - Define and convert between pixel formats.
