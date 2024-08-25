@@ -6,7 +6,7 @@ presets:
     reporter: github
   
   # Runs the tests on both the VM and in a JS VM.
-  test:
+  all:
     platforms:
       - vm
       - node
