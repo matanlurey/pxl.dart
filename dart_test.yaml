@@ -4,6 +4,12 @@ presets:
   # Runs VM-specific tests and captures coverage.
   coverage:
     reporter: github
+  
+  # Runs the tests on both the VM and in a JS VM.
+  test:
+    platforms:
+      - vm
+      - node
 
 platforms:
   - vm

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:pxl/pxl.dart';
+import 'package:pxl/src/internal.dart';
 
 import 'src/prelude.dart';
 
@@ -128,7 +129,12 @@ void main() {
       final b = IntPixels(2, 3);
       final diff = a.compare(b);
       check(diff.difference).equals(1.0);
-      check(diff.toString()).contains('1.0');
+
+      if (isJsRuntime) {
+        check(diff.toString()).contains('1');
+      } else {
+        check(diff.toString()).contains('1.0');
+      }
     });
 
     test('different data returns difference = 1.0', () {
