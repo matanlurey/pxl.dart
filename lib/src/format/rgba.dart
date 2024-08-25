@@ -230,24 +230,4 @@ abstract final class _Rgba8x4Int extends Rgba<int, int> with _Rgb8Int {
   @override
   @nonVirtual
   int getAlpha(int pixel) => (pixel >> _offsetAlpha) & 0xFF;
-
-  @override
-  int fromAbgr8888(int pixel) {
-    return create(
-      red: abgr8888.getRed(pixel),
-      green: abgr8888.getGreen(pixel),
-      blue: abgr8888.getBlue(pixel),
-      alpha: abgr8888.getAlpha(pixel),
-    );
-  }
-
-  @override
-  int toAbgr8888(int pixel) {
-    return abgr8888.create(
-      red: getRed(pixel),
-      green: getGreen(pixel),
-      blue: getBlue(pixel),
-      alpha: getAlpha(pixel),
-    );
-  }
 }
