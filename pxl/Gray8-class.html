@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the Rgb888 class from the pxl library, for the Dart programming language.">
-  <title>Rgb888 class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the Gray8 class from the pxl library, for the Dart programming language.">
+  <title>Gray8 class - pxl library - Dart API</title>
 
 
   
@@ -30,9 +30,9 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">pxl</a></li>
     <li><a href="../pxl/pxl-library.html">pxl.dart</a></li>
-    <li class="self-crumb">Rgb888 class</li>
+    <li class="self-crumb">Gray8 class</li>
   </ol>
-  <div class="self-name">Rgb888</div>
+  <div class="self-name">Gray8</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,9 +54,9 @@
     id="dartdoc-main-content"
     class="main-content"
     data-above-sidebar="pxl&#47;pxl-library-sidebar.html"
-    data-below-sidebar="pxl&#47;Rgb888-class-sidebar.html">
+    data-below-sidebar="pxl&#47;Gray8-class-sidebar.html">
     <div>
-<h1><span class="kind-class">Rgb888</span> class 
+<h1><span class="kind-class">Gray8</span> class 
     <a href="https://dart.dev/language/class-modifiers#final" class="feature feature-final" title="This class can neither be extended, implemented, nor mixed in.">final</a>
  
     <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
@@ -64,9 +64,8 @@
 
     
 <section class="desc markdown">
-  <p>24-bit<code>^1</code> RGB pixel format with three 8-bit channels.</p>
-<p>For a singleton instance of this class, and further details, see <a href="../pxl/rgb888-constant.html">rgb888</a>.</p>
-<p><code>^1</code>: The 24-bit RGB format is a 32-bit format with 8 unused bits.</p>
+  <p>8-bit grayscale pixel format.</p>
+<p>For a singleton instance of this class, and further details, see <a href="../pxl/gray8-constant.html">gray8</a>.</p>
 </section>
 
 
@@ -78,8 +77,7 @@
     <ul class="gt-separated dark clazz-relationships">
       <li><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object-class.html">Object</a></li>
         <li><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>&gt;</span></li>
-        <li><a href="../pxl/Rgb-class.html">Rgb</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>&gt;</span></li>
-      <li>Rgb888</li>
+      <li>Gray8</li>
     </ul>
   </dd>
 
@@ -102,31 +100,19 @@
     <h2>Properties</h2>
     <dl class="properties">
         <dt id="black" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb/black.html">black</a></span>
+  <span class="name"><a href="../pxl/Gray8/black.html">black</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   
 
 </dt>
 <dd class="inherited">
-  Black color with full transparency.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="blue" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb/blue.html">blue</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  Blue color with full transparency.
+  Black pixel.
   <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="bytesPerPixel" class="property">
-  <span class="name"><a href="../pxl/Rgb888/bytesPerPixel.html">bytesPerPixel</a></span>
+  <span class="name"><a href="../pxl/Gray8/bytesPerPixel.html">bytesPerPixel</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   
 
@@ -134,30 +120,6 @@
 <dd>
   Number of bytes required to store a single pixel in memory.
   <div class="features"><span class="feature">no setter</span><span class="feature">override</span></div>
-
-</dd>
-
-        <dt id="cyan" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb/cyan.html">cyan</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  Cyan color with full transparency.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="green" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb/green.html">green</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  Green color with full transparency.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -173,20 +135,8 @@
 
 </dd>
 
-        <dt id="magenta" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb/magenta.html">magenta</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  Magenta color with full transparency.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
         <dt id="max" class="property">
-  <span class="name"><a href="../pxl/Rgb888/max.html">max</a></span>
+  <span class="name"><a href="../pxl/Gray8/max.html">max</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   
 
@@ -197,80 +147,32 @@
 
 </dd>
 
-        <dt id="maxBlue" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb888/maxBlue.html">maxBlue</a></span>
+        <dt id="maxGray" class="property">
+  <span class="name"><a href="../pxl/Gray8/maxGray.html">maxGray</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   
 
 </dt>
-<dd class="inherited">
-  The maximum value for the blue channel.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+<dd>
+  The maximum value for the gray channel.
+  <div class="features"><span class="feature">no setter</span><span class="feature">override</span></div>
 
 </dd>
 
-        <dt id="maxGreen" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb888/maxGreen.html">maxGreen</a></span>
+        <dt id="minGray" class="property inherited">
+  <span class="name"><a href="../pxl/Gray8/minGray.html">minGray</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   
 
 </dt>
 <dd class="inherited">
-  The maximum value for the green channel.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="maxRed" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb888/maxRed.html">maxRed</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  The maximum value for the red channel.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="minBlue" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb888/minBlue.html">minBlue</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  The minimum value for the blue channel.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="minGreen" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb888/minGreen.html">minGreen</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  The minimum value for the green channel.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="minRed" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb888/minRed.html">minRed</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  The minimum value for the red channel.
+  The minimum value for the gray channel.
   <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="name" class="property">
-  <span class="name"><a href="../pxl/Rgb888/name.html">name</a></span>
+  <span class="name"><a href="../pxl/Gray8/name.html">name</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a></span>
   
 
@@ -278,18 +180,6 @@
 <dd>
   Human-readable name or description of the pixel format.
   <div class="features"><span class="feature">no setter</span><span class="feature">override</span></div>
-
-</dd>
-
-        <dt id="red" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb/red.html">red</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  Red color with full transparency.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -306,31 +196,19 @@
 </dd>
 
         <dt id="white" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb/white.html">white</a></span>
+  <span class="name"><a href="../pxl/Grayscale/white.html">white</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   
 
 </dt>
 <dd class="inherited">
-  White color with full transparency.
-  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="yellow" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb/yellow.html">yellow</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  
-
-</dt>
-<dd class="inherited">
-  Yellow color with full transparency.
+  White pixel.
   <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="zero" class="property inherited">
-  <span class="name"><a href="../pxl/Rgb888/zero.html">zero</a></span>
+  <span class="name"><a href="../pxl/Gray8/zero.html">zero</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   
 
@@ -350,7 +228,7 @@
     <h2>Methods</h2>
     <dl class="callables">
         <dt id="clamp" class="callable inherited">
-  <span class="name"><a href="../pxl/Rgb888/clamp.html">clamp</a></span><span class="signature">(<wbr><span class="parameter" id="clamp-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+  <span class="name"><a href="../pxl/Gray8/clamp.html">clamp</a></span><span class="signature">(<wbr><span class="parameter" id="clamp-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
@@ -363,7 +241,7 @@
 </dd>
 
         <dt id="compare" class="callable inherited">
-  <span class="name"><a href="../pxl/Rgb888/compare.html">compare</a></span><span class="signature">(<wbr><span class="parameter" id="compare-param-a"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">a</span>, </span><span class="parameter" id="compare-param-b"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">b</span></span>)
+  <span class="name"><a href="../pxl/Gray8/compare.html">compare</a></span><span class="signature">(<wbr><span class="parameter" id="compare-param-a"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">a</span>, </span><span class="parameter" id="compare-param-b"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">b</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span>
   </span>
   
@@ -389,7 +267,7 @@
 </dd>
 
         <dt id="copyWith" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/copyWith.html">copyWith</a></span><span class="signature">(<wbr><span class="parameter" id="copyWith-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="copyWith-param-red"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">red</span>, </span><span class="parameter" id="copyWith-param-green"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">green</span>, </span><span class="parameter" id="copyWith-param-blue"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">blue</span></span>})
+  <span class="name"><a href="../pxl/Gray8/copyWith.html">copyWith</a></span><span class="signature">(<wbr><span class="parameter" id="copyWith-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="copyWith-param-gray"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">gray</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
@@ -402,7 +280,7 @@
 </dd>
 
         <dt id="copyWithNormalized" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/copyWithNormalized.html">copyWithNormalized</a></span><span class="signature">(<wbr><span class="parameter" id="copyWithNormalized-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="copyWithNormalized-param-red"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">red</span>, </span><span class="parameter" id="copyWithNormalized-param-green"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">green</span>, </span><span class="parameter" id="copyWithNormalized-param-blue"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">blue</span></span>})
+  <span class="name"><a href="../pxl/Gray8/copyWithNormalized.html">copyWithNormalized</a></span><span class="signature">(<wbr><span class="parameter" id="copyWithNormalized-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="copyWithNormalized-param-gray"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">gray</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
@@ -415,7 +293,7 @@
 </dd>
 
         <dt id="create" class="callable inherited">
-  <span class="name"><a href="../pxl/Rgb/create.html">create</a></span><span class="signature">(<wbr>{<span class="parameter" id="create-param-red"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">red</span>, </span><span class="parameter" id="create-param-green"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">green</span>, </span><span class="parameter" id="create-param-blue"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">blue</span></span>})
+  <span class="name"><a href="../pxl/Grayscale/create.html">create</a></span><span class="signature">(<wbr>{<span class="parameter" id="create-param-gray"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a>?</span> <span class="parameter-name">gray</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
@@ -428,34 +306,34 @@
 </dd>
 
         <dt id="createNormalized" class="callable inherited">
-  <span class="name"><a href="../pxl/Rgb/createNormalized.html">createNormalized</a></span><span class="signature">(<wbr>{<span class="parameter" id="createNormalized-param-red"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span> <span class="parameter-name">red</span> = <span class="default-value">0.0</span>, </span><span class="parameter" id="createNormalized-param-green"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span> <span class="parameter-name">green</span> = <span class="default-value">0.0</span>, </span><span class="parameter" id="createNormalized-param-blue"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span> <span class="parameter-name">blue</span> = <span class="default-value">0.0</span></span>})
+  <span class="name"><a href="../pxl/Grayscale/createNormalized.html">createNormalized</a></span><span class="signature">(<wbr>{<span class="parameter" id="createNormalized-param-gray"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span> <span class="parameter-name">gray</span> = <span class="default-value">0.0</span></span>})
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
 
 </dt>
 <dd class="inherited">
-  Creates a new pixel with the given channel values normalized to the range
+  Creates a new pixel with the given channel value normalized to the range
 <code>[0.0, 1.0]</code>.
   <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
-        <dt id="distance" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/distance.html">distance</a></span><span class="signature">(<wbr><span class="parameter" id="distance-param-a"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">a</span>, </span><span class="parameter" id="distance-param-b"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">b</span></span>)
+        <dt id="distance" class="callable inherited">
+  <span class="name"><a href="../pxl/Gray8/distance.html">distance</a></span><span class="signature">(<wbr><span class="parameter" id="distance-param-a"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">a</span>, </span><span class="parameter" id="distance-param-b"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">b</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Returns the distance between two pixels in the pixel format.
-  <div class="features"><span class="feature">override</span></div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="fromAbgr8888" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/fromAbgr8888.html">fromAbgr8888</a></span><span class="signature">(<wbr><span class="parameter" id="fromAbgr8888-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+  <span class="name"><a href="../pxl/Gray8/fromAbgr8888.html">fromAbgr8888</a></span><span class="signature">(<wbr><span class="parameter" id="fromAbgr8888-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
@@ -467,54 +345,28 @@
 
 </dd>
 
-        <dt id="fromFloatRgba" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/fromFloatRgba.html">fromFloatRgba</a></span><span class="signature">(<wbr><span class="parameter" id="fromFloatRgba-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span>)
+        <dt id="fromFloatRgba" class="callable inherited">
+  <span class="name"><a href="../pxl/Grayscale/fromFloatRgba.html">fromFloatRgba</a></span><span class="signature">(<wbr><span class="parameter" id="fromFloatRgba-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Converts a pixel in the <a href="../pxl/floatRgba-constant.html">floatRgba</a> pixel format to <code>this</code> pixel format.
-  <div class="features"><span class="feature">override</span></div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
-        <dt id="getBlue" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/getBlue.html">getBlue</a></span><span class="signature">(<wbr><span class="parameter" id="getBlue-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+        <dt id="getGray" class="callable">
+  <span class="name"><a href="../pxl/Gray8/getGray.html">getGray</a></span><span class="signature">(<wbr><span class="parameter" id="getGray-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
 
 </dt>
 <dd>
-  Returns the blue channel value of the <code>pixel</code>.
-  <div class="features"><span class="feature">override</span></div>
-
-</dd>
-
-        <dt id="getGreen" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/getGreen.html">getGreen</a></span><span class="signature">(<wbr><span class="parameter" id="getGreen-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Returns the green channel value of the <code>pixel</code>.
-  <div class="features"><span class="feature">override</span></div>
-
-</dd>
-
-        <dt id="getRed" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/getRed.html">getRed</a></span><span class="signature">(<wbr><span class="parameter" id="getRed-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Returns the red channel value of the <code>pixel</code>.
+  Returns the gray channel value of the <code>pixel</code>.
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
@@ -533,7 +385,7 @@
 </dd>
 
         <dt id="toAbgr8888" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/toAbgr8888.html">toAbgr8888</a></span><span class="signature">(<wbr><span class="parameter" id="toAbgr8888-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+  <span class="name"><a href="../pxl/Gray8/toAbgr8888.html">toAbgr8888</a></span><span class="signature">(<wbr><span class="parameter" id="toAbgr8888-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
@@ -546,7 +398,7 @@
 </dd>
 
         <dt id="toFloatRgba" class="callable">
-  <span class="name"><a href="../pxl/Rgb888/toFloatRgba.html">toFloatRgba</a></span><span class="signature">(<wbr><span class="parameter" id="toFloatRgba-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+  <span class="name"><a href="../pxl/Gray8/toFloatRgba.html">toFloatRgba</a></span><span class="signature">(<wbr><span class="parameter" id="toFloatRgba-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Float32x4-class.html">Float32x4</a></span>
   </span>
   
@@ -612,7 +464,7 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">pxl</a></li>
     <li><a href="../pxl/pxl-library.html">pxl</a></li>
-    <li class="self-crumb">Rgb888 class</li>
+    <li class="self-crumb">Gray8 class</li>
 </ol>
 
 

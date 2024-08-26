@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the PixelFormat class from the pxl library, for the Dart programming language.">
-  <title>PixelFormat class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the Grayscale mixin from the pxl library, for the Dart programming language.">
+  <title>Grayscale mixin - pxl library - Dart API</title>
 
 
   
@@ -30,9 +30,9 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">pxl</a></li>
     <li><a href="../pxl/pxl-library.html">pxl.dart</a></li>
-    <li class="self-crumb">PixelFormat<span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span> class</li>
+    <li class="self-crumb">Grayscale<span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span> mixin</li>
   </ol>
-  <div class="self-name">PixelFormat</div>
+  <div class="self-name">Grayscale</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,71 +54,70 @@
     id="dartdoc-main-content"
     class="main-content"
     data-above-sidebar="pxl&#47;pxl-library-sidebar.html"
-    data-below-sidebar="pxl&#47;PixelFormat-class-sidebar.html">
+    data-below-sidebar="pxl&#47;Grayscale-mixin-sidebar.html">
     <div>
-<h1><span class="kind-class">PixelFormat&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span> class 
-    <a href="https://dart.dev/language/class-modifiers#abstract" class="feature feature-abstract" title="This type can not be directly constructed.">abstract</a>
+<h1><span class="kind-mixin">Grayscale&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span> mixin 
     <a href="https://dart.dev/language/class-modifiers#base" class="feature feature-base" title="This class or mixin can only be extended (not implemented or mixed in).">base</a>
-    <a href="https://dart.dev/language/mixins" class="feature feature-mixin" title="This class can be used as a class and a mixin.">mixin</a>
  
-    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
 </h1></div>
 
     
 <section class="desc markdown">
-  <p>Describes the organization and characteristics of pixel data <code>P</code> in memory.</p>
-<p>A pixel format is essentially a set of rules and static-like methods that
-define how to work with pixels of a specific format without requiring boxing
-of pixels. Several built-in pixel formats are provided, such as <a href="../pxl/abgr8888-constant.html">abgr8888</a>
-and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
-<p>///</p>
+  <p>A mixin for pixel formats that represent <em>graysacle</em> pixels.</p>
 </section>
 
 
-    <section>
-      <dl class="dl-horizontal">
-        
+      <section>
+        <dl class="dl-horizontal">
 
-        
-        
+          
 
-          <dt>Implementers</dt>
-          <dd><ul class="comma-separated clazz-relationships">
-              <li><a href="../pxl/Gray8-class.html">Gray8</a></li>
-              <li><a href="../pxl/Grayscale-mixin.html">Grayscale</a></li>
-              <li><a href="../pxl/IndexedFormat-class.html">IndexedFormat</a></li>
-              <li><a href="../pxl/Rgb-class.html">Rgb</a></li>
-          </ul></dd>
-
-
-        
-  <dt>Annotations</dt>
+          
+  <dt>Implemented types</dt>
   <dd>
-    <ul class="annotation-list clazz-relationships">
-        <li>@<a href="https://pub.dev/documentation/meta/1.15.0/meta/immutable-constant.html">immutable</a></li>
+    <ul class="comma-separated mixin-relationships">
+        <li><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span></li>
     </ul>
   </dd>
 
+            <dt>Mixin Applications</dt>
+            <dd>
+              <ul class="comma-separated mixin-relationships">
+                <li><a href="../pxl/Gray8-class.html">Gray8</a></li>
+              </ul>
+            </dd>
 
-      </dl>
-    </section>
+          
+        </dl>
+      </section>
 
-    
     
   <section
       class="summary offset-anchor"
       id="instance-properties">
     <h2>Properties</h2>
     <dl class="properties">
-        <dt id="bytesPerPixel" class="property">
+        <dt id="black" class="property">
+  <span class="name"><a href="../pxl/Grayscale/black.html">black</a></span>
+  <span class="signature">&#8594; P</span>
+  
+
+</dt>
+<dd>
+  Black pixel.
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="bytesPerPixel" class="property inherited">
   <span class="name"><a href="../pxl/PixelFormat/bytesPerPixel.html">bytesPerPixel</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Number of bytes required to store a single pixel in memory.
-  <div class="features"><span class="feature">no setter</span></div>
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -134,27 +133,51 @@ and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
 
 </dd>
 
-        <dt id="max" class="property">
+        <dt id="max" class="property inherited">
   <span class="name"><a href="../pxl/PixelFormat/max.html">max</a></span>
   <span class="signature">&#8594; P</span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   The maximum value for the pixel format.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="maxGray" class="property">
+  <span class="name"><a href="../pxl/Grayscale/maxGray.html">maxGray</a></span>
+  <span class="signature">&#8594; C</span>
+  
+
+</dt>
+<dd>
+  The maximum value for the gray channel.
   <div class="features"><span class="feature">no setter</span></div>
 
 </dd>
 
-        <dt id="name" class="property">
+        <dt id="minGray" class="property">
+  <span class="name"><a href="../pxl/Grayscale/minGray.html">minGray</a></span>
+  <span class="signature">&#8594; C</span>
+  
+
+</dt>
+<dd>
+  The minimum value for the gray channel.
+  <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="name" class="property inherited">
   <span class="name"><a href="../pxl/PixelFormat/name.html">name</a></span>
   <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a></span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Human-readable name or description of the pixel format.
-  <div class="features"><span class="feature">no setter</span></div>
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -170,15 +193,27 @@ and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
 
 </dd>
 
-        <dt id="zero" class="property">
-  <span class="name"><a href="../pxl/PixelFormat/zero.html">zero</a></span>
+        <dt id="white" class="property">
+  <span class="name"><a href="../pxl/Grayscale/white.html">white</a></span>
   <span class="signature">&#8594; P</span>
   
 
 </dt>
 <dd>
-  The zero, or minimum, value for the pixel format.
+  White pixel.
   <div class="features"><span class="feature">no setter</span></div>
+
+</dd>
+
+        <dt id="zero" class="property inherited">
+  <span class="name"><a href="../pxl/PixelFormat/zero.html">zero</a></span>
+  <span class="signature">&#8594; P</span>
+  
+
+</dt>
+<dd class="inherited">
+  The zero, or minimum, value for the pixel format.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -190,47 +225,47 @@ and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
       id="instance-methods">
     <h2>Methods</h2>
     <dl class="callables">
-        <dt id="clamp" class="callable">
+        <dt id="clamp" class="callable inherited">
   <span class="name"><a href="../pxl/PixelFormat/clamp.html">clamp</a></span><span class="signature">(<wbr><span class="parameter" id="clamp-param-pixel"><span class="type-annotation">P</span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; P</span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Clamps a <code>pixel</code> to the valid range of values for the pixel format.
-  
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
-        <dt id="compare" class="callable">
+        <dt id="compare" class="callable inherited">
   <span class="name"><a href="../pxl/PixelFormat/compare.html">compare</a></span><span class="signature">(<wbr><span class="parameter" id="compare-param-a"><span class="type-annotation">P</span> <span class="parameter-name">a</span>, </span><span class="parameter" id="compare-param-b"><span class="type-annotation">P</span> <span class="parameter-name">b</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Compares two pixels in the pixel format.
-  
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
-        <dt id="convert" class="callable">
+        <dt id="convert" class="callable inherited">
   <span class="name"><a href="../pxl/PixelFormat/convert.html">convert</a></span><span class="signature">&lt;<wbr><span class="type-parameter">R</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="convert-param-pixel"><span class="type-annotation">R</span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="convert-param-from"><span>required</span> <span class="type-annotation"><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter">R</span>, <span class="type-parameter">void</span>&gt;</span></span> <span class="parameter-name">from</span></span>})
     <span class="returntype parameter">&#8594; P</span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Converts a pixel <code>from</code> one another format <em>to</em> <code>this</code> format.
-  
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="copyWith" class="callable">
-  <span class="name"><a href="../pxl/PixelFormat/copyWith.html">copyWith</a></span><span class="signature">(<wbr><span class="parameter" id="copyWith-param-pixel"><span class="type-annotation">P</span> <span class="parameter-name">pixel</span></span>)
+  <span class="name"><a href="../pxl/Grayscale/copyWith.html">copyWith</a></span><span class="signature">(<wbr><span class="parameter" id="copyWith-param-pixel"><span class="type-annotation">P</span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="copyWith-param-gray"><span class="type-annotation">C?</span> <span class="parameter-name">gray</span></span>})
     <span class="returntype parameter">&#8594; P</span>
   </span>
   
@@ -238,12 +273,12 @@ and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
 </dt>
 <dd>
   Returns a copy of the <code>pixel</code>.
-  
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
         <dt id="copyWithNormalized" class="callable">
-  <span class="name"><a href="../pxl/PixelFormat/copyWithNormalized.html">copyWithNormalized</a></span><span class="signature">(<wbr><span class="parameter" id="copyWithNormalized-param-pixel"><span class="type-annotation">P</span> <span class="parameter-name">pixel</span></span>)
+  <span class="name"><a href="../pxl/Grayscale/copyWithNormalized.html">copyWithNormalized</a></span><span class="signature">(<wbr><span class="parameter" id="copyWithNormalized-param-pixel"><span class="type-annotation">P</span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="copyWithNormalized-param-gray"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a>?</span> <span class="parameter-name">gray</span></span>})
     <span class="returntype parameter">&#8594; P</span>
   </span>
   
@@ -251,38 +286,65 @@ and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
 </dt>
 <dd>
   Returns a copy of the <code>pixel</code> with normalized values.
-  
+  <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
-        <dt id="distance" class="callable">
-  <span class="name"><a href="../pxl/PixelFormat/distance.html">distance</a></span><span class="signature">(<wbr><span class="parameter" id="distance-param-a"><span class="type-annotation">P</span> <span class="parameter-name">a</span>, </span><span class="parameter" id="distance-param-b"><span class="type-annotation">P</span> <span class="parameter-name">b</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Returns the distance between two pixels in the pixel format.
-  
-
-</dd>
-
-        <dt id="fromAbgr8888" class="callable">
-  <span class="name"><a href="../pxl/PixelFormat/fromAbgr8888.html">fromAbgr8888</a></span><span class="signature">(<wbr><span class="parameter" id="fromAbgr8888-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+        <dt id="create" class="callable">
+  <span class="name"><a href="../pxl/Grayscale/create.html">create</a></span><span class="signature">(<wbr>{<span class="parameter" id="create-param-gray"><span class="type-annotation">C?</span> <span class="parameter-name">gray</span></span>})
     <span class="returntype parameter">&#8594; P</span>
   </span>
   
 
 </dt>
 <dd>
-  Converts a pixel in the <a href="../pxl/abgr8888-constant.html">abgr8888</a> pixel format to <code>this</code> pixel format.
+  Creates a new pixel with the given channel values.
   
 
 </dd>
 
+        <dt id="createNormalized" class="callable">
+  <span class="name"><a href="../pxl/Grayscale/createNormalized.html">createNormalized</a></span><span class="signature">(<wbr>{<span class="parameter" id="createNormalized-param-gray"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span> <span class="parameter-name">gray</span> = <span class="default-value">0.0</span></span>})
+    <span class="returntype parameter">&#8594; P</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Creates a new pixel with the given channel value normalized to the range
+<code>[0.0, 1.0]</code>.
+  
+
+</dd>
+
+        <dt id="distance" class="callable inherited">
+  <span class="name"><a href="../pxl/PixelFormat/distance.html">distance</a></span><span class="signature">(<wbr><span class="parameter" id="distance-param-a"><span class="type-annotation">P</span> <span class="parameter-name">a</span>, </span><span class="parameter" id="distance-param-b"><span class="type-annotation">P</span> <span class="parameter-name">b</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/double-class.html">double</a></span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Returns the distance between two pixels in the pixel format.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="fromAbgr8888" class="callable inherited">
+  <span class="name"><a href="../pxl/PixelFormat/fromAbgr8888.html">fromAbgr8888</a></span><span class="signature">(<wbr><span class="parameter" id="fromAbgr8888-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span>)
+    <span class="returntype parameter">&#8594; P</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Converts a pixel in the <a href="../pxl/abgr8888-constant.html">abgr8888</a> pixel format to <code>this</code> pixel format.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
         <dt id="fromFloatRgba" class="callable">
-  <span class="name"><a href="../pxl/PixelFormat/fromFloatRgba.html">fromFloatRgba</a></span><span class="signature">(<wbr><span class="parameter" id="fromFloatRgba-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span>)
+  <span class="name"><a href="../pxl/Grayscale/fromFloatRgba.html">fromFloatRgba</a></span><span class="signature">(<wbr><span class="parameter" id="fromFloatRgba-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; P</span>
   </span>
   
@@ -290,6 +352,19 @@ and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
 </dt>
 <dd>
   Converts a pixel in the <a href="../pxl/floatRgba-constant.html">floatRgba</a> pixel format to <code>this</code> pixel format.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="getGray" class="callable">
+  <span class="name"><a href="../pxl/Grayscale/getGray.html">getGray</a></span><span class="signature">(<wbr><span class="parameter" id="getGray-param-pixel"><span class="type-annotation">P</span> <span class="parameter-name">pixel</span></span>)
+    <span class="returntype parameter">&#8594; C</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Returns the gray channel value of the <code>pixel</code>.
   
 
 </dd>
@@ -307,42 +382,42 @@ and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
 
 </dd>
 
-        <dt id="toAbgr8888" class="callable">
+        <dt id="toAbgr8888" class="callable inherited">
   <span class="name"><a href="../pxl/PixelFormat/toAbgr8888.html">toAbgr8888</a></span><span class="signature">(<wbr><span class="parameter" id="toAbgr8888-param-pixel"><span class="type-annotation">P</span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Converts a pixel in <code>this</code> pixel format to the <a href="../pxl/abgr8888-constant.html">abgr8888</a> pixel format.
-  
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
-        <dt id="toFloatRgba" class="callable">
+        <dt id="toFloatRgba" class="callable inherited">
   <span class="name"><a href="../pxl/PixelFormat/toFloatRgba.html">toFloatRgba</a></span><span class="signature">(<wbr><span class="parameter" id="toFloatRgba-param-pixel"><span class="type-annotation">P</span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Float32x4-class.html">Float32x4</a></span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Converts a pixel in <code>this</code> pixel format to the <a href="../pxl/floatRgba-constant.html">floatRgba</a> pixel format.
-  
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
-        <dt id="toString" class="callable">
-  <span class="name"><a href="../pxl/PixelFormat/toString.html">toString</a></span><span class="signature">(<wbr>)
+        <dt id="toString" class="callable inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a></span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   A string representation of this object.
-  <div class="features"><span class="feature">override</span></div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -373,11 +448,10 @@ and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
     
     
 
+</div> <!-- /.main-content -->
 
-  </div> <!-- /.main-content -->
-
-  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -387,16 +461,16 @@ and <a href="../pxl/floatRgba-constant.html">floatRgba</a>.</p>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">pxl</a></li>
     <li><a href="../pxl/pxl-library.html">pxl</a></li>
-    <li class="self-crumb">PixelFormat<span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span> class</li>
+    <li class="self-crumb">Grayscale<span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span> mixin</li>
 </ol>
 
 
-    <h5>pxl library</h5>
-    <div id="dartdoc-sidebar-left-content"></div>
-  </div>
+  <h5>pxl library</h5>
+  <div id="dartdoc-sidebar-left-content"></div>
+</div>
 
-  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
-  </div><!--/.sidebar-offcanvas-->
+<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
 
 </main>
 

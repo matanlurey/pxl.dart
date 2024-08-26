@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the fromFloatRgba method from the Rgb class, for the Dart programming language.">
-  <title>fromFloatRgba method - Rgb class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the create method from the Grayscale mixin, for the Dart programming language.">
+  <title>create method - Grayscale mixin - pxl library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
-    <li><a href="../../pxl/Rgb-class.html">Rgb<span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span></a></li>
-    <li class="self-crumb">fromFloatRgba method</li>
+    <li><a href="../../pxl/Grayscale-mixin.html">Grayscale<span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span></a></li>
+    <li class="self-crumb">create method</li>
   </ol>
-  <div class="self-name">fromFloatRgba</div>
+  <div class="self-name">create</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,36 +54,30 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="pxl&#47;Rgb-class-sidebar.html"
+    data-above-sidebar="pxl&#47;Grayscale-mixin-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">fromFloatRgba</span> method 
+<h1><span class="kind-method">create</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
-  <div>
-    <ol class="annotation-list">
-        <li>@<a href="https://api.dart.dev/stable/3.5.1/dart-core/override-constant.html">override</a></li>
-    </ol>
-  </div>
 
 <span class="returntype">P</span>
-<span class="name ">fromFloatRgba</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fromFloatRgba-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span></li>
-</ol>)
+<span class="name ">create</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="create-param-gray"><span class="type-annotation">C?</span> <span class="parameter-name">gray</span>, </span></li>
+</ol>})
 
-      <div class="features"><span class="feature">override</span></div>
+      
 
     </section>
     
 <section class="desc markdown">
-  <p>Converts a pixel in the <a href="../../pxl/floatRgba-constant.html">floatRgba</a> pixel format to <code>this</code> pixel format.</p>
-<p>FLOAT_RGBA is used as the canonical floating-point pixel format, and this
-method guarantees that all pixel formats can be converted from it. Loss of
-precision may occur when converting from a higher-precision format.</p>
+  <p>Creates a new pixel with the given channel values.</p>
+<p>The <code>gray</code> value is optional.</p>
+<p>If omitted, the channel value is set to the minimum value.</p>
 <h2 id="example">Example</h2>
-<pre class="language-dart"><code class="language-dart">print(abgr8888.fromFloatRgba(floatRgba.red)); // 0xFFFF0000
-print(abgr8888.fromFloatRgba(floatRgba.white)); // 0xFFFFFFFF
+<pre class="language-dart"><code class="language-dart">// Creating a full gray pixel.
+final pixel = grayscale.create(gray: 0xFF);
 </code></pre>
 </section>
 
@@ -91,15 +85,7 @@ print(abgr8888.fromFloatRgba(floatRgba.white)); // 0xFFFFFFFF
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">@override
-P fromFloatRgba(Float32x4 pixel) {
-  return copyWithNormalized(
-    zero,
-    red: pixel.x,
-    green: pixel.y,
-    blue: pixel.z,
-  );
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">P create({C? gray}) =&gt; copyWith(zero, gray: gray ?? minGray);</code></pre>
 </section>
 
 
@@ -116,12 +102,12 @@ P fromFloatRgba(Float32x4 pixel) {
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
-    <li><a href="../../pxl/Rgb-class.html">Rgb<span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span></a></li>
-    <li class="self-crumb">fromFloatRgba method</li>
+    <li><a href="../../pxl/Grayscale-mixin.html">Grayscale<span class="signature">&lt;<wbr><span class="type-parameter">P</span>, <span class="type-parameter">C</span>&gt;</span></a></li>
+    <li class="self-crumb">create method</li>
 </ol>
 
 
-    <h5>Rgb class</h5>
+    <h5>Grayscale mixin</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 

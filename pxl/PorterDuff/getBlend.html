@@ -90,7 +90,9 @@ T Function(S src, T dst) getBlend&lt;S, T&gt;(
   PixelFormat&lt;S, void&gt; srcFormat,
   PixelFormat&lt;T, void&gt; dstFormat,
 ) {
-  if (identical(srcFormat, floatRgba) &amp;&amp; identical(dstFormat, floatRgba)) {
+  &#47;&#47; Intentionally ignore the type check, we&#39;re performing it implicitly.
+  &#47;&#47; ignore: unrelated_type_equality_checks
+  if (srcFormat == floatRgba &amp;&amp; dstFormat == floatRgba) {
     return _blendFloatRgba as T Function(S src, T dst);
   }
   return (src, dst) {

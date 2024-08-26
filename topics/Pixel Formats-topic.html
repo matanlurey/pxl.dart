@@ -100,12 +100,18 @@ scaled to <code>0xFF</code> when converting to 8-bit.</p>
 <td>4 channels @ 8 bits each</td>
 </tr>
 <tr>
+<td><a href="../pxl/gray8-constant.html">gray8</a></td>
+<td>8</td>
+<td>1 channel @ 8 bits</td>
+</tr>
+<tr>
 <td><a href="../pxl/rgba8888-constant.html">rgba8888</a></td>
 <td>32</td>
 <td>4 channels @ 8 bits each</td>
 </tr>
 </tbody>
 </table>
+<p>Grayscale formats use <em>luminance</em> values to represent color.</p>
 <h2 id="floating-point-pixel-formats">Floating-point pixel formats</h2>
 <p>All floating-point formats use the RGBA 128-bit format as a common intermediate
 for conversions; channels that are larger or smaller than 32 bits are scaled to
@@ -192,6 +198,15 @@ final mono1 = IndexedPixelFormat.bits8(
 </dt>
 <dd>
   A 128-bit floating-point RGBA pixel format with four 32-bit channels.
+</dd>
+
+      <dt id="Gray8">
+  <span class="name "><a href="../pxl/Gray8-class.html">Gray8</a></span> 
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  8-bit grayscale pixel format.
 </dd>
 
       <dt id="IndexedFormat">
@@ -287,6 +302,19 @@ final mono1 = IndexedPixelFormat.bits8(
 
 </dd>
 
+      <dt id="gray8" class="constant">
+    <span class="name "><a href="../pxl/gray8-constant.html">gray8</a></span>
+  <span class="signature">&#8594; const <a href="../pxl/Gray8-class.html">Gray8</a></span>
+  
+    <span class="category pixel-formats cp-1 linked" title="This is part of the Pixel Formats topic."><a href="../topics/Pixel Formats-topic.html">Pixel&nbsp;Formats</a></span>
+
+</dt>
+<dd>
+  8-bit grayscale pixel format.
+  
+
+</dd>
+
       <dt id="rgb888" class="constant">
     <span class="name "><a href="../pxl/rgb888-constant.html">rgb888</a></span>
   <span class="signature">&#8594; const <a href="../pxl/Rgb888-class.html">Rgb888</a></span>
@@ -377,6 +405,7 @@ final mono1 = IndexedPixelFormat.bits8(
       <li><a href="../pxl/Abgr8888-class.html">Abgr8888</a></li>
       <li><a href="../pxl/Argb8888-class.html">Argb8888</a></li>
       <li><a href="../pxl/FloatRgba-class.html">FloatRgba</a></li>
+      <li><a href="../pxl/Gray8-class.html">Gray8</a></li>
       <li><a href="../pxl/IndexedFormat-class.html">IndexedFormat</a></li>
       <li><a href="../pxl/PixelFormat-class.html">PixelFormat</a></li>
       <li><a href="../pxl/Rgb-class.html">Rgb</a></li>
@@ -390,6 +419,7 @@ final mono1 = IndexedPixelFormat.bits8(
       <li><a href="../pxl/abgr8888-constant.html">abgr8888</a></li>
       <li><a href="../pxl/argb8888-constant.html">argb8888</a></li>
       <li><a href="../pxl/floatRgba-constant.html">floatRgba</a></li>
+      <li><a href="../pxl/gray8-constant.html">gray8</a></li>
       <li><a href="../pxl/rgb888-constant.html">rgb888</a></li>
 
     <li class="section-title"><a href="../topics/Pixel Formats-topic.html#properties">Properties</a></li>
