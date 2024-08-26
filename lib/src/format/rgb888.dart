@@ -90,6 +90,16 @@ final class Rgb888 extends Rgb<int, int> with _Rgb8Int {
   }
 
   @override
+  int fromFloatRgba(Float32x4 pixel) {
+    return copyWithNormalized(
+      zero,
+      red: pixel.x,
+      green: pixel.y,
+      blue: pixel.z,
+    );
+  }
+
+  @override
   int getRed(int pixel) => (pixel >> 16) & 0xFF;
 
   @override

@@ -54,7 +54,9 @@ final class PorterDuff implements BlendMode {
     PixelFormat<S, void> srcFormat,
     PixelFormat<T, void> dstFormat,
   ) {
-    if (identical(srcFormat, floatRgba) && identical(dstFormat, floatRgba)) {
+    // Intentionally ignore the type check, we're performing it implicitly.
+    // ignore: unrelated_type_equality_checks
+    if (srcFormat == floatRgba && dstFormat == floatRgba) {
       return _blendFloatRgba as T Function(S src, T dst);
     }
     return (src, dst) {

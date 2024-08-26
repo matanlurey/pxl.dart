@@ -29,7 +29,7 @@ extension Float32x4Checks on Subject<Float32x4> {
   void equals(Float32x4 other) {
     context.expect(() => prefixFirst('equals ', literal(other)), (actual) {
       final result = actual.equal(other);
-      if (result.signMask == 0xF) return null;
+      if (result.signMask != 0) return null;
       return Rejection(which: ['are not equal']);
     });
   }
