@@ -144,16 +144,6 @@ abstract final class Rgb<P, C> extends PixelFormat<P, C> {
 
   /// Returns the blue channel value of the [pixel].
   C getBlue(P pixel);
-
-  @override
-  P fromFloatRgba(Float32x4 pixel) {
-    return copyWithNormalized(
-      zero,
-      red: pixel.x,
-      green: pixel.y,
-      blue: pixel.z,
-    );
-  }
 }
 
 base mixin _Rgb8Int on Rgb<int, int> {

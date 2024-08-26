@@ -37,11 +37,15 @@ Name         | Bits per pixel | Description
 ------------ | -------------- | ------------------------------------------------
 [abgr8888][] | 32             | 4 channels @ 8 bits each
 [argb8888][] | 32             | 4 channels @ 8 bits each
+[gray8][]    | 8              | 1 channel @ 8 bits
 [rgba8888][] | 32             | 4 channels @ 8 bits each
 
 [abgr8888]: ../pxl/abgr8888-constant.html
 [argb8888]: ../pxl/argb8888-constant.html
+[gray8]: ../pxl/gray8-constant.html
 [rgba8888]: ../pxl/rgba8888-constant.html
+
+Grayscale formats use _luminance_ values to represent color.
 
 ## Floating-point pixel formats
 

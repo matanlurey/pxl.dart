@@ -87,10 +87,12 @@ final _pngSignature = Uint8List(8)
   ..[7] = 0x0A;
 
 Uint8List _encodeUncompressedPng(Buffer<int> pixels) {
+  // coverage:ignore-start
   assert(
     pixels.format == abgr8888,
     'Unsupported pixel format: ${pixels.format}',
   );
+  // coverage:ignore-end
   final output = BytesBuilder(copy: false);
 
   // Write the PNG signature (https://www.w3.org/TR/png-3/#3PNGsignature).

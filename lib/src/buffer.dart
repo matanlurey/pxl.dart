@@ -135,7 +135,7 @@ abstract base mixin class Buffer<T> {
   /// print(converted.data); // [0xFFFF0000, 0xFF00FF00, 0xFF0000FF]
   /// ```
   Buffer<R> mapConvert<R>(PixelFormat<R, void> format) {
-    if (identical(this.format, format)) {
+    if (format == this.format) {
       return this as Buffer<R>;
     }
     return _MapBuffer(

@@ -229,7 +229,7 @@ void main() {
 
   test('buffer.format is pixels.format', () {
     final buffer = IntPixels(2, 2).mapRect(Rect.fromLTWH(1, 1, 1, 1));
-    check(buffer.format).identicalTo(abgr8888);
+    check(buffer.format).equals(abgr8888);
   });
 
   test('buffer.getUnsafe maps to pixels.getUnsafe', () {

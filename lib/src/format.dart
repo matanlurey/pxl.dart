@@ -6,6 +6,8 @@ import 'package:pxl/src/internal.dart';
 part 'format/abgr8888.dart';
 part 'format/argb8888.dart';
 part 'format/float_rgba.dart';
+part 'format/gray8.dart';
+part 'format/grayscale.dart';
 part 'format/indexed.dart';
 part 'format/rgb.dart';
 part 'format/rgb888.dart';
@@ -198,4 +200,21 @@ abstract base mixin class PixelFormat<P, C> {
 
   @override
   String toString() => name;
+}
+
+/// Converts RGB channels to a gray luminance value.
+///
+/// The resulting value is in the range `[0, 255]`.
+int _luminanceRgb888(int r, int g, int b) {
+  final weightedSum = (r & 0xFF) * 76 + (g & 0xFF) * 150 + (b & 0xFF) * 29;
+  return weightedSum ~/ 0xFF;
+}
+
+/// Converts floating-point RGB channels to a gray luminance value.
+///
+/// The resulting value is in the range `[0.0, 1.0]`.
+(double gray, double alpha) _luminanceFloatRgba(Float32x4 pixel) {
+  final product = pixel * Float32x4(76 / 0xFF, 150 / 0xFF, 29 / 0xFF, 0.0);
+  final weightedSum = product.x + product.y + product.z;
+  return (weightedSum, pixel.w);
 }
