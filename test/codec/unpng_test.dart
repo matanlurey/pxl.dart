@@ -1,6 +1,6 @@
 import 'package:pxl/pxl.dart';
 
-import 'src/prelude.dart';
+import '../src/prelude.dart';
 
 void main() {
   test('width must be at least 1', () {

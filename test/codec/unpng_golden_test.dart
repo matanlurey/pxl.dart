@@ -5,7 +5,7 @@ import 'dart:io' as io;
 import 'dart:typed_data';
 import 'package:path/path.dart' as p;
 import 'package:pxl/pxl.dart';
-import 'src/prelude.dart';
+import '../src/prelude.dart';
 
 final _updateGoldens = () {
   return switch (io.Platform.environment['UPDATE_GOLDENS']?.toUpperCase()) {

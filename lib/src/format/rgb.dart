@@ -182,4 +182,9 @@ base mixin _Rgb8Int on Rgb<int, int> {
   @override
   @nonVirtual
   int get maxBlue => 0xFF;
+
+  @override
+  String describe(int pixel) {
+    return '0x${pixel.toRadixString(16).padLeft(max.bitLength ~/ 4, '0')}';
+  }
 }

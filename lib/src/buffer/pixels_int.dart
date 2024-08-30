@@ -86,4 +86,7 @@ final class IntPixels extends Pixels<int> {
 
   @override
   final TypedDataList<int> data;
+
+  @override
+  String get _typeName => 'IntPixels';
 }

@@ -11,6 +11,14 @@ import 'package:pxl/pxl.dart';
 
 /// Encodes a buffer of integer pixel data as an uncompressed RGBA PNG image.
 ///
+/// {@category Output and Comparison}
+const uncompressedPngEncoder = UncompressedPngEncoder._();
+
+/// Encodes a buffer of pixel data as an uncompressed RGBA PNG image with 8-bit
+/// color depth.
+///
+/// A singleton instance of this class is available as [uncompressedPngEncoder].
+///
 /// This encoder is intentionally minimal and does not support all features of
 /// the PNG format. It's primary purpose is to provide a zero-dependency way to
 /// visualize and persist pixel data in a standard format, i.e. for debugging
@@ -40,15 +48,7 @@ import 'package:pxl/pxl.dart';
 /// [3]: https://pub.dev/documentation/image/latest/image/PngEncoder-class.html
 ///
 /// {@category Output and Comparison}
-const uncompressedPngEncoder = UncompressedPngEncoder._();
-
-/// Encodes a buffer of pixel data as an uncompressed RGBA PNG image with 8-bit
-/// color depth.
-///
-/// A singleton instance of this class is available as [uncompressedPngEncoder].
-///
-/// {@category Output and Comparison}
-final class UncompressedPngEncoder extends Converter<Buffer<void>, List<int>> {
+final class UncompressedPngEncoder extends Converter<Buffer<void>, Uint8List> {
   const UncompressedPngEncoder._();
 
   /// The maximum resolution we support is 8192x8192.

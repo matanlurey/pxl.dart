@@ -23,7 +23,7 @@ part 'buffer/pixels.dart';
 /// representation of pixel data.
 ///
 /// {@category Buffers}
-abstract base mixin class Buffer<T> {
+abstract base mixin class Buffer<T extends Object?> {
   /// Format of the pixel data in the buffer.
   PixelFormat<T, void> get format;
 
@@ -222,6 +222,43 @@ abstract base mixin class Buffer<T> {
       return getRangeUnsafe(rect.topLeft, rect.bottomRight - const Pos(1, 1));
     }
     return rect.positions.map(getUnsafe);
+  }
+
+  @override
+  String toString() => bufferToLongString(this);
+
+  String get _typeName => 'Buffer';
+
+  /// Converts a [Buffer] to a string like [Buffer.toString].
+  ///
+  /// The string will be long and detailed, suitable for debugging, and even if
+  /// the dimensions of the buffer are large, the buffer will not be truncated,
+  /// which may result in a very long string for large buffers.
+  static String bufferToLongString<T>(Buffer<T> buffer) {
+    return _bufferToStringImpl(buffer);
+  }
+
+  static String _bufferToStringImpl<T>(Buffer<T> buffer) {
+    final output = StringBuffer('${buffer._typeName} {\n');
+    output.writeln('  width: ${buffer.width},');
+    output.writeln('  height: ${buffer.height},');
+    output.writeln('  format: ${buffer.format},');
+    output.writeln('  data: (${buffer.length}) [');
+
+    for (var y = 0; y < buffer.height; y++) {
+      output.write('    ');
+      for (var x = 0; x < buffer.width; x++) {
+        output.write(buffer.format.describe(buffer.getUnsafe(Pos(x, y))));
+        if (x < buffer.width - 1) {
+          output.write(', ');
+        }
+      }
+      output.writeln(',');
+    }
+
+    output.writeln('  ]');
+    output.write('}');
+    return output.toString();
   }
 }
 

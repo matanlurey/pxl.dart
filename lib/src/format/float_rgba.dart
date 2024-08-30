@@ -118,4 +118,18 @@ final class FloatRgba extends Rgba<Float32x4, double> {
 
   @override
   Float32x4 toFloatRgba(Float32x4 pixel) => pixel;
+
+  @override
+  String describe(Float32x4 pixel) {
+    final output = StringBuffer('[');
+    output.write(pixel.x.toStringAsFixed(2));
+    output.write(', ');
+    output.write(pixel.y.toStringAsFixed(2));
+    output.write(', ');
+    output.write(pixel.z.toStringAsFixed(2));
+    output.write(', ');
+    output.write(pixel.w.toStringAsFixed(2));
+    output.write(']');
+    return output.toString();
+  }
 }
