@@ -243,7 +243,7 @@ abstract final class NetpbmDecoder<T> extends Converter<T, Buffer<int>> {
   /// {@template pxl.netpbm_encoder.pixel_format}
   /// The pixel format of the decoded image.
   ///
-  /// If omitted, the pixel format defauls to [abgr8888].
+  /// If omitted, the pixel format defauls to a fully opaque [abgr8888].
   /// {@endtemplate}
   final PixelFormat<int, void> format;
 }
@@ -316,32 +316,57 @@ final class NetpbmAsciiDecoder extends NetpbmDecoder<String> {
       }
     }
 
-    final pixels = buffer.data;
-
     // Keep parsing pixels until the end of the image, skipping whitespace.
-    var i = 0;
+    var offset = 0;
     while (lines.moveNext()) {
       final line = lines.current;
-      final values = line.split(' ').map(int.tryParse).toList();
+      final values = line
+          .trim()
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .split(' ')
+          .map(int.tryParse)
+          .toList();
       if (values.any((v) => v == null)) {
         throw FormatException(
           'Invalid Netpbm image: invalid pixel value(s)',
           line,
         );
       }
-      for (final value in values) {
-        value!;
-        pixels[i++] = switch (format) {
-          NetpbmFormat.bitmap =>
-            value == 0 ? this.format.zero : this.format.max,
-          NetpbmFormat.graymap => gray8.create(gray: value),
-          NetpbmFormat.pixmap => rgb888.create(
-              red: value,
-              green: values[++i],
-              blue: values[++i],
-            ),
-        };
+
+      final Iterable<int> pixels;
+      switch (format) {
+        case NetpbmFormat.bitmap:
+          pixels = values.map(
+            (v) => v == 0 ? this.format.zero : this.format.max,
+          );
+        case NetpbmFormat.graymap:
+          pixels = values.map((v) {
+            final gray = gray8.create(gray: v);
+            return this.format.convert(gray, from: gray8);
+          });
+        case NetpbmFormat.pixmap:
+          if (values.length % 3 != 0) {
+            throw FormatException(
+              'Invalid Netpbm image: invalid pixel count',
+              line,
+            );
+          }
+          pixels = Iterable.generate(
+            values.length ~/ 3,
+            (i) {
+              final offset = i * 3;
+              final rgb = abgr8888.create(
+                red: values[offset],
+                green: values[offset + 1],
+                blue: values[offset + 2],
+              );
+              return this.format.convert(rgb, from: abgr8888);
+            },
+          );
       }
+
+      buffer.data.setAll(offset, pixels);
+      offset += pixels.length;
     }
 
     return buffer;
