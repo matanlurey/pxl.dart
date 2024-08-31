@@ -12,6 +12,7 @@ part 'buffer/map.dart';
 part 'buffer/pixels_float.dart';
 part 'buffer/pixels_int.dart';
 part 'buffer/pixels.dart';
+part 'buffer/scaled.dart';
 
 /// A 2-dimensional _view_ of pixel data [T] in memory.
 ///
@@ -169,6 +170,30 @@ abstract base mixin class Buffer<T extends Object?> {
       throw ArgumentError.value(bounds, 'bounds', 'region must be non-empty');
     }
     return _ClippedBuffer(this, result);
+  }
+
+  /// Returns a lazy buffer that scales the buffer by the given factor.
+  ///
+  /// The returned buffer will have the same dimensions as the original buffer
+  /// multiplied by the scale factor. The scale factor must be greater than 0.
+  ///
+  /// ## Example
+  ///
+  /// ```dart
+  /// final buffer = IntPixels(2, 2, data: Uint32List.fromList([
+  ///   abgr8888.red, abgr8888.green,
+  ///   abgr8888.blue, abgr8888.magenta,
+  /// ]));
+  ///
+  /// final scaled = buffer.mapScaled(2);
+  /// print(scaled.data); // [0xFFFF0000, 0xFFFF0000, 0xFF00FF00, 0xFF00FF00, 0xFF0000FF, 0xFF0000FF, 0xFFFF00FF, 0xFFFF00FF]
+  /// ```
+  Buffer<T> mapScaled(int scale) {
+    RangeError.checkNotNegative(scale, 'scale');
+    if (scale == 1) {
+      return this;
+    }
+    return _ScaledBuffer(this, scale);
   }
 
   /// Returns a lazy iterable of pixels in the buffer from [start] to [end].

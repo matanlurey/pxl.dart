@@ -159,4 +159,38 @@ void main() {
       uncompressedPngEncoder.convert(output),
     );
   });
+
+  test('blit with embedded font and scaling', () {
+    // We are going to write the word "PXL" in the terminal8x8Font.
+    // The font is stored in code page 437 tile order.
+    final $P = Pos(00, 5) * 8;
+    final $X = Pos(08, 5) * 8;
+    final $L = Pos(12, 4) * 8;
+
+    final output = IntPixels(24 * 4, 8 * 4)..fill(abgr8888.black);
+    final scaled = terminal8x8Font.mapScaled(4);
+
+    output.blit(
+      scaled,
+      target: Pos(00, 00),
+      source: Rect.fromWH(8 * 4, 8 * 4, offset: $P * 4),
+    );
+
+    output.blit(
+      scaled,
+      target: Pos(08 * 4, 00),
+      source: Rect.fromWH(8 * 4, 8 * 4, offset: $X * 4),
+    );
+
+    output.blit(
+      scaled,
+      target: Pos(16 * 4, 00),
+      source: Rect.fromWH(8 * 4, 8 * 4, offset: $L * 4),
+    );
+
+    checkOrUpdateGolden(
+      'blit_with_embedded_font_and_scaling',
+      uncompressedPngEncoder.convert(output),
+    );
+  });
 }

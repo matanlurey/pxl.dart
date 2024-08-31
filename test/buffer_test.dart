@@ -116,6 +116,40 @@ void main() {
     ).throws<ArgumentError>();
   });
 
+  test('mapScaled', () {
+    final buffer = IntPixels(
+      2,
+      2,
+      data: Uint32List.fromList([
+        abgr8888.red,
+        abgr8888.green,
+        abgr8888.blue,
+        abgr8888.cyan,
+      ]),
+    );
+    final scaled = buffer.mapScaled(2);
+    check(scaled.width).equals(4);
+    check(scaled.height).equals(4);
+    check(scaled.data).deepEquals([
+      abgr8888.red,
+      abgr8888.red,
+      abgr8888.green,
+      abgr8888.green,
+      abgr8888.red,
+      abgr8888.red,
+      abgr8888.green,
+      abgr8888.green,
+      abgr8888.blue,
+      abgr8888.blue,
+      abgr8888.cyan,
+      abgr8888.cyan,
+      abgr8888.blue,
+      abgr8888.blue,
+      abgr8888.cyan,
+      abgr8888.cyan,
+    ]);
+  });
+
   group('compare', () {
     test('different width returns difference = 1.0', () {
       final a = IntPixels(2, 2);
