@@ -1,9 +1,13 @@
 # Format: https://dart.dev/tools/pub/pubspec
 
 name: pxl
+description: |-
+  A tiny cross-platform pixel buffer and foundation for pixel-based graphics.
 version: 0.1.0-alpha
 environment:
   sdk: ^3.5.0
+
+repository: https://github.com/matanlurey/pxl.dart
 
 dependencies:
   lodim: ^0.1.4
