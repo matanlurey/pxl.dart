@@ -69,9 +69,10 @@ void main() {
     pixels.set(Pos(1, 0), abgr8888.white);
     pixels.set(Pos(2, 0), abgr8888.white);
 
-    final encoded = const NetpbmBinaryEncoder(
+    final encoded = netpbmBinaryEncoder.convert(
+      pixels,
       format: NetpbmFormat.bitmap,
-    ).convert(pixels);
+    );
     check(encoded).deepEquals(
       Uint8List.fromList([
         ...utf8.encode('P4\n3 2\n'),
@@ -109,7 +110,7 @@ void main() {
     );
 
     // Try decoding the encoded string.
-    final decoded = NetpbmBinaryDecoder(format: monochrome).convert(encoded);
+    final decoded = netpbmBinaryDecoder.convert(encoded, format: monochrome);
     check(decoded.compare(pixels).difference).equals(0.0);
   });
 
@@ -132,7 +133,7 @@ void main() {
     );
 
     // Try decoding the encoded string.
-    final decoded = NetpbmBinaryDecoder(format: gray8).convert(encoded);
+    final decoded = netpbmBinaryDecoder.convert(encoded, format: gray8);
     check(decoded.format).equals(pixels.format);
     check(decoded.compare(pixels).difference).equals(0.0);
   });

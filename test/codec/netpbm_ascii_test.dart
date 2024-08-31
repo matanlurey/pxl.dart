@@ -60,9 +60,10 @@ void main() {
     pixels.set(Pos(1, 0), abgr8888.white);
     pixels.set(Pos(2, 0), abgr8888.white);
 
-    final encoded = const NetpbmAsciiEncoder(
+    final encoded = netpbmAsciiEncoder.convert(
+      pixels,
       format: NetpbmFormat.bitmap,
-    ).convert(pixels);
+    );
     check(encoded).equals(
       [
         'P1',
@@ -102,7 +103,7 @@ void main() {
     );
 
     // Try decoding the encoded string.
-    final decoded = NetpbmAsciiDecoder(format: monochrome).convert(encoded);
+    final decoded = netpbmAsciiDecoder.convert(encoded, format: monochrome);
     check(decoded.compare(pixels).difference).equals(0.0);
   });
 
@@ -113,9 +114,10 @@ void main() {
     pixels.set(Pos(1, 0), gray8.create(gray: 128));
     pixels.set(Pos(2, 0), gray8.create(gray: 255));
 
-    final encoded = const NetpbmAsciiEncoder(
+    final encoded = netpbmAsciiEncoder.convert(
+      pixels,
       format: NetpbmFormat.graymap,
-    ).convert(pixels);
+    );
 
     check(encoded).equals(
       [
@@ -127,7 +129,7 @@ void main() {
     );
 
     // Try decoding the encoded string.
-    final decoded = NetpbmAsciiDecoder(format: gray8).convert(encoded);
+    final decoded = netpbmAsciiDecoder.convert(encoded, format: gray8);
     check(decoded.format).equals(pixels.format);
     check(decoded.compare(pixels).difference).equals(0.0);
   });

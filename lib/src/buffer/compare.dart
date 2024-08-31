@@ -1,6 +1,8 @@
 part of '../buffer.dart';
 
 /// The result of a pixel comparison test.
+///
+/// {@category Output and Comparison}
 final class ComparisonResult<T> {
   /// Compares two pixel buffers [a] and [b] and returns the result.
   factory ComparisonResult._compare(
