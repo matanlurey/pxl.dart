@@ -1,7 +1,7 @@
 # Format: https://dart.dev/tools/pub/pubspec
 
 name: pxl
-version: 0.0.0
+version: 0.1.0-alpha
 publish_to: none
 environment:
   sdk: ^3.5.0
