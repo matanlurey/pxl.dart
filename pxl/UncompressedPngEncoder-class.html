@@ -67,6 +67,28 @@
   <p>Encodes a buffer of pixel data as an uncompressed RGBA PNG image with 8-bit
 color depth.</p>
 <p>A singleton instance of this class is available as <a href="../pxl/uncompressedPngEncoder-constant.html">uncompressedPngEncoder</a>.</p>
+<p>This encoder is intentionally minimal and does not support all features of
+the PNG format. It's primary purpose is to provide a zero-dependency way to
+visualize and persist pixel data in a standard format, i.e. for debugging
+purposes, and it's recommended to use a dedicated library for more advanced
+use cases.</p>
+<h2 id="limitations">Limitations</h2>
+<p>While the produced image is a valid PNG file, consider the following:</p>
+<ul>
+<li>The maximum resolution supported is 8192x8192.</li>
+<li>No compression is performed.</li>
+<li>Interlacing is not supported.</li>
+<li>Only a single <code>IDAT</code> chunk is written.</li>
+<li>Only 8-bit color depth is supported.</li>
+<li>Pixel formats are converted to <a href="../pxl/abgr8888-constant.html">abgr8888</a> before encoding.</li>
+<li>No additional metadata or chunks are supported.</li>
+</ul>
+<h2 id="alternatives">Alternatives</h2>
+<ul>
+<li>In Flutter, prefer <a href="https://api.flutter.dev/flutter/dart-ui/instantiateImageCodec.html"><code>instantiateImageCodec</code></a>.</li>
+<li>In the browser, prefer <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob"><code>HTMLCanvasElement toBlob</code></a>.</li>
+<li>In the standalone Dart VM, consider using <a href="https://pub.dev/documentation/image/latest/image/PngEncoder-class.html"><code>package:image</code></a>.</li>
+</ul>
 </section>
 
 
@@ -76,8 +98,8 @@ color depth.</p>
   <dt>Inheritance</dt>
   <dd>
     <ul class="gt-separated dark clazz-relationships">
-      <li><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object-class.html">Object</a></li>
-        <li><a href="https://api.dart.dev/stable/3.5.1/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>&gt;</span></span>&gt;</span></li>
+      <li><a href="https://api.dart.dev/stable/3.5.2/dart-core/Object-class.html">Object</a></li>
+        <li><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>&gt;</span></li>
       <li>UncompressedPngEncoder</li>
     </ul>
   </dd>
@@ -101,8 +123,8 @@ color depth.</p>
     <h2>Properties</h2>
     <dl class="properties">
         <dt id="hashCode" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/hashCode.html">hashCode</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Object/hashCode.html">hashCode</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>
   
 
 </dt>
@@ -113,8 +135,8 @@ color depth.</p>
 </dd>
 
         <dt id="runtimeType" class="property inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/runtimeType.html">runtimeType</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/Type-class.html">Type</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Object/runtimeType.html">runtimeType</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Type-class.html">Type</a></span>
   
 
 </dt>
@@ -133,8 +155,8 @@ color depth.</p>
     <h2>Methods</h2>
     <dl class="callables">
         <dt id="bind" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-convert/Converter/bind.html">bind</a></span><span class="signature">(<wbr><span class="parameter" id="bind-param-stream"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-async/Stream-class.html">Stream</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">stream</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-async/Stream-class.html">Stream</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>&gt;</span></span>&gt;</span></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter/bind.html">bind</a></span><span class="signature">(<wbr><span class="parameter" id="bind-param-stream"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-async/Stream-class.html">Stream</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">stream</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-async/Stream-class.html">Stream</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>&gt;</span></span>
   </span>
   
 
@@ -146,8 +168,8 @@ color depth.</p>
 </dd>
 
         <dt id="cast" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-convert/Converter/cast.html">cast</a></span><span class="signature">&lt;<wbr><span class="type-parameter">RS</span>, <span class="type-parameter">RT</span>&gt;</span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter">RS</span>, <span class="type-parameter">RT</span>&gt;</span></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter/cast.html">cast</a></span><span class="signature">&lt;<wbr><span class="type-parameter">RS</span>, <span class="type-parameter">RT</span>&gt;</span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter">RS</span>, <span class="type-parameter">RT</span>&gt;</span></span>
   </span>
   
 
@@ -160,7 +182,7 @@ color depth.</p>
 
         <dt id="convert" class="callable">
   <span class="name"><a href="../pxl/UncompressedPngEncoder/convert.html">convert</a></span><span class="signature">(<wbr><span class="parameter" id="convert-param-input"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span> <span class="parameter-name">input</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
   </span>
   
 
@@ -172,8 +194,8 @@ color depth.</p>
 </dd>
 
         <dt id="fuse" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-convert/Converter/fuse.html">fuse</a></span><span class="signature">&lt;<wbr><span class="type-parameter">TT</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="fuse-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>&gt;</span></span>, <span class="type-parameter">TT</span>&gt;</span></span> <span class="parameter-name">other</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>, <span class="type-parameter">TT</span>&gt;</span></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter/fuse.html">fuse</a></span><span class="signature">&lt;<wbr><span class="type-parameter">TT</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="fuse-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>, <span class="type-parameter">TT</span>&gt;</span></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>, <span class="type-parameter">TT</span>&gt;</span></span>
   </span>
   
 
@@ -185,7 +207,7 @@ color depth.</p>
 </dd>
 
         <dt id="noSuchMethod" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Object/noSuchMethod.html">noSuchMethod</a></span><span class="signature">(<wbr><span class="parameter" id="noSuchMethod-param-invocation"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Invocation-class.html">Invocation</a></span> <span class="parameter-name">invocation</span></span>)
     <span class="returntype parameter">&#8594; dynamic</span>
   </span>
   
@@ -198,8 +220,8 @@ color depth.</p>
 </dd>
 
         <dt id="startChunkedConversion" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-convert/Converter/startChunkedConversion.html">startChunkedConversion</a></span><span class="signature">(<wbr><span class="parameter" id="startChunkedConversion-param-sink"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Sink-class.html">Sink</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.1/dart-core/int-class.html">int</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">sink</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/Sink-class.html">Sink</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>&gt;</span></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter/startChunkedConversion.html">startChunkedConversion</a></span><span class="signature">(<wbr><span class="parameter" id="startChunkedConversion-param-sink"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Sink-class.html">Sink</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>&gt;</span></span> <span class="parameter-name">sink</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Sink-class.html">Sink</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>&gt;</span></span>
   </span>
   
 
@@ -211,8 +233,8 @@ color depth.</p>
 </dd>
 
         <dt id="toString" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/String-class.html">String</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Object/toString.html">toString</a></span><span class="signature">(<wbr>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>
   </span>
   
 
@@ -232,8 +254,8 @@ color depth.</p>
     <h2>Operators</h2>
     <dl class="callables">
         <dt id="operator ==" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.1/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.1/dart-core/bool-class.html">bool</a></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Object/operator_equals.html">operator ==</a></span><span class="signature">(<wbr><span class="parameter" id="==-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Object-class.html">Object</a></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/bool-class.html">bool</a></span>
   </span>
   
 

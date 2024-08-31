@@ -71,28 +71,6 @@
         
 <section class="desc markdown">
   <p>Encodes a buffer of integer pixel data as an uncompressed RGBA PNG image.</p>
-<p>This encoder is intentionally minimal and does not support all features of
-the PNG format. It's primary purpose is to provide a zero-dependency way to
-visualize and persist pixel data in a standard format, i.e. for debugging
-purposes, and it's recommended to use a dedicated library for more advanced
-use cases.</p>
-<h2 id="limitations">Limitations</h2>
-<p>While the produced image is a valid PNG file, consider the following:</p>
-<ul>
-<li>The maximum resolution supported is 8192x8192.</li>
-<li>No compression is performed.</li>
-<li>Interlacing is not supported.</li>
-<li>Only a single <code>IDAT</code> chunk is written.</li>
-<li>Only 8-bit color depth is supported.</li>
-<li>Pixel formats are converted to <a href="../pxl/abgr8888-constant.html">abgr8888</a> before encoding.</li>
-<li>No additional metadata or chunks are supported.</li>
-</ul>
-<h2 id="alternatives">Alternatives</h2>
-<ul>
-<li>In Flutter, prefer <a href="https://api.flutter.dev/flutter/dart-ui/instantiateImageCodec.html"><code>instantiateImageCodec</code></a>.</li>
-<li>In the browser, prefer <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toBlob"><code>HTMLCanvasElement toBlob</code></a>.</li>
-<li>In the standalone Dart VM, consider using <a href="https://pub.dev/documentation/image/latest/image/PngEncoder-class.html"><code>package:image</code></a>.</li>
-</ul>
 <p>{@category Output and Comparison}</p>
 </section>
 
