@@ -86,4 +86,7 @@ final class Float32x4Pixels extends Pixels<Float32x4> {
 
   @override
   final Float32x4List data;
+
+  @override
+  String get _typeName => 'Float32x4Pixels';
 }

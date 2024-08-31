@@ -60,10 +60,10 @@ void main() {
   });
 
   test('compare', () {
-    check(gray8.compare(0, 0)).equals(1.0);
-    check(gray8.compare(0, 29)).equals(0.8862745098039215);
-    check(gray8.compare(29, 0)).equals(0.8862745098039215);
-    check(gray8.compare(29, 29)).equals(1.0);
+    check(gray8.compare(0, 0)).equals(0.0);
+    check(gray8.compare(0, 29)).equals(0.11372549019607843);
+    check(gray8.compare(29, 0)).equals(0.11372549019607843);
+    check(gray8.compare(29, 29)).equals(0.0);
   });
 
   test('minGray', () {

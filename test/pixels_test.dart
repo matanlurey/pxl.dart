@@ -70,6 +70,24 @@ void main() {
       pixels.set(Pos(0, 0), 0xFFFFFFFF);
       check(pixels.get(Pos(0, 0))).equals(0xFFFFFFFF);
     });
+
+    test('toString() is written in full with padding', () {
+      final empty = IntPixels(5, 3);
+      check(empty.toString()).equals(
+        [
+          'IntPixels {',
+          '  width: 5,',
+          '  height: 3,',
+          '  format: ABGR8888,',
+          '  data: (15) [',
+          '    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,',
+          '    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,',
+          '    0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000,',
+          '  ]',
+          '}',
+        ].join('\n'),
+      );
+    });
   });
 
   group('Float32x4Pixels', () {
@@ -137,6 +155,24 @@ void main() {
       final pixels = Float32x4Pixels(1, 1);
       pixels.set(Pos(0, 0), Float32x4(1.0, 1.0, 1.0, 1.0));
       check(pixels.get(Pos(0, 0))).equals(Float32x4(1.0, 1.0, 1.0, 1.0));
+    });
+
+    test('toString() is written in full with padding', () {
+      final empty = Float32x4Pixels(5, 3);
+      check(empty.toString()).equals(
+        [
+          'Float32x4Pixels {',
+          '  width: 5,',
+          '  height: 3,',
+          '  format: FLOAT_RGBA,',
+          '  data: (15) [',
+          '    [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00],',
+          '    [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00],',
+          '    [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00], [0.00, 0.00, 0.00, 0.00],',
+          '  ]',
+          '}',
+        ].join('\n'),
+      );
     });
   });
 

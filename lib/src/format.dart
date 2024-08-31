@@ -1,3 +1,6 @@
+/// @docImport 'package:pxl/src/buffer.dart';
+library;
+
 import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
@@ -197,6 +200,15 @@ abstract base mixin class PixelFormat<P, C> {
     }
     return fromFloatRgba(from.toFloatRgba(pixel));
   }
+
+  /// Returns a human-readable description of the pixel.
+  ///
+  /// This is used in the default implementation of [Buffer.toString].
+  ///
+  /// It is preferred that the result values are padded to a fixed width, and
+  /// that the result is a single line; for example, `0x12345678` or `[0.1, 0.2,
+  /// 0.3, 0.4]`.
+  String describe(P pixel) => pixel.toString();
 
   @override
   String toString() => name;

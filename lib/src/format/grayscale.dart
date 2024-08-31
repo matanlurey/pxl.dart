@@ -69,7 +69,7 @@ abstract final class _GrayInt extends PixelFormat<int, int>
   double distance(int a, int b) => (a - b).abs().toDouble();
 
   @override
-  double compare(int a, int b) => 1.0 - (a - b).abs() / maxGray.toDouble();
+  double compare(int a, int b) => distance(a, b) / max;
 
   @override
   @nonVirtual
@@ -85,4 +85,9 @@ abstract final class _GrayInt extends PixelFormat<int, int>
 
   @override
   int get black => create(gray: minGray);
+
+  @override
+  String describe(int pixel) {
+    return '0x${pixel.toRadixString(16).padLeft(max.bitLength ~/ 4, '0')}';
+  }
 }
