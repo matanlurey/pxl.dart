@@ -6,6 +6,51 @@ import 'package:pxl/pxl.dart';
 import '../src/prelude.dart';
 
 void main() {
+  test('parses a header', () {
+    final header = netpbmBinaryDecoder.parseHeader(
+      utf8.encode('P4\n3 2\n'),
+    );
+    check(header).equals(
+      NetpbmHeader(
+        format: NetpbmFormat.bitmap,
+        width: 3,
+        height: 2,
+      ),
+    );
+  });
+
+  test('parses a header with a maximum value', () {
+    final header = netpbmBinaryDecoder.parseHeader(
+      utf8.encode('P5\n3 2\n255\n'),
+    );
+    check(header).equals(
+      NetpbmHeader(
+        format: NetpbmFormat.graymap,
+        width: 3,
+        height: 2,
+        max: 255,
+      ),
+    );
+  });
+
+  test('parses a header with a comment', () {
+    final header = netpbmBinaryDecoder.parseHeader(
+      utf8.encode(
+        'P6\n'
+        '# comment\n'
+        '3 2\n',
+      ),
+    );
+    check(header).equals(
+      NetpbmHeader(
+        format: NetpbmFormat.pixmap,
+        width: 3,
+        height: 2,
+        comments: ['comment'],
+      ),
+    );
+  });
+
   test('width must be at least 1', () {
     check(
       () => netpbmBinaryEncoder.convert(_ZeroWidthBuffer()),
@@ -105,7 +150,9 @@ void main() {
     check(encoded).deepEquals(
       Uint8List.fromList([
         ...utf8.encode('P6\n3 1\n255\n'),
-        255, 0, 0, 0, 255, 0, 0, 0, 255, //
+        255, 0, 0, //
+        0, 255, 0, //
+        0, 0, 255, //
       ]),
     );
 
