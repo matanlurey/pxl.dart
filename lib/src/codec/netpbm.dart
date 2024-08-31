@@ -173,9 +173,15 @@ final class NetpbmAsciiEncoder extends NetpbmEncoder<String> {
       padding = '$max'.length;
     }
     var i = 0;
+    final int newLine;
+    if (header.format == NetpbmFormat.pixmap) {
+      newLine = header.width * 3;
+    } else {
+      newLine = header.width;
+    }
     for (final pixel in pixels) {
       output.write('$pixel'.padLeft(padding));
-      if (++i % header.width == 0) {
+      if (++i % newLine == 0) {
         if (i < pixels.length) {
           output.writeln();
         }
