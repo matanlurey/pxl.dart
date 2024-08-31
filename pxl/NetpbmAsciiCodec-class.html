@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the NetpbmEncoder class from the pxl library, for the Dart programming language.">
-  <title>NetpbmEncoder class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the NetpbmAsciiCodec class from the pxl library, for the Dart programming language.">
+  <title>NetpbmAsciiCodec class - pxl library - Dart API</title>
 
 
   
@@ -30,9 +30,9 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">pxl</a></li>
     <li><a href="../pxl/pxl-library.html">pxl.dart</a></li>
-    <li class="self-crumb">NetpbmEncoder<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span> class</li>
+    <li class="self-crumb">NetpbmAsciiCodec class</li>
   </ol>
-  <div class="self-name">NetpbmEncoder</div>
+  <div class="self-name">NetpbmAsciiCodec</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,10 +54,9 @@
     id="dartdoc-main-content"
     class="main-content"
     data-above-sidebar="pxl&#47;pxl-library-sidebar.html"
-    data-below-sidebar="pxl&#47;NetpbmEncoder-class-sidebar.html">
+    data-below-sidebar="pxl&#47;NetpbmAsciiCodec-class-sidebar.html">
     <div>
-<h1><span class="kind-class">NetpbmEncoder&lt;<wbr><span class="type-parameter">T</span>&gt;</span> class 
-    <a href="https://dart.dev/language/class-modifiers#abstract" class="feature feature-abstract" title="This type can not be directly constructed.">abstract</a>
+<h1><span class="kind-class">NetpbmAsciiCodec</span> class 
     <a href="https://dart.dev/language/class-modifiers#final" class="feature feature-final" title="This class can neither be extended, implemented, nor mixed in.">final</a>
  
     <span class="category output-and-comparison cp-3 linked" title="This is part of the Output and Comparison topic."><a href="../topics/Output and Comparison-topic.html">Output&nbsp;and&nbsp;Comparison</a></span>
@@ -65,7 +64,9 @@
 
     
 <section class="desc markdown">
-  <p>Encodes pixel data as a portable pixmap (Netpbm) image format.</p>
+  <p>A codec that encodes and decodes pixel data as a portable pixmap (Netpbm)
+image format.</p>
+<p>A singleton instance of this class is available as <a href="../pxl/netpbmAsciiCodec-constant.html">netpbmAsciiCodec</a>.</p>
 </section>
 
 
@@ -76,19 +77,14 @@
   <dd>
     <ul class="gt-separated dark clazz-relationships">
       <li><a href="https://api.dart.dev/stable/3.5.2/dart-core/Object-class.html">Object</a></li>
-        <li><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>, <span class="type-parameter">T</span>&gt;</span></li>
-      <li>NetpbmEncoder</li>
+        <li><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Codec-class.html">Codec</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>, <span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>&gt;</span></li>
+      <li>NetpbmAsciiCodec</li>
     </ul>
   </dd>
 
         
         
 
-          <dt>Implementers</dt>
-          <dd><ul class="comma-separated clazz-relationships">
-              <li><a href="../pxl/NetpbmAsciiEncoder-class.html">NetpbmAsciiEncoder</a></li>
-              <li><a href="../pxl/NetpbmBinaryEncoder-class.html">NetpbmBinaryEncoder</a></li>
-          </ul></dd>
 
 
         
@@ -104,15 +100,27 @@
       id="instance-properties">
     <h2>Properties</h2>
     <dl class="properties">
-        <dt id="format" class="property">
-  <span class="name"><a href="../pxl/NetpbmEncoder/format.html">format</a></span>
-  <span class="signature">&#8594; <a href="../pxl/NetpbmFormat.html">NetpbmFormat</a>?</span>
+        <dt id="decoder" class="property">
+  <span class="name"><a href="../pxl/NetpbmAsciiCodec/decoder.html">decoder</a></span>
+  <span class="signature">&#8594; <a href="../pxl/NetpbmAsciiDecoder-class.html">NetpbmAsciiDecoder</a></span>
   
 
 </dt>
 <dd>
-  The format of the Netpbm image.
-  <div class="features"><span class="feature">final</span></div>
+  Returns the decoder of <code>this</code>, converting from <code>T</code> to <code>S</code>.
+  <div class="features"><span class="feature">no setter</span><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="encoder" class="property">
+  <span class="name"><a href="../pxl/NetpbmAsciiCodec/encoder.html">encoder</a></span>
+  <span class="signature">&#8594; <a href="../pxl/NetpbmAsciiEncoder-class.html">NetpbmAsciiEncoder</a></span>
+  
+
+</dt>
+<dd>
+  Returns the encoder from <code>S</code> to <code>T</code>.
+  <div class="features"><span class="feature">no setter</span><span class="feature">override</span></div>
 
 </dd>
 
@@ -124,6 +132,18 @@
 </dt>
 <dd class="inherited">
   The hash code for this object.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="inverted" class="property inherited">
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Codec/inverted.html">inverted</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-convert/Codec-class.html">Codec</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>&gt;</span></span>
+  
+
+</dt>
+<dd class="inherited">
+  Inverts <code>this</code>.
   <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
@@ -148,48 +168,35 @@
       id="instance-methods">
     <h2>Methods</h2>
     <dl class="callables">
-        <dt id="bind" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter/bind.html">bind</a></span><span class="signature">(<wbr><span class="parameter" id="bind-param-stream"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-async/Stream-class.html">Stream</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">stream</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-async/Stream-class.html">Stream</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Transforms the provided <code>stream</code>.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="cast" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter/cast.html">cast</a></span><span class="signature">&lt;<wbr><span class="type-parameter">RS</span>, <span class="type-parameter">RT</span>&gt;</span><span class="signature">(<wbr>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter">RS</span>, <span class="type-parameter">RT</span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Provides a <code>Converter&lt;RS, RT&gt;</code> view of this stream transformer.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="convert" class="callable">
-  <span class="name"><a href="../pxl/NetpbmEncoder/convert.html">convert</a></span><span class="signature">(<wbr><span class="parameter" id="convert-param-input"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span>, {</span><span class="parameter" id="convert-param-comments"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">comments</span> = <span class="default-value">const []</span>, </span><span class="parameter" id="convert-param-format"><span class="type-annotation"><a href="../pxl/NetpbmFormat.html">NetpbmFormat</a>?</span> <span class="parameter-name">format</span></span>})
-    <span class="returntype parameter">&#8594; T</span>
+        <dt id="decode" class="callable">
+  <span class="name"><a href="../pxl/NetpbmAsciiCodec/decode.html">decode</a></span><span class="signature">(<wbr><span class="parameter" id="decode-param-input"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span> <span class="parameter-name">input</span>, {</span><span class="parameter" id="decode-param-format"><span class="type-annotation"><a href="../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>, <span class="type-parameter">void</span>&gt;</span>?</span> <span class="parameter-name">format</span></span>})
+    <span class="returntype parameter">&#8594; <a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
   </span>
   
 
 </dt>
 <dd>
-  Converts the pixel data to a Netpbm image.
+  Decodes an ASCII Netpbm image to pixel data.
+  <div class="features"><span class="feature">override</span></div>
+
+</dd>
+
+        <dt id="encode" class="callable">
+  <span class="name"><a href="../pxl/NetpbmAsciiCodec/encode.html">encode</a></span><span class="signature">(<wbr><span class="parameter" id="encode-param-input"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span>, {</span><span class="parameter" id="encode-param-comments"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">comments</span> = <span class="default-value">const []</span>, </span><span class="parameter" id="encode-param-format"><span class="type-annotation"><a href="../pxl/NetpbmFormat.html">NetpbmFormat</a>?</span> <span class="parameter-name">format</span></span>})
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>
+  </span>
+  
+
+</dt>
+<dd>
+  Encodes pixel data as an ASCII Netpbm image.
   <div class="features"><span class="feature">override</span></div>
 
 </dd>
 
         <dt id="fuse" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter/fuse.html">fuse</a></span><span class="signature">&lt;<wbr><span class="type-parameter">TT</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="fuse-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>, <span class="type-parameter">TT</span>&gt;</span></span> <span class="parameter-name">other</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter-class.html">Converter</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>, <span class="type-parameter">TT</span>&gt;</span></span>
+  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Codec/fuse.html">fuse</a></span><span class="signature">&lt;<wbr><span class="type-parameter">R</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="fuse-param-other"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Codec-class.html">Codec</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>, <span class="type-parameter">R</span>&gt;</span></span> <span class="parameter-name">other</span></span>)
+    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-convert/Codec-class.html">Codec</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>, <span class="type-parameter">R</span>&gt;</span></span>
   </span>
   
 
@@ -209,19 +216,6 @@
 </dt>
 <dd class="inherited">
   Invoked when a nonexistent method or property is accessed.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="startChunkedConversion" class="callable inherited">
-  <span class="name"><a href="https://api.dart.dev/stable/3.5.2/dart-convert/Converter/startChunkedConversion.html">startChunkedConversion</a></span><span class="signature">(<wbr><span class="parameter" id="startChunkedConversion-param-sink"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Sink-class.html">Sink</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">sink</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Sink-class.html">Sink</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Starts a chunked conversion.
   <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
@@ -280,7 +274,7 @@
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">pxl</a></li>
     <li><a href="../pxl/pxl-library.html">pxl</a></li>
-    <li class="self-crumb">NetpbmEncoder<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span> class</li>
+    <li class="self-crumb">NetpbmAsciiCodec class</li>
 </ol>
 
 

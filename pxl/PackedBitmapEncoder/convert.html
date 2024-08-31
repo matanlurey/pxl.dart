@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the convert method from the NetpbmEncoder class, for the Dart programming language.">
-  <title>convert method - NetpbmEncoder class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the convert method from the PackedBitmapEncoder class, for the Dart programming language.">
+  <title>convert method - PackedBitmapEncoder class - pxl library - Dart API</title>
 
 
   
@@ -30,7 +30,7 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
-    <li><a href="../../pxl/NetpbmEncoder-class.html">NetpbmEncoder<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
+    <li><a href="../../pxl/PackedBitmapEncoder-class.html">PackedBitmapEncoder</a></li>
     <li class="self-crumb">convert method</li>
   </ol>
   <div class="self-name">convert</div>
@@ -54,7 +54,7 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="pxl&#47;NetpbmEncoder-class-sidebar.html"
+    data-above-sidebar="pxl&#47;PackedBitmapEncoder-class-sidebar.html"
     data-below-sidebar="">
     <div>
 <h1><span class="kind-method">convert</span> method 
@@ -68,21 +68,16 @@
     </ol>
   </div>
 
-<span class="returntype">T</span>
-<span class="name ">convert</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="convert-param-input"><span class="type-annotation"><a href="../../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span>, {</span></li>
-<li><span class="parameter" id="convert-param-comments"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">comments</span> = <span class="default-value">const []</span>, </span></li>
-<li><span class="parameter" id="convert-param-format"><span class="type-annotation"><a href="../../pxl/NetpbmFormat.html">NetpbmFormat</a>?</span> <span class="parameter-name">format</span>, </span></li>
-</ol>})
+<span class="returntype"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Uint32List-class.html">Uint32List</a></span>
+<span class="name ">convert</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="convert-param-input"><span class="type-annotation"><a href="../../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span></span></li>
+</ol>)
 
       <div class="features"><span class="feature">override</span></div>
 
     </section>
     
 <section class="desc markdown">
-  <p>Converts the pixel data to a Netpbm image.</p>
-<p>The <code>comments</code> are added to the image.</p>
-<p>If the <code>format</code> is omitted, and <a href="../../pxl/NetpbmEncoder/format.html">NetpbmEncoder.format</a> is not set, the
-format is inferred from the pixel data.</p>
+  <p>Converts <code>input</code> and returns the result of the conversion.</p>
 </section>
 
 
@@ -90,44 +85,34 @@ format is inferred from the pixel data.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-T convert(
-  Buffer&lt;int&gt; input, {
-  Iterable&lt;String&gt; comments = const [],
-  NetpbmFormat? format,
-}) {
-  format ??= _getOrInferFormat(input);
-  final header = NetpbmHeader(
-    width: input.width,
-    height: input.height,
-    max: switch (format) {
-      NetpbmFormat.bitmap =&gt; null,
-      NetpbmFormat.graymap =&gt; gray8.maxGray,
-      NetpbmFormat.pixmap =&gt; rgb888.maxRed,
-    },
-    format: format,
-    comments: comments,
-  );
-  final Iterable&lt;int&gt; pixels;
-  switch (format) {
-    case NetpbmFormat.bitmap:
-      pixels = input.data.map((value) {
-        return value == input.format.zero ? 0 : 1;
-      });
-    case NetpbmFormat.graymap:
-      pixels = input.data.map((value) {
-        return gray8.convert(value, from: input.format);
-      });
-    case NetpbmFormat.pixmap:
-      pixels = input.data.map((value) {
-        final rgb = rgb888.convert(value, from: input.format);
-        return [
-          rgb888.getRed(rgb),
-          rgb888.getGreen(rgb),
-          rgb888.getBlue(rgb),
-        ];
-      }).expand((p) =&gt; p);
+Uint32List convert(Buffer&lt;int&gt; input) {
+  final width = input.width;
+  final height = input.height;
+  final data = input.data;
+
+  &#47;&#47; Convert every 32 pixels into 32-bits.
+  &#47;&#47; That is, a 128x128 bitmap is represented as 4x4 32-bit words.
+  final output = Uint32List(2 + (data.length ~&#47; 32));
+  output[0] = width;
+  output[1] = height;
+
+  var word = 0;
+  var bit = 0;
+  var offset = 2;
+  for (final pixel in input.data) {
+    if (pixel != input.format.zero) {
+      word |= 1 &lt;&lt; bit;
+    }
+    bit++;
+    if (bit == 32) {
+      output[offset] = word;
+      word = 0;
+      bit = 0;
+      offset++;
+    }
   }
-  return _convert(header, pixels);
+
+  return output;
 }</code></pre>
 </section>
 
@@ -145,12 +130,12 @@ T convert(
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
-    <li><a href="../../pxl/NetpbmEncoder-class.html">NetpbmEncoder<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
+    <li><a href="../../pxl/PackedBitmapEncoder-class.html">PackedBitmapEncoder</a></li>
     <li class="self-crumb">convert method</li>
 </ol>
 
 
-    <h5>NetpbmEncoder class</h5>
+    <h5>PackedBitmapEncoder class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 

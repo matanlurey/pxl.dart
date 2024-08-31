@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the convert method from the NetpbmEncoder class, for the Dart programming language.">
-  <title>convert method - NetpbmEncoder class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the encode method from the NetpbmBinaryCodec class, for the Dart programming language.">
+  <title>encode method - NetpbmBinaryCodec class - pxl library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
-    <li><a href="../../pxl/NetpbmEncoder-class.html">NetpbmEncoder<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">convert method</li>
+    <li><a href="../../pxl/NetpbmBinaryCodec-class.html">NetpbmBinaryCodec</a></li>
+    <li class="self-crumb">encode method</li>
   </ol>
-  <div class="self-name">convert</div>
+  <div class="self-name">encode</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,10 +54,10 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="pxl&#47;NetpbmEncoder-class-sidebar.html"
+    data-above-sidebar="pxl&#47;NetpbmBinaryCodec-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">convert</span> method 
+<h1><span class="kind-method">encode</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
@@ -68,10 +68,10 @@
     </ol>
   </div>
 
-<span class="returntype">T</span>
-<span class="name ">convert</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="convert-param-input"><span class="type-annotation"><a href="../../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span>, {</span></li>
-<li><span class="parameter" id="convert-param-comments"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">comments</span> = <span class="default-value">const []</span>, </span></li>
-<li><span class="parameter" id="convert-param-format"><span class="type-annotation"><a href="../../pxl/NetpbmFormat.html">NetpbmFormat</a>?</span> <span class="parameter-name">format</span>, </span></li>
+<span class="returntype"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Uint8List-class.html">Uint8List</a></span>
+<span class="name ">encode</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="encode-param-input"><span class="type-annotation"><a href="../../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">input</span>, {</span></li>
+<li><span class="parameter" id="encode-param-comments"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/String-class.html">String</a></span>&gt;</span></span> <span class="parameter-name">comments</span> = <span class="default-value">const []</span>, </span></li>
+<li><span class="parameter" id="encode-param-format"><span class="type-annotation"><a href="../../pxl/NetpbmFormat.html">NetpbmFormat</a>?</span> <span class="parameter-name">format</span>, </span></li>
 </ol>})
 
       <div class="features"><span class="feature">override</span></div>
@@ -79,10 +79,14 @@
     </section>
     
 <section class="desc markdown">
-  <p>Converts the pixel data to a Netpbm image.</p>
+  <p>Encodes pixel data as a binary Netpbm image.</p>
 <p>The <code>comments</code> are added to the image.</p>
-<p>If the <code>format</code> is omitted, and <a href="../../pxl/NetpbmEncoder/format.html">NetpbmEncoder.format</a> is not set, the
-format is inferred from the pixel data.</p>
+<p>If the <code>format</code> is omitted, defaults to:</p>
+<ul>
+<li><a href="../../pxl/NetpbmFormat.html">NetpbmFormat.graymap</a> for grayscale pixel data.</li>
+<li><a href="../../pxl/NetpbmFormat.html">NetpbmFormat.pixmap</a> for RGB pixel data.</li>
+<li><a href="../../pxl/NetpbmFormat.html">NetpbmFormat.bitmap</a> otherwise.</li>
+</ul>
 </section>
 
 
@@ -90,44 +94,16 @@ format is inferred from the pixel data.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-T convert(
+Uint8List encode(
   Buffer&lt;int&gt; input, {
   Iterable&lt;String&gt; comments = const [],
   NetpbmFormat? format,
 }) {
-  format ??= _getOrInferFormat(input);
-  final header = NetpbmHeader(
-    width: input.width,
-    height: input.height,
-    max: switch (format) {
-      NetpbmFormat.bitmap =&gt; null,
-      NetpbmFormat.graymap =&gt; gray8.maxGray,
-      NetpbmFormat.pixmap =&gt; rgb888.maxRed,
-    },
-    format: format,
+  return netpbmBinaryEncoder.convert(
+    input,
     comments: comments,
+    format: format,
   );
-  final Iterable&lt;int&gt; pixels;
-  switch (format) {
-    case NetpbmFormat.bitmap:
-      pixels = input.data.map((value) {
-        return value == input.format.zero ? 0 : 1;
-      });
-    case NetpbmFormat.graymap:
-      pixels = input.data.map((value) {
-        return gray8.convert(value, from: input.format);
-      });
-    case NetpbmFormat.pixmap:
-      pixels = input.data.map((value) {
-        final rgb = rgb888.convert(value, from: input.format);
-        return [
-          rgb888.getRed(rgb),
-          rgb888.getGreen(rgb),
-          rgb888.getBlue(rgb),
-        ];
-      }).expand((p) =&gt; p);
-  }
-  return _convert(header, pixels);
 }</code></pre>
 </section>
 
@@ -145,12 +121,12 @@ T convert(
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
-    <li><a href="../../pxl/NetpbmEncoder-class.html">NetpbmEncoder<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">convert method</li>
+    <li><a href="../../pxl/NetpbmBinaryCodec-class.html">NetpbmBinaryCodec</a></li>
+    <li class="self-crumb">encode method</li>
 </ol>
 
 
-    <h5>NetpbmEncoder class</h5>
+    <h5>NetpbmBinaryCodec class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 

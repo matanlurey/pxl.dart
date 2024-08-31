@@ -70,15 +70,20 @@
   </div>
 
 <span class="returntype"><a href="../../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
-<span class="name ">convert</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="convert-param-input"><span class="type-annotation">T</span> <span class="parameter-name">input</span></span></li>
-</ol>)
+<span class="name ">convert</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="convert-param-input"><span class="type-annotation">T</span> <span class="parameter-name">input</span>, {</span></li>
+<li><span class="parameter" id="convert-param-format"><span class="type-annotation"><a href="../../pxl/PixelFormat-class.html">PixelFormat</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>, <span class="type-parameter">void</span>&gt;</span>?</span> <span class="parameter-name">format</span>, </span></li>
+</ol>})
 
       <div class="features"><span class="feature">override</span></div>
 
     </section>
     
 <section class="desc markdown">
-  <p>Converts <code>input</code> and returns the result of the conversion.</p>
+  <p>Converts the input to integer-based pixel data.</p>
+<p>If the input is invalid, a <a href="https://api.dart.dev/stable/3.5.2/dart-core/FormatException-class.html">FormatException</a> is thrown.</p>
+<p>The <code>format</code> is used to convert the pixel data to the desired format;
+if omitted, the decoder's <a href="../../pxl/NetpbmDecoder/format.html">NetpbmDecoder.format</a> is used, which defaults
+to <a href="../../pxl/abgr8888-constant.html">abgr8888</a>.</p>
 </section>
 
 
@@ -87,11 +92,12 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
 @nonVirtual
-Buffer&lt;int&gt; convert(T input) {
+Buffer&lt;int&gt; convert(T input, {PixelFormat&lt;int, void&gt;? format}) {
   final (header, error, offset) = _parseHeader(input);
   if (header == null) {
     throw FormatException(error, input);
   }
+  final fmt = format ?? this.format;
   final data = _data(
     input,
     offset,
@@ -101,12 +107,12 @@ Buffer&lt;int&gt; convert(T input) {
   switch (header.format) {
     case NetpbmFormat.bitmap:
       pixels = data.map((value) {
-        return value == 0x0 ? format.zero : format.max;
+        return value == 0x0 ? fmt.zero : fmt.max;
       });
     case NetpbmFormat.graymap:
       pixels = data.map((value) {
         final gray = gray8.create(gray: value);
-        return format.convert(gray, from: gray8);
+        return fmt.convert(gray, from: gray8);
       });
     case NetpbmFormat.pixmap:
       if (data.length % 3 != 0) {
@@ -117,11 +123,11 @@ Buffer&lt;int&gt; convert(T input) {
         final g = data[i * 3 + 1];
         final b = data[i * 3 + 2];
         final rgb = rgb888.create(red: r, green: g, blue: b);
-        return format.convert(rgb, from: rgb888);
+        return fmt.convert(rgb, from: rgb888);
       });
   }
 
-  final buffer = IntPixels(header.width, header.height, format: format);
+  final buffer = IntPixels(header.width, header.height, format: fmt);
   buffer.data.setAll(0, pixels);
   return buffer;
 }</code></pre>
