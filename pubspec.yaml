@@ -2,12 +2,11 @@
 
 name: pxl
 version: 0.1.0-alpha
-publish_to: none
 environment:
   sdk: ^3.5.0
 
 dependencies:
-  lodim: any
+  lodim: ^0.1.4
   meta: ^1.15.0
 
 dev_dependencies:
@@ -16,9 +15,3 @@ dev_dependencies:
   oath: ^0.2.1
   path: ^1.9.0
   test: ^1.25.8
-
-dependency_overrides:
-  lodim:
-    git:
-      url: https://github.com/matanlurey/lodim
-      ref: 2145724012eca83036afbd154473fca6a3d53d8d
