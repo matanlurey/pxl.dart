@@ -311,8 +311,8 @@ abstract final class Pixels<T> with Buffer<T> {
       return;
     }
     source = Rect.fromLTWH(
-      source.top,
       source.left,
+      source.top,
       clipped.width,
       clipped.height,
     );
@@ -457,8 +457,8 @@ abstract final class Pixels<T> with Buffer<T> {
       return;
     }
     source = Rect.fromLTWH(
-      source.top,
       source.left,
+      source.top,
       clipped.width,
       clipped.height,
     );
@@ -508,8 +508,8 @@ abstract final class Pixels<T> with Buffer<T> {
       return;
     }
     source = Rect.fromLTWH(
-      sRect.top,
       sRect.left,
+      sRect.top,
       tRect.width,
       tRect.height,
     );
@@ -557,6 +557,7 @@ abstract final class Pixels<T> with Buffer<T> {
         dstIdx++;
       }
       dstIdx += width - source.width;
+      srcIdx += from.width - source.width;
     }
   }
 }

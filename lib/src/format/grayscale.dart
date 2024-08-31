@@ -1,6 +1,8 @@
 part of '../format.dart';
 
 /// A mixin for pixel formats that represent _graysacle_ pixels.
+///
+/// {@category Pixel Formats}
 base mixin Grayscale<P, C> implements PixelFormat<P, C> {
   /// Creates a new pixel with the given channel values.
   ///

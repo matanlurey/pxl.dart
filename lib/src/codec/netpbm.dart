@@ -10,6 +10,114 @@ import 'dart:typed_data';
 import 'package:meta/meta.dart';
 import 'package:pxl/pxl.dart';
 
+/// A codec that encodes and decodes pixel data as a portable pixmap (Netpbm)
+/// image format.
+///
+/// {@category Output and Comparison}
+const netpbmAsciiCodec = NetpbmAsciiCodec._();
+
+/// A codec that encodes and decodes pixel data as a portable pixmap (Netpbm)
+/// image format.
+///
+/// {@category Output and Comparison}
+const netpbmBinaryCodec = NetpbmBinaryCodec._();
+
+/// A codec that encodes and decodes pixel data as a portable pixmap (Netpbm)
+/// image format.
+///
+/// A singleton instance of this class is available as [netpbmAsciiCodec].
+///
+/// {@category Output and Comparison}
+final class NetpbmAsciiCodec extends Codec<Buffer<int>, String> {
+  const NetpbmAsciiCodec._();
+
+  @override
+  NetpbmAsciiEncoder get encoder => netpbmAsciiEncoder;
+
+  /// Encodes pixel data as an ASCII Netpbm image.
+  ///
+  /// The [comments] are added to the image.
+  ///
+  /// If the [format] is omitted, defaults to:
+  /// - [NetpbmFormat.graymap] for grayscale pixel data.
+  /// - [NetpbmFormat.pixmap] for RGB pixel data.
+  /// - [NetpbmFormat.bitmap] otherwise.
+  @override
+  String encode(
+    Buffer<int> input, {
+    Iterable<String> comments = const [],
+    NetpbmFormat? format,
+  }) {
+    return netpbmAsciiEncoder.convert(
+      input,
+      comments: comments,
+      format: format,
+    );
+  }
+
+  @override
+  NetpbmAsciiDecoder get decoder => netpbmAsciiDecoder;
+
+  /// Decodes an ASCII Netpbm image to pixel data.
+  ///
+  /// If the input is invalid, a [FormatException] is thrown.
+  ///
+  /// The [format] is used to convert the pixel data to the desired format;
+  /// if omitted defaults to [abgr8888].
+  @override
+  Buffer<int> decode(String input, {PixelFormat<int, void>? format}) {
+    return netpbmAsciiDecoder.convert(input, format: format);
+  }
+}
+
+/// A codec that encodes and decodes pixel data as a portable pixmap (Netpbm)
+/// image format.
+///
+/// A singleton instance of this class is available as [netpbmBinaryCodec].
+///
+/// {@category Output and Comparison}
+final class NetpbmBinaryCodec extends Codec<Buffer<int>, Uint8List> {
+  const NetpbmBinaryCodec._();
+
+  @override
+  NetpbmBinaryEncoder get encoder => netpbmBinaryEncoder;
+
+  /// Encodes pixel data as a binary Netpbm image.
+  ///
+  /// The [comments] are added to the image.
+  ///
+  /// If the [format] is omitted, defaults to:
+  /// - [NetpbmFormat.graymap] for grayscale pixel data.
+  /// - [NetpbmFormat.pixmap] for RGB pixel data.
+  /// - [NetpbmFormat.bitmap] otherwise.
+  @override
+  Uint8List encode(
+    Buffer<int> input, {
+    Iterable<String> comments = const [],
+    NetpbmFormat? format,
+  }) {
+    return netpbmBinaryEncoder.convert(
+      input,
+      comments: comments,
+      format: format,
+    );
+  }
+
+  @override
+  NetpbmBinaryDecoder get decoder => netpbmBinaryDecoder;
+
+  /// Decodes a binary Netpbm image to pixel data.
+  ///
+  /// If the input is invalid, a [FormatException] is thrown.
+  ///
+  /// The [format] is used to convert the pixel data to the desired format;
+  /// if omitted defaults to [abgr8888].
+  @override
+  Buffer<int> decode(Uint8List input, {PixelFormat<int, void>? format}) {
+    return netpbmBinaryDecoder.convert(input, format: format);
+  }
+}
+
 /// Encodes pixel data as a portable pixmap (Netpbm) image format.
 ///
 /// {@macro pxl.netpbm_encoder.format}
@@ -84,9 +192,19 @@ abstract final class NetpbmEncoder<T> extends Converter<Buffer<int>, T> {
   /// {@endtemplate}
   final NetpbmFormat? format;
 
+  /// Converts the pixel data to a Netpbm image.
+  ///
+  /// The [comments] are added to the image.
+  ///
+  /// If the [format] is omitted, and [NetpbmEncoder.format] is not set, the
+  /// format is inferred from the pixel data.
   @override
-  T convert(Buffer<int> input, {Iterable<String> comments = const []}) {
-    final format = _getOrInferFormat(input);
+  T convert(
+    Buffer<int> input, {
+    Iterable<String> comments = const [],
+    NetpbmFormat? format,
+  }) {
+    format ??= _getOrInferFormat(input);
     final header = NetpbmHeader(
       width: input.width,
       height: input.height,
@@ -391,13 +509,21 @@ abstract final class NetpbmDecoder<T> extends Converter<T, Buffer<int>> {
   @protected
   List<int> _data(T input, int offset, {required bool bitmap});
 
+  /// Converts the input to integer-based pixel data.
+  ///
+  /// If the input is invalid, a [FormatException] is thrown.
+  ///
+  /// The [format] is used to convert the pixel data to the desired format;
+  /// if omitted, the decoder's [NetpbmDecoder.format] is used, which defaults
+  /// to [abgr8888].
   @override
   @nonVirtual
-  Buffer<int> convert(T input) {
+  Buffer<int> convert(T input, {PixelFormat<int, void>? format}) {
     final (header, error, offset) = _parseHeader(input);
     if (header == null) {
       throw FormatException(error, input);
     }
+    final fmt = format ?? this.format;
     final data = _data(
       input,
       offset,
@@ -407,12 +533,12 @@ abstract final class NetpbmDecoder<T> extends Converter<T, Buffer<int>> {
     switch (header.format) {
       case NetpbmFormat.bitmap:
         pixels = data.map((value) {
-          return value == 0x0 ? format.zero : format.max;
+          return value == 0x0 ? fmt.zero : fmt.max;
         });
       case NetpbmFormat.graymap:
         pixels = data.map((value) {
           final gray = gray8.create(gray: value);
-          return format.convert(gray, from: gray8);
+          return fmt.convert(gray, from: gray8);
         });
       case NetpbmFormat.pixmap:
         if (data.length % 3 != 0) {
@@ -423,11 +549,11 @@ abstract final class NetpbmDecoder<T> extends Converter<T, Buffer<int>> {
           final g = data[i * 3 + 1];
           final b = data[i * 3 + 2];
           final rgb = rgb888.create(red: r, green: g, blue: b);
-          return format.convert(rgb, from: rgb888);
+          return fmt.convert(rgb, from: rgb888);
         });
     }
 
-    final buffer = IntPixels(header.width, header.height, format: format);
+    final buffer = IntPixels(header.width, header.height, format: fmt);
     buffer.data.setAll(0, pixels);
     return buffer;
   }
@@ -519,6 +645,8 @@ final class NetpbmBinaryDecoder extends NetpbmDecoder<Uint8List> {
 }
 
 /// Parsed header information from a Netpbm image.
+///
+/// {@category Output and Comparison}
 @immutable
 final class NetpbmHeader {
   /// Creates a new Netpbm header with the given values.
