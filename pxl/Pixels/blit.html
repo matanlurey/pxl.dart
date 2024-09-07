@@ -31,7 +31,7 @@
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">blit&lt;<wbr><span class="type-parameter">S</span>&gt; method</li>
+    <li class="self-crumb">blit&lt;<wbr><span class="type-parameter">S</span>&gt; abstract method</li>
   </ol>
   <div class="self-name">blit</div>
   <form class="search navbar-right" role="search">
@@ -57,7 +57,7 @@
     data-above-sidebar="pxl&#47;Pixels-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">blit&lt;<wbr><span class="type-parameter">S</span>&gt;</span> method 
+<h1><span class="kind-method">blit&lt;<wbr><span class="type-parameter">S</span>&gt;</span> abstract method 
 </h1></div>
 
     <section class="multi-line-signature">
@@ -109,31 +109,7 @@ dst.blit(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
   Rect? source,
   Pos? target,
   BlendMode blend = BlendMode.srcOver,
-}) {
-  if (source == null) {
-    if (target == null) {
-      return blitUnsafe(from, blend: blend);
-    }
-    source = from.bounds;
-  } else {
-    source = source.intersect(from.bounds);
-  }
-  target ??= Pos.zero;
-  final clipped = Rect.fromTLBR(
-    target,
-    target + source.size,
-  ).intersect(bounds);
-  if (clipped.isEmpty) {
-    return;
-  }
-  source = Rect.fromLTWH(
-    source.left,
-    source.top,
-    clipped.width,
-    clipped.height,
-  );
-  return blitUnsafe(from, source: source, target: target, blend: blend);
-}</code></pre>
+});</code></pre>
 </section>
 
 
@@ -151,7 +127,7 @@ dst.blit(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">blit&lt;<wbr><span class="type-parameter">S</span>&gt; method</li>
+    <li class="self-crumb">blit&lt;<wbr><span class="type-parameter">S</span>&gt; abstract method</li>
 </ol>
 
 
@@ -167,7 +143,7 @@ dst.blit(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

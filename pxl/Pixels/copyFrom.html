@@ -31,7 +31,7 @@
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">copyFrom method</li>
+    <li class="self-crumb">copyFrom abstract method</li>
   </ol>
   <div class="self-name">copyFrom</div>
   <form class="search navbar-right" role="search">
@@ -57,7 +57,7 @@
     data-above-sidebar="pxl&#47;Pixels-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">copyFrom</span> method 
+<h1><span class="kind-method">copyFrom</span> abstract method 
 </h1></div>
 
     <section class="multi-line-signature">
@@ -107,31 +107,7 @@ dst.copyFrom(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
   Buffer&lt;T&gt; from, {
   Rect? source,
   Pos? target,
-}) {
-  if (source == null) {
-    if (target == null) {
-      return copyFromUnsafe(from);
-    }
-    source = from.bounds;
-  } else {
-    source = source.intersect(from.bounds);
-  }
-  target ??= Pos.zero;
-  final clipped = Rect.fromTLBR(
-    target,
-    target + source.size,
-  ).intersect(bounds);
-  if (clipped.isEmpty) {
-    return;
-  }
-  source = Rect.fromLTWH(
-    source.left,
-    source.top,
-    clipped.width,
-    clipped.height,
-  );
-  return copyFromUnsafe(from, source: source, target: target);
-}</code></pre>
+});</code></pre>
 </section>
 
 
@@ -149,7 +125,7 @@ dst.copyFrom(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">copyFrom method</li>
+    <li class="self-crumb">copyFrom abstract method</li>
 </ol>
 
 
@@ -165,7 +141,7 @@ dst.copyFrom(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

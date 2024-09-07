@@ -31,7 +31,7 @@
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">blitUnsafe&lt;<wbr><span class="type-parameter">S</span>&gt; method</li>
+    <li class="self-crumb">blitUnsafe&lt;<wbr><span class="type-parameter">S</span>&gt; abstract method</li>
   </ol>
   <div class="self-name">blitUnsafe</div>
   <form class="search navbar-right" role="search">
@@ -57,7 +57,7 @@
     data-above-sidebar="pxl&#47;Pixels-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">blitUnsafe&lt;<wbr><span class="type-parameter">S</span>&gt;</span> method 
+<h1><span class="kind-method">blitUnsafe&lt;<wbr><span class="type-parameter">S</span>&gt;</span> abstract method 
 </h1></div>
 
     <section class="multi-line-signature">
@@ -107,29 +107,7 @@ dst.blitUnsafe(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
   Rect? source,
   Pos? target,
   BlendMode blend = BlendMode.srcOver,
-}) {
-  target ??= Pos.zero;
-  final sRect = source ?? from.bounds;
-  final tRect = Rect.fromTLBR(
-    target,
-    target + sRect.size,
-  ).intersect(bounds);
-  if (tRect.isEmpty) {
-    return;
-  }
-  source = Rect.fromLTWH(
-    sRect.left,
-    sRect.top,
-    tRect.width,
-    tRect.height,
-  );
-  final fn = blend.getBlend(from.format, format);
-  if (from is Pixels&lt;S&gt;) {
-    _blitUnsafeFast(from, source: source, target: tRect, blend: fn);
-  } else {
-    _blitUnsafeSlow(from, source: source, target: tRect, blend: fn);
-  }
-}</code></pre>
+});</code></pre>
 </section>
 
 
@@ -147,7 +125,7 @@ dst.blitUnsafe(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">blitUnsafe&lt;<wbr><span class="type-parameter">S</span>&gt; method</li>
+    <li class="self-crumb">blitUnsafe&lt;<wbr><span class="type-parameter">S</span>&gt; abstract method</li>
 </ol>
 
 
@@ -163,7 +141,7 @@ dst.blitUnsafe(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

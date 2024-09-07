@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getRectUnsafe method from the Pixels class, for the Dart programming language.">
-  <title>getRectUnsafe method - Pixels class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the copyFromUnsafe method from the IntPixels class, for the Dart programming language.">
+  <title>copyFromUnsafe method - IntPixels class - pxl library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
-    <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">getRectUnsafe method</li>
+    <li><a href="../../pxl/IntPixels-class.html">IntPixels</a></li>
+    <li class="self-crumb">copyFromUnsafe method</li>
   </ol>
-  <div class="self-name">getRectUnsafe</div>
+  <div class="self-name">copyFromUnsafe</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,10 +54,10 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="pxl&#47;Pixels-class-sidebar.html"
+    data-above-sidebar="pxl&#47;IntPixels-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">getRectUnsafe</span> method 
+<h1><span class="kind-method">copyFromUnsafe</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
@@ -68,20 +68,38 @@
     </ol>
   </div>
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-<span class="name ">getRectUnsafe</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getRectUnsafe-param-rect"><span class="type-annotation"><a href="../../pxl/Rect.html">Rect</a></span> <span class="parameter-name">rect</span></span></li>
-</ol>)
+<span class="returntype">void</span>
+<span class="name ">copyFromUnsafe</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="copyFromUnsafe-param-from"><span class="type-annotation"><a href="../../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">from</span>, {</span></li>
+<li><span class="parameter" id="copyFromUnsafe-param-source"><span class="type-annotation"><a href="../../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">source</span>, </span></li>
+<li><span class="parameter" id="copyFromUnsafe-param-target"><span class="type-annotation"><a href="../../pxl/Pos.html">Pos</a>?</span> <span class="parameter-name">target</span>, </span></li>
+</ol>})
 
-      <div class="features"><span class="feature">override</span></div>
+      <div class="features"><span class="feature">inherited</span></div>
 
     </section>
     
 <section class="desc markdown">
-  <p>Returns a lazy iterable of pixels in the rectangle defined by <code>rect</code>.</p>
-<p>The returned iterable will contain all pixels in the buffer that are
-within the rectangle defined by <code>rect</code>.</p>
-<p>The provided rectangle must be contained within the bounds of the buffer
-or the behavior is undefined.</p>
+  <p>Copies the pixel data from a source buffer to <code>this</code> buffer.</p>
+<p>If a <code>source</code> rectangle is provided, only the pixels within that rectangle
+are copied. If the rectangle is outside the bounds of the source buffer,
+the behavior is undefined.</p>
+<p>If a <code>target</code> position is provded, the top-left corner of the source
+rectangle will be copied starting at that position. If there is not
+sufficient space in the target buffer, the behavior is undefined.</p>
+<p>The pixels are copied as-is, <strong>without any conversion or blending</strong>; see
+<a href="../../pxl/IntPixels/blit.html">blit</a> for converting and blending pixel data.</p>
+<h2 id="example">Example</h2>
+<pre class="language-dart"><code class="language-dart">final src = IntPixels(2, 2, data: Uint32List.fromList([
+  0xFFFFFFFF, 0x00000000, //
+  0x00000000, 0xFFFFFFFF, //
+]));
+
+final dst = IntPixels(3, 3);
+dst.copyFromUnsafe(src);
+dst.copyFromUnsafe(src, source: Rect.fromLTWH(1, 0, 1, 2));
+dst.copyFromUnsafe(src, target: Pos(1, 1));
+dst.copyFromUnsafe(src, source: Rect.fromLTWH(1, 0, 1, 2), target: Pos(1, 1));
+</code></pre>
 </section>
 
 
@@ -89,16 +107,29 @@ or the behavior is undefined.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-Iterable&lt;T&gt; getRectUnsafe(Rect rect) {
-  &#47;&#47; TODO: Consider a custom Iterable.
-  return Iterable.generate(
-    rect.height,
-    (y) {
-      final start = _indexAtUnsafe(Pos(rect.left, rect.top + y));
-      final end = start + rect.width;
-      return data.getRange(start, end);
-    },
-  ).expand((e) =&gt; e);
+void copyFromUnsafe(
+  Buffer&lt;T&gt; from, {
+  Rect? source,
+  Pos? target,
+}) {
+  final src = from;
+  final dst = this;
+  if (src is _Pixels&lt;T&gt;) {
+    return lodim.copyRectLinear(
+      src.data,
+      dst.data,
+      srcWidth: src.width,
+      dstWidth: dst.width,
+      source: source,
+      target: target ?? Pos.zero,
+    );
+  }
+  return lodim.copyRect(
+    source ?? src.bounds,
+    src.getUnsafe,
+    dst.setUnsafe,
+    target: target ?? Pos.zero,
+  );
 }</code></pre>
 </section>
 
@@ -116,12 +147,12 @@ Iterable&lt;T&gt; getRectUnsafe(Rect rect) {
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
-    <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">getRectUnsafe method</li>
+    <li><a href="../../pxl/IntPixels-class.html">IntPixels</a></li>
+    <li class="self-crumb">copyFromUnsafe method</li>
 </ol>
 
 
-    <h5>Pixels class</h5>
+    <h5>IntPixels class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 
@@ -133,7 +164,7 @@ Iterable&lt;T&gt; getRectUnsafe(Rect rect) {
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

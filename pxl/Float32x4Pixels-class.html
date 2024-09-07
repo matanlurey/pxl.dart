@@ -144,7 +144,7 @@ dimensions.
 
 </dt>
 <dd>
-  Raw bytes of pixel data.
+  Pixel data in the buffer.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -230,7 +230,7 @@ dimensions.
     <h2>Methods</h2>
     <dl class="callables">
         <dt id="blit" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/blit.html">blit</a></span><span class="signature">&lt;<wbr><span class="type-parameter">S</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="blit-param-from"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">S</span>&gt;</span></span> <span class="parameter-name">from</span>, {</span><span class="parameter" id="blit-param-source"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">source</span>, </span><span class="parameter" id="blit-param-target"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a>?</span> <span class="parameter-name">target</span>, </span><span class="parameter" id="blit-param-blend"><span class="type-annotation"><a href="../pxl/BlendMode-class.html">BlendMode</a></span> <span class="parameter-name">blend</span> = <span class="default-value">BlendMode.srcOver</span></span>})
+  <span class="name"><a href="../pxl/Float32x4Pixels/blit.html">blit</a></span><span class="signature">&lt;<wbr><span class="type-parameter">S</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="blit-param-from"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">S</span>&gt;</span></span> <span class="parameter-name">from</span>, {</span><span class="parameter" id="blit-param-source"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">source</span>, </span><span class="parameter" id="blit-param-target"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a>?</span> <span class="parameter-name">target</span>, </span><span class="parameter" id="blit-param-blend"><span class="type-annotation"><a href="../pxl/BlendMode-class.html">BlendMode</a></span> <span class="parameter-name">blend</span> = <span class="default-value">BlendMode.srcOver</span></span>})
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -244,7 +244,7 @@ dimensions.
 </dd>
 
         <dt id="blitUnsafe" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/blitUnsafe.html">blitUnsafe</a></span><span class="signature">&lt;<wbr><span class="type-parameter">S</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="blitUnsafe-param-from"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">S</span>&gt;</span></span> <span class="parameter-name">from</span>, {</span><span class="parameter" id="blitUnsafe-param-source"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">source</span>, </span><span class="parameter" id="blitUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a>?</span> <span class="parameter-name">target</span>, </span><span class="parameter" id="blitUnsafe-param-blend"><span class="type-annotation"><a href="../pxl/BlendMode-class.html">BlendMode</a></span> <span class="parameter-name">blend</span> = <span class="default-value">BlendMode.srcOver</span></span>})
+  <span class="name"><a href="../pxl/Float32x4Pixels/blitUnsafe.html">blitUnsafe</a></span><span class="signature">&lt;<wbr><span class="type-parameter">S</span>&gt;</span><span class="signature">(<wbr><span class="parameter" id="blitUnsafe-param-from"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter">S</span>&gt;</span></span> <span class="parameter-name">from</span>, {</span><span class="parameter" id="blitUnsafe-param-source"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">source</span>, </span><span class="parameter" id="blitUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a>?</span> <span class="parameter-name">target</span>, </span><span class="parameter" id="blitUnsafe-param-blend"><span class="type-annotation"><a href="../pxl/BlendMode-class.html">BlendMode</a></span> <span class="parameter-name">blend</span> = <span class="default-value">BlendMode.srcOver</span></span>})
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -258,7 +258,7 @@ dimensions.
 </dd>
 
         <dt id="clear" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/clear.html">clear</a></span><span class="signature">(<wbr>{<span class="parameter" id="clear-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Float32x4Pixels/clear.html">clear</a></span><span class="signature">(<wbr>[<span class="parameter" id="clear-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -271,7 +271,7 @@ dimensions.
 </dd>
 
         <dt id="clearUnsafe" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/clearUnsafe.html">clearUnsafe</a></span><span class="signature">(<wbr>{<span class="parameter" id="clearUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Float32x4Pixels/clearUnsafe.html">clearUnsafe</a></span><span class="signature">(<wbr>[<span class="parameter" id="clearUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -310,7 +310,7 @@ dimensions.
 </dd>
 
         <dt id="copyFrom" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/copyFrom.html">copyFrom</a></span><span class="signature">(<wbr><span class="parameter" id="copyFrom-param-from"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span> <span class="parameter-name">from</span>, {</span><span class="parameter" id="copyFrom-param-source"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">source</span>, </span><span class="parameter" id="copyFrom-param-target"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Float32x4Pixels/copyFrom.html">copyFrom</a></span><span class="signature">(<wbr><span class="parameter" id="copyFrom-param-from"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span> <span class="parameter-name">from</span>, {</span><span class="parameter" id="copyFrom-param-source"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">source</span>, </span><span class="parameter" id="copyFrom-param-target"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a>?</span> <span class="parameter-name">target</span></span>})
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -323,7 +323,7 @@ dimensions.
 </dd>
 
         <dt id="copyFromUnsafe" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/copyFromUnsafe.html">copyFromUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="copyFromUnsafe-param-from"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span> <span class="parameter-name">from</span>, {</span><span class="parameter" id="copyFromUnsafe-param-source"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">source</span>, </span><span class="parameter" id="copyFromUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Float32x4Pixels/copyFromUnsafe.html">copyFromUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="copyFromUnsafe-param-from"><span class="type-annotation"><a href="../pxl/Buffer-class.html">Buffer</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span> <span class="parameter-name">from</span>, {</span><span class="parameter" id="copyFromUnsafe-param-source"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">source</span>, </span><span class="parameter" id="copyFromUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a>?</span> <span class="parameter-name">target</span></span>})
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -336,7 +336,7 @@ dimensions.
 </dd>
 
         <dt id="fill" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/fill.html">fill</a></span><span class="signature">(<wbr><span class="parameter" id="fill-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="fill-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Float32x4Pixels/fill.html">fill</a></span><span class="signature">(<wbr><span class="parameter" id="fill-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span>, [</span><span class="parameter" id="fill-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -344,12 +344,38 @@ dimensions.
 </dt>
 <dd class="inherited">
   Fill the buffer with the given <code>pixel</code>.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="fillFrom" class="callable inherited">
+  <span class="name"><a href="../pxl/Float32x4Pixels/fillFrom.html">fillFrom</a></span><span class="signature">(<wbr><span class="parameter" id="fillFrom-param-pixels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span> <span class="parameter-name">pixels</span>, [</span><span class="parameter" id="fillFrom-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Fill the buffer with the given <code>pixels</code>.
+  <div class="features"><span class="feature">inherited</span></div>
+
+</dd>
+
+        <dt id="fillFromUnsafe" class="callable inherited">
+  <span class="name"><a href="../pxl/Float32x4Pixels/fillFromUnsafe.html">fillFromUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="fillFromUnsafe-param-pixels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span> <span class="parameter-name">pixels</span>, [</span><span class="parameter" id="fillFromUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd class="inherited">
+  Fill the buffer with the given <code>pixels</code>.
   <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
         <dt id="fillUnsafe" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/fillUnsafe.html">fillUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="fillUnsafe-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="fillUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Float32x4Pixels/fillUnsafe.html">fillUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="fillUnsafe-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span>, [</span><span class="parameter" id="fillUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -357,32 +383,6 @@ dimensions.
 </dt>
 <dd class="inherited">
   Fill the buffer with the given <code>pixel</code>.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="fillWith" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/fillWith.html">fillWith</a></span><span class="signature">(<wbr><span class="parameter" id="fillWith-param-pixels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span> <span class="parameter-name">pixels</span>, {</span><span class="parameter" id="fillWith-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Fill the buffer with the given <code>pixels</code>.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="fillWithUnsafe" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/fillWithUnsafe.html">fillWithUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="fillWithUnsafe-param-pixels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span> <span class="parameter-name">pixels</span>, {</span><span class="parameter" id="fillWithUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Fill the buffer with the given <code>pixels</code>.
   <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
@@ -400,34 +400,8 @@ dimensions.
 
 </dd>
 
-        <dt id="getRange" class="callable inherited">
-  <span class="name"><a href="../pxl/Buffer/getRange.html">getRange</a></span><span class="signature">(<wbr><span class="parameter" id="getRange-param-start"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">start</span>, </span><span class="parameter" id="getRange-param-end"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">end</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Returns a lazy iterable of pixels in the buffer from <code>start</code> to <code>end</code>.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="getRangeUnsafe" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/getRangeUnsafe.html">getRangeUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getRangeUnsafe-param-start"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">start</span>, </span><span class="parameter" id="getRangeUnsafe-param-end"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">end</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Returns a lazy iterable of pixels in the buffer from <code>start</code> to <code>end</code>.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
         <dt id="getRect" class="callable inherited">
-  <span class="name"><a href="../pxl/Buffer/getRect.html">getRect</a></span><span class="signature">(<wbr><span class="parameter" id="getRect-param-rect"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a></span> <span class="parameter-name">rect</span></span>)
+  <span class="name"><a href="../pxl/Float32x4Pixels/getRect.html">getRect</a></span><span class="signature">(<wbr><span class="parameter" id="getRect-param-rect"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a></span> <span class="parameter-name">rect</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span>
   </span>
   
@@ -440,7 +414,7 @@ dimensions.
 </dd>
 
         <dt id="getRectUnsafe" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/getRectUnsafe.html">getRectUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getRectUnsafe-param-rect"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a></span> <span class="parameter-name">rect</span></span>)
+  <span class="name"><a href="../pxl/Float32x4Pixels/getRectUnsafe.html">getRectUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getRectUnsafe-param-rect"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a></span> <span class="parameter-name">rect</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span>
   </span>
   
@@ -453,7 +427,7 @@ dimensions.
 </dd>
 
         <dt id="getUnsafe" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/getUnsafe.html">getUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getUnsafe-param-pos"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">pos</span></span>)
+  <span class="name"><a href="../pxl/Float32x4Pixels/getUnsafe.html">getUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getUnsafe-param-pos"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">pos</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>
   </span>
   
@@ -544,7 +518,7 @@ dimensions.
 </dd>
 
         <dt id="set" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/set.html">set</a></span><span class="signature">(<wbr><span class="parameter" id="set-param-pos"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">pos</span>, </span><span class="parameter" id="set-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span>)
+  <span class="name"><a href="../pxl/Float32x4Pixels/set.html">set</a></span><span class="signature">(<wbr><span class="parameter" id="set-param-pos"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">pos</span>, </span><span class="parameter" id="set-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -557,7 +531,7 @@ dimensions.
 </dd>
 
         <dt id="setUnsafe" class="callable inherited">
-  <span class="name"><a href="../pxl/Pixels/setUnsafe.html">setUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="setUnsafe-param-pos"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">pos</span>, </span><span class="parameter" id="setUnsafe-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span>)
+  <span class="name"><a href="../pxl/Float32x4Pixels/setUnsafe.html">setUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="setUnsafe-param-pos"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">pos</span>, </span><span class="parameter" id="setUnsafe-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span> <span class="parameter-name">pixel</span></span>)
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -639,7 +613,7 @@ dimensions.
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

@@ -84,10 +84,7 @@ or the behavior is undefined.</p>
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Iterable&lt;T&gt; getRectUnsafe(Rect rect) {
-  if (rect.width == width) {
-    return getRangeUnsafe(rect.topLeft, rect.bottomRight - const Pos(1, 1));
-  }
-  return rect.positions.map(getUnsafe);
+  return lodim.getRect(rect, getUnsafe);
 }</code></pre>
 </section>
 
@@ -122,7 +119,7 @@ or the behavior is undefined.</p>
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

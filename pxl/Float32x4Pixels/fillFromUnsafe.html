@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getRange method from the Buffer class, for the Dart programming language.">
-  <title>getRange method - Buffer class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the fillFromUnsafe method from the Float32x4Pixels class, for the Dart programming language.">
+  <title>fillFromUnsafe method - Float32x4Pixels class - pxl library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
-    <li><a href="../../pxl/Buffer-class.html">Buffer<span class="signature">&lt;<wbr><span class="type-parameter">T extends Object?</span>&gt;</span></a></li>
-    <li class="self-crumb">getRange method</li>
+    <li><a href="../../pxl/Float32x4Pixels-class.html">Float32x4Pixels</a></li>
+    <li class="self-crumb">fillFromUnsafe method</li>
   </ol>
-  <div class="self-name">getRange</div>
+  <div class="self-name">fillFromUnsafe</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,44 +54,51 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="pxl&#47;Buffer-class-sidebar.html"
+    data-above-sidebar="pxl&#47;Float32x4Pixels-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">getRange</span> method 
+<h1><span class="kind-method">fillFromUnsafe</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.dart.dev/stable/3.5.2/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-<span class="name ">getRange</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getRange-param-start"><span class="type-annotation"><a href="../../pxl/Pos.html">Pos</a></span> <span class="parameter-name">start</span>, </span></li>
-<li><span class="parameter" id="getRange-param-end"><span class="type-annotation"><a href="../../pxl/Pos.html">Pos</a></span> <span class="parameter-name">end</span></span></li>
-</ol>)
+<span class="returntype">void</span>
+<span class="name ">fillFromUnsafe</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fillFromUnsafe-param-pixels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/Float32x4-class.html">Float32x4</a></span>&gt;</span></span> <span class="parameter-name">pixels</span>, [</span></li>
+<li><span class="parameter" id="fillFromUnsafe-param-target"><span class="type-annotation"><a href="../../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span></li>
+</ol>])
 
-      
+      <div class="features"><span class="feature">inherited</span></div>
 
     </section>
     
 <section class="desc markdown">
-  <p>Returns a lazy iterable of pixels in the buffer from <code>start</code> to <code>end</code>.</p>
-<p>The returned iterable will contain all pixels in the buffer that are
-within the rectangle defined by <code>start</code> and <code>end</code>, inclusive.</p>
-<p>The provided positions are clamped to the bounds of the buffer, and yield
-no pixels if <code>start &gt; end</code>.</p>
+  <p>Fill the buffer with the given <code>pixels</code>.</p>
+<p>If a <code>target</code> rectangle is provided, only the pixels within that rectangle
+are filled. If the rectangle is outside the bounds of the buffer, the
+behavior is undefined.</p>
+<p>If the number of pixels in the iterable is less than the number of pixels
+in the target rectangle, or if the number of pixels is greater, the
+behavior is undefined.</p>
+<h2 id="example">Example</h2>
+<pre class="language-dart"><code class="language-dart">final pixels = IntPixels(2, 2);
+pixels.fillWithUnsafe([0xFFFFFFFF, 0x00000000]);
+pixels.fillWithUnsafe([0x00000000, 0xFFFFFFFF], target: Rect.fromLTWH(1, 0, 1, 2));
+</code></pre>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Iterable&lt;T&gt; getRange(Pos start, Pos end) {
-  final bottomRight = bounds.bottomRight;
-  start = start.clamp(Pos.zero, bottomRight);
-  end = end.clamp(Pos.zero, bottomRight);
-  if (Pos.byRowMajor(start, end) &gt; 0) {
-    return const Iterable.empty();
-  }
-  return getRangeUnsafe(start, end);
+  <pre class="language-dart"><code class="language-dart">@override
+void fillFromUnsafe(Iterable&lt;T&gt; pixels, [Rect? target]) {
+  lodim.fillRectFromLinear(data, pixels, width: width, bounds: target);
 }</code></pre>
 </section>
 
@@ -109,12 +116,12 @@ no pixels if <code>start &gt; end</code>.</p>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
-    <li><a href="../../pxl/Buffer-class.html">Buffer<span class="signature">&lt;<wbr><span class="type-parameter">T extends Object?</span>&gt;</span></a></li>
-    <li class="self-crumb">getRange method</li>
+    <li><a href="../../pxl/Float32x4Pixels-class.html">Float32x4Pixels</a></li>
+    <li class="self-crumb">fillFromUnsafe method</li>
 </ol>
 
 
-    <h5>Buffer class</h5>
+    <h5>Float32x4Pixels class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 
@@ -126,7 +133,7 @@ no pixels if <code>start &gt; end</code>.</p>
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

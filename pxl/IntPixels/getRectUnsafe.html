@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the data property from the Pixels class, for the Dart programming language.">
-  <title>data property - Pixels class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the getRectUnsafe method from the IntPixels class, for the Dart programming language.">
+  <title>getRectUnsafe method - IntPixels class - pxl library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
-    <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">data property</li>
+    <li><a href="../../pxl/IntPixels-class.html">IntPixels</a></li>
+    <li class="self-crumb">getRectUnsafe method</li>
   </ol>
-  <div class="self-name">data</div>
+  <div class="self-name">getRectUnsafe</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,15 +54,11 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="pxl&#47;Pixels-class-sidebar.html"
+    data-above-sidebar="pxl&#47;IntPixels-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-property">data</span> property 
+<h1><span class="kind-method">getRectUnsafe</span> method 
 </h1></div>
-
-
-        
-  <section id="getter">
 
     <section class="multi-line-signature">
       
@@ -71,35 +67,38 @@
         <li>@<a href="https://api.dart.dev/stable/3.5.2/dart-core/override-constant.html">override</a></li>
     </ol>
   </div>
-      <span class="returntype"><a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/TypedDataList-class.html">TypedDataList</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-      <span class="name ">data</span>
-      <div class="features"><span class="feature">override</span></div>
+
+<span class="returntype"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span>&gt;</span></span>
+<span class="name ">getRectUnsafe</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getRectUnsafe-param-rect"><span class="type-annotation"><a href="../../pxl/Rect.html">Rect</a></span> <span class="parameter-name">rect</span></span></li>
+</ol>)
+
+      <div class="features"><span class="feature">inherited</span></div>
 
     </section>
-
     
 <section class="desc markdown">
-  <p>Raw bytes of pixel data.</p>
-<p>This type is exposed for operations that require direct access to the
-underlying memory, such as <a href="https://pub.dev/documentation/web/latest/web/ImageData/ImageData.html">copying pixel data to a canvas</a>, or
-<a href="https://api.dart.dev/stable/3.5.1/dart-isolate/TransferableTypedData-class.html">transferring bytes to an isolate</a>; in most cases the other methods
-provided by <a href="../../pxl/Pixels-class.html">Pixels</a> will be used instead.</p>
+  <p>Returns a lazy iterable of pixels in the rectangle defined by <code>rect</code>.</p>
+<p>The returned iterable will contain all pixels in the buffer that are
+within the rectangle defined by <code>rect</code>.</p>
+<p>The provided rectangle must be contained within the bounds of the buffer
+or the behavior is undefined.</p>
 </section>
+
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@override
-TypedDataList&lt;T&gt; get data;</code></pre>
+Iterable&lt;T&gt; getRectUnsafe(Rect rect) {
+  return lodim.getRectLinear(data, width: width, bounds: rect);
+}</code></pre>
 </section>
 
-  </section>
 
+  </div> <!-- /.main-content -->
 
-</div> <!-- /.main-content -->
-
-<div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
-  <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
 <header id="header-search-sidebar" class="hidden-l">
   <form class="search-sidebar" role="search">
     <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
@@ -109,16 +108,16 @@ TypedDataList&lt;T&gt; get data;</code></pre>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
-    <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">data property</li>
+    <li><a href="../../pxl/IntPixels-class.html">IntPixels</a></li>
+    <li class="self-crumb">getRectUnsafe method</li>
 </ol>
 
 
-  <h5>Pixels class</h5>
-  <div id="dartdoc-sidebar-left-content"></div>
-</div><!--/.sidebar-offcanvas-->
+    <h5>IntPixels class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
 
-<div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
 </div><!--/.sidebar-offcanvas-->
 
 </main>
@@ -126,7 +125,7 @@ TypedDataList&lt;T&gt; get data;</code></pre>
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

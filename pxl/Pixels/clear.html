@@ -31,7 +31,7 @@
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">clear method</li>
+    <li class="self-crumb">clear abstract method</li>
   </ol>
   <div class="self-name">clear</div>
   <form class="search navbar-right" role="search">
@@ -57,15 +57,15 @@
     data-above-sidebar="pxl&#47;Pixels-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">clear</span> method 
+<h1><span class="kind-method">clear</span> abstract method 
 </h1></div>
 
     <section class="multi-line-signature">
       
 
 <span class="returntype">void</span>
-<span class="name ">clear</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="clear-param-target"><span class="type-annotation"><a href="../../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span>, </span></li>
-</ol>})
+<span class="name ">clear</span>(<wbr>[<ol class="parameter-list single-line"> <li><span class="parameter" id="clear-param-target"><span class="type-annotation"><a href="../../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span></li>
+</ol>])
 
       
 
@@ -80,7 +80,7 @@ buffer. If omitted, the entire buffer will be cleared.</p>
 <h2 id="example">Example</h2>
 <pre class="language-dart"><code class="language-dart">final pixels = IntPixels(2, 2);
 pixels.clear();
-pixels.clear(target: Rect.fromLTWH(1, 0, 1, 2));
+pixels.clear(Rect.fromLTWH(1, 0, 1, 2));
 </code></pre>
 </section>
 
@@ -88,9 +88,7 @@ pixels.clear(target: Rect.fromLTWH(1, 0, 1, 2));
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">void clear({Rect? target}) {
-  fill(format.zero, target: target);
-}</code></pre>
+  <pre class="language-dart"><code class="language-dart">void clear([Rect? target]);</code></pre>
 </section>
 
 
@@ -108,7 +106,7 @@ pixels.clear(target: Rect.fromLTWH(1, 0, 1, 2));
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">clear method</li>
+    <li class="self-crumb">clear abstract method</li>
 </ol>
 
 
@@ -124,7 +122,7 @@ pixels.clear(target: Rect.fromLTWH(1, 0, 1, 2));
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

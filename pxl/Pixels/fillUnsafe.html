@@ -31,7 +31,7 @@
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">fillUnsafe method</li>
+    <li class="self-crumb">fillUnsafe abstract method</li>
   </ol>
   <div class="self-name">fillUnsafe</div>
   <form class="search navbar-right" role="search">
@@ -57,7 +57,7 @@
     data-above-sidebar="pxl&#47;Pixels-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">fillUnsafe</span> method 
+<h1><span class="kind-method">fillUnsafe</span> abstract method 
 </h1></div>
 
     <section class="multi-line-signature">
@@ -69,9 +69,9 @@
   </div>
 
 <span class="returntype">void</span>
-<span class="name ">fillUnsafe</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="fillUnsafe-param-pixel"><span class="type-annotation">T</span> <span class="parameter-name">pixel</span>, {</span></li>
-<li><span class="parameter" id="fillUnsafe-param-target"><span class="type-annotation"><a href="../../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span>, </span></li>
-</ol>})
+<span class="name ">fillUnsafe</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="fillUnsafe-param-pixel"><span class="type-annotation">T</span> <span class="parameter-name">pixel</span>, [</span></li>
+<li><span class="parameter" id="fillUnsafe-param-target"><span class="type-annotation"><a href="../../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span></li>
+</ol>])
 
       
 
@@ -86,7 +86,7 @@ behavior is undefined.</p>
 <h2 id="example">Example</h2>
 <pre class="language-dart"><code class="language-dart">final pixels = IntPixels(2, 2);
 pixels.fillUnsafe(0xFFFFFFFF);
-pixels.fillUnsafe(0x00000000, target: Rect.fromLTWH(1, 0, 1, 2));
+pixels.fillUnsafe(0x00000000, Rect.fromLTWH(1, 0, 1, 2));
 </code></pre>
 </section>
 
@@ -95,30 +95,7 @@ pixels.fillUnsafe(0x00000000, target: Rect.fromLTWH(1, 0, 1, 2));
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">@unsafeNoBoundsChecks
-void fillUnsafe(T pixel, {Rect? target}) {
-  if (target == null) {
-    return data.fillRange(
-      0,
-      data.length,
-      pixel,
-    );
-  }
-  if (target.width == width) {
-    return data.fillRange(
-      target.top * width,
-      target.bottom * width,
-      pixel,
-    );
-  }
-  for (var y = target.top; y &lt; target.bottom; y++) {
-    final x = y * width;
-    data.fillRange(
-      x + target.left,
-      x + target.right,
-      pixel,
-    );
-  }
-}</code></pre>
+void fillUnsafe(T pixel, [Rect? target]);</code></pre>
 </section>
 
 
@@ -136,7 +113,7 @@ void fillUnsafe(T pixel, {Rect? target}) {
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
     <li><a href="../../pxl/Pixels-class.html">Pixels<span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></a></li>
-    <li class="self-crumb">fillUnsafe method</li>
+    <li class="self-crumb">fillUnsafe abstract method</li>
 </ol>
 
 
@@ -152,7 +129,7 @@ void fillUnsafe(T pixel, {Rect? target}) {
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

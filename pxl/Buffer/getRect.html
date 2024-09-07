@@ -83,7 +83,9 @@ no pixels if the rectangle is empty.</p>
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Iterable&lt;T&gt; getRect(Rect rect) =&gt; getRectUnsafe(rect.intersect(bounds));</code></pre>
+  <pre class="language-dart"><code class="language-dart">Iterable&lt;T&gt; getRect(Rect rect) {
+  return getRectUnsafe(rect.intersect(bounds));
+}</code></pre>
 </section>
 
 
@@ -117,7 +119,7 @@ no pixels if the rectangle is empty.</p>
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

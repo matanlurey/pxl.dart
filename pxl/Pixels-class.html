@@ -119,15 +119,15 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 
 </dd>
 
-        <dt id="data" class="property">
-  <span class="name"><a href="../pxl/Pixels/data.html">data</a></span>
-  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-typed_data/TypedDataList-class.html">TypedDataList</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
+        <dt id="data" class="property inherited">
+  <span class="name"><a href="../pxl/Buffer/data.html">data</a></span>
+  <span class="signature">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
   
 
 </dt>
-<dd>
-  Raw bytes of pixel data.
-  <div class="features"><span class="feature">no setter</span><span class="feature">override</span></div>
+<dd class="inherited">
+  Pixel data in the buffer.
+  <div class="features"><span class="feature">no setter</span><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -240,7 +240,7 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 </dd>
 
         <dt id="clear" class="callable">
-  <span class="name"><a href="../pxl/Pixels/clear.html">clear</a></span><span class="signature">(<wbr>{<span class="parameter" id="clear-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Pixels/clear.html">clear</a></span><span class="signature">(<wbr>[<span class="parameter" id="clear-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -253,7 +253,7 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 </dd>
 
         <dt id="clearUnsafe" class="callable">
-  <span class="name"><a href="../pxl/Pixels/clearUnsafe.html">clearUnsafe</a></span><span class="signature">(<wbr>{<span class="parameter" id="clearUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Pixels/clearUnsafe.html">clearUnsafe</a></span><span class="signature">(<wbr>[<span class="parameter" id="clearUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -318,7 +318,7 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 </dd>
 
         <dt id="fill" class="callable">
-  <span class="name"><a href="../pxl/Pixels/fill.html">fill</a></span><span class="signature">(<wbr><span class="parameter" id="fill-param-pixel"><span class="type-annotation">T</span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="fill-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Pixels/fill.html">fill</a></span><span class="signature">(<wbr><span class="parameter" id="fill-param-pixel"><span class="type-annotation">T</span> <span class="parameter-name">pixel</span>, [</span><span class="parameter" id="fill-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -326,12 +326,38 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 </dt>
 <dd>
   Fill the buffer with the given <code>pixel</code>.
+  
+
+</dd>
+
+        <dt id="fillFrom" class="callable">
+  <span class="name"><a href="../pxl/Pixels/fillFrom.html">fillFrom</a></span><span class="signature">(<wbr><span class="parameter" id="fillFrom-param-pixels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">pixels</span>, [</span><span class="parameter" id="fillFrom-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Fill the buffer with the given <code>pixels</code>.
+  
+
+</dd>
+
+        <dt id="fillFromUnsafe" class="callable">
+  <span class="name"><a href="../pxl/Pixels/fillFromUnsafe.html">fillFromUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="fillFromUnsafe-param-pixels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">pixels</span>, [</span><span class="parameter" id="fillFromUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
+    <span class="returntype parameter">&#8594; void</span>
+  </span>
+  
+
+</dt>
+<dd>
+  Fill the buffer with the given <code>pixels</code>.
   
 
 </dd>
 
         <dt id="fillUnsafe" class="callable">
-  <span class="name"><a href="../pxl/Pixels/fillUnsafe.html">fillUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="fillUnsafe-param-pixel"><span class="type-annotation">T</span> <span class="parameter-name">pixel</span>, {</span><span class="parameter" id="fillUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
+  <span class="name"><a href="../pxl/Pixels/fillUnsafe.html">fillUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="fillUnsafe-param-pixel"><span class="type-annotation">T</span> <span class="parameter-name">pixel</span>, [</span><span class="parameter" id="fillUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>])
     <span class="returntype parameter">&#8594; void</span>
   </span>
   
@@ -339,32 +365,6 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 </dt>
 <dd>
   Fill the buffer with the given <code>pixel</code>.
-  
-
-</dd>
-
-        <dt id="fillWith" class="callable">
-  <span class="name"><a href="../pxl/Pixels/fillWith.html">fillWith</a></span><span class="signature">(<wbr><span class="parameter" id="fillWith-param-pixels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">pixels</span>, {</span><span class="parameter" id="fillWith-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
-  
-
-</dt>
-<dd>
-  Fill the buffer with the given <code>pixels</code>.
-  
-
-</dd>
-
-        <dt id="fillWithUnsafe" class="callable">
-  <span class="name"><a href="../pxl/Pixels/fillWithUnsafe.html">fillWithUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="fillWithUnsafe-param-pixels"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span> <span class="parameter-name">pixels</span>, {</span><span class="parameter" id="fillWithUnsafe-param-target"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a>?</span> <span class="parameter-name">target</span></span>})
-    <span class="returntype parameter">&#8594; void</span>
-  </span>
-  
-
-</dt>
-<dd>
-  Fill the buffer with the given <code>pixels</code>.
   
 
 </dd>
@@ -382,32 +382,6 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 
 </dd>
 
-        <dt id="getRange" class="callable inherited">
-  <span class="name"><a href="../pxl/Buffer/getRange.html">getRange</a></span><span class="signature">(<wbr><span class="parameter" id="getRange-param-start"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">start</span>, </span><span class="parameter" id="getRange-param-end"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">end</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd class="inherited">
-  Returns a lazy iterable of pixels in the buffer from <code>start</code> to <code>end</code>.
-  <div class="features"><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="getRangeUnsafe" class="callable">
-  <span class="name"><a href="../pxl/Pixels/getRangeUnsafe.html">getRangeUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getRangeUnsafe-param-start"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">start</span>, </span><span class="parameter" id="getRangeUnsafe-param-end"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">end</span></span>)
-    <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-  </span>
-  
-
-</dt>
-<dd>
-  Returns a lazy iterable of pixels in the buffer from <code>start</code> to <code>end</code>.
-  <div class="features"><span class="feature">override</span></div>
-
-</dd>
-
         <dt id="getRect" class="callable inherited">
   <span class="name"><a href="../pxl/Buffer/getRect.html">getRect</a></span><span class="signature">(<wbr><span class="parameter" id="getRect-param-rect"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a></span> <span class="parameter-name">rect</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
@@ -421,29 +395,29 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 
 </dd>
 
-        <dt id="getRectUnsafe" class="callable">
-  <span class="name"><a href="../pxl/Pixels/getRectUnsafe.html">getRectUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getRectUnsafe-param-rect"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a></span> <span class="parameter-name">rect</span></span>)
+        <dt id="getRectUnsafe" class="callable inherited">
+  <span class="name"><a href="../pxl/Buffer/getRectUnsafe.html">getRectUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getRectUnsafe-param-rect"><span class="type-annotation"><a href="../pxl/Rect.html">Rect</a></span> <span class="parameter-name">rect</span></span>)
     <span class="returntype parameter">&#8594; <a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Returns a lazy iterable of pixels in the rectangle defined by <code>rect</code>.
-  <div class="features"><span class="feature">override</span></div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
-        <dt id="getUnsafe" class="callable">
-  <span class="name"><a href="../pxl/Pixels/getUnsafe.html">getUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getUnsafe-param-pos"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">pos</span></span>)
+        <dt id="getUnsafe" class="callable inherited">
+  <span class="name"><a href="../pxl/Buffer/getUnsafe.html">getUnsafe</a></span><span class="signature">(<wbr><span class="parameter" id="getUnsafe-param-pos"><span class="type-annotation"><a href="../pxl/Pos.html">Pos</a></span> <span class="parameter-name">pos</span></span>)
     <span class="returntype parameter">&#8594; T</span>
   </span>
   
 
 </dt>
-<dd>
+<dd class="inherited">
   Returns the pixel at the given position <strong>without bounds checking</strong>.
-  <div class="features"><span class="feature">override</span></div>
+  <div class="features"><span class="feature">inherited</span></div>
 
 </dd>
 
@@ -621,7 +595,7 @@ but cannot be extended or implemented (similar to <a href="https://api.dart.dev/
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   

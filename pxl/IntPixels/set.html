@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the getRangeUnsafe method from the Buffer class, for the Dart programming language.">
-  <title>getRangeUnsafe method - Buffer class - pxl library - Dart API</title>
+  <meta name="description" content="API docs for the set method from the IntPixels class, for the Dart programming language.">
+  <title>set method - IntPixels class - pxl library - Dart API</title>
 
 
   
@@ -30,10 +30,10 @@
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl.dart</a></li>
-    <li><a href="../../pxl/Buffer-class.html">Buffer<span class="signature">&lt;<wbr><span class="type-parameter">T extends Object?</span>&gt;</span></a></li>
-    <li class="self-crumb">getRangeUnsafe method</li>
+    <li><a href="../../pxl/IntPixels-class.html">IntPixels</a></li>
+    <li class="self-crumb">set method</li>
   </ol>
-  <div class="self-name">getRangeUnsafe</div>
+  <div class="self-name">set</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
@@ -54,40 +54,43 @@
 <div
     id="dartdoc-main-content"
     class="main-content"
-    data-above-sidebar="pxl&#47;Buffer-class-sidebar.html"
+    data-above-sidebar="pxl&#47;IntPixels-class-sidebar.html"
     data-below-sidebar="">
     <div>
-<h1><span class="kind-method">getRangeUnsafe</span> method 
+<h1><span class="kind-method">set</span> method 
 </h1></div>
 
     <section class="multi-line-signature">
       
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.dart.dev/stable/3.5.2/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
 
-<span class="returntype"><a href="https://api.dart.dev/stable/3.5.2/dart-core/Iterable-class.html">Iterable</a><span class="signature">&lt;<wbr><span class="type-parameter">T</span>&gt;</span></span>
-<span class="name ">getRangeUnsafe</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getRangeUnsafe-param-start"><span class="type-annotation"><a href="../../pxl/Pos.html">Pos</a></span> <span class="parameter-name">start</span>, </span></li>
-<li><span class="parameter" id="getRangeUnsafe-param-end"><span class="type-annotation"><a href="../../pxl/Pos.html">Pos</a></span> <span class="parameter-name">end</span></span></li>
+<span class="returntype">void</span>
+<span class="name ">set</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="set-param-pos"><span class="type-annotation"><a href="../../pxl/Pos.html">Pos</a></span> <span class="parameter-name">pos</span>, </span></li>
+<li><span class="parameter" id="set-param-pixel"><span class="type-annotation"><a href="https://api.dart.dev/stable/3.5.2/dart-core/int-class.html">int</a></span> <span class="parameter-name">pixel</span></span></li>
 </ol>)
 
-      
+      <div class="features"><span class="feature">inherited</span></div>
 
     </section>
     
 <section class="desc markdown">
-  <p>Returns a lazy iterable of pixels in the buffer from <code>start</code> to <code>end</code>.</p>
-<p>The returned iterable will contain all pixels in the buffer that are
-within the rectangle defined by <code>start</code> and <code>end</code>, inclusive.</p>
-<p>The provided positions must be <code>(0, 0) &lt;= start &lt;= end &lt; (width, height)</code>
-or the behavior is undefined.</p>
+  <p>Sets the pixel at the given position.</p>
+<p>If outside the bounds of the buffer, does nothing.</p>
 </section>
 
 
     
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
-  <pre class="language-dart"><code class="language-dart">Iterable&lt;T&gt; getRangeUnsafe(Pos start, Pos end) {
-  final iStart = start.y * width + start.x;
-  final iEnd = end.y * width + end.x;
-  return data.skip(iStart).take(iEnd - iStart + 1);
+  <pre class="language-dart"><code class="language-dart">@override
+void set(Pos pos, T pixel) {
+  if (contains(pos)) {
+    setUnsafe(pos, pixel);
+  }
 }</code></pre>
 </section>
 
@@ -105,12 +108,12 @@ or the behavior is undefined.</p>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">pxl</a></li>
     <li><a href="../../pxl/pxl-library.html">pxl</a></li>
-    <li><a href="../../pxl/Buffer-class.html">Buffer<span class="signature">&lt;<wbr><span class="type-parameter">T extends Object?</span>&gt;</span></a></li>
-    <li class="self-crumb">getRangeUnsafe method</li>
+    <li><a href="../../pxl/IntPixels-class.html">IntPixels</a></li>
+    <li class="self-crumb">set method</li>
 </ol>
 
 
-    <h5>Buffer class</h5>
+    <h5>IntPixels class</h5>
     <div id="dartdoc-sidebar-left-content"></div>
   </div><!--/.sidebar-offcanvas-->
 
@@ -122,7 +125,7 @@ or the behavior is undefined.</p>
 <footer>
   <span class="no-break">
     pxl
-      0.1.0-alpha
+      0.1.0-alpha+1
   </span>
 
   
