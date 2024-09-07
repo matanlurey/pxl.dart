@@ -189,7 +189,7 @@ void main() {
 
   test('fill (rect)', () {
     final pixels = IntPixels(2, 2);
-    pixels.fill(0xFFFFFFFF, target: Rect.fromLTWH(1, 1, 1, 1));
+    pixels.fill(0xFFFFFFFF, Rect.fromLTWH(1, 1, 1, 1));
     check(pixels.data).deepEquals([
       0x00000000,
       0x00000000,
@@ -200,7 +200,7 @@ void main() {
 
   test('fill (rect, partial, full width)', () {
     final pixels = IntPixels(2, 2);
-    pixels.fill(0xFFFFFFFF, target: Rect.fromLTWH(0, 0, 2, 1));
+    pixels.fill(0xFFFFFFFF, Rect.fromLTWH(0, 0, 2, 1));
     check(pixels.data).deepEquals([
       0xFFFFFFFF,
       0xFFFFFFFF,
@@ -211,7 +211,7 @@ void main() {
 
   test('fill (rect, partial)', () {
     final pixels = IntPixels(2, 2);
-    pixels.fill(0xFFFFFFFF, target: Rect.fromLTWH(0, 0, 1, 1));
+    pixels.fill(0xFFFFFFFF, Rect.fromLTWH(0, 0, 1, 1));
     check(pixels.data).deepEquals([
       0xFFFFFFFF,
       0x00000000,
@@ -222,7 +222,7 @@ void main() {
 
   test('fill (rect, clamped)', () {
     final pixels = IntPixels(2, 2);
-    pixels.fill(0xFFFFFFFF, target: Rect.fromLTWH(1, 1, 2, 2));
+    pixels.fill(0xFFFFFFFF, Rect.fromLTWH(1, 1, 2, 2));
     check(pixels.data).deepEquals([
       0x00000000,
       0x00000000,
@@ -288,7 +288,7 @@ void main() {
         ],
       ),
     );
-    pixels.clear(target: Rect.fromLTWH(1, 1, 1, 1));
+    pixels.clear(Rect.fromLTWH(1, 1, 1, 1));
     check(pixels.data).deepEquals([
       0xFFFFFFFF,
       0xFFFFFFFF,
@@ -299,7 +299,7 @@ void main() {
 
   test('fillWith', () {
     final pixels = IntPixels(2, 2);
-    pixels.fillWith([0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF]);
+    pixels.fillFrom([0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF]);
     check(pixels.data).deepEquals([
       0xFFFFFFFF,
       0xFFFFFFFF,
@@ -310,9 +310,9 @@ void main() {
 
   test('fillWith (rect)', () {
     final pixels = IntPixels(2, 2);
-    pixels.fillWith(
+    pixels.fillFrom(
       [0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF],
-      target: Rect.fromLTWH(1, 1, 1, 1),
+      Rect.fromLTWH(1, 1, 1, 1),
     );
     check(pixels.data).deepEquals([
       0x00000000,
@@ -324,9 +324,9 @@ void main() {
 
   test('fillWith (rect, partial)', () {
     final pixels = IntPixels(2, 2);
-    pixels.fillWith(
+    pixels.fillFrom(
       [0xFFFFFFFF, 0xFFFFFFFF],
-      target: Rect.fromLTWH(0, 0, 1, 1),
+      Rect.fromLTWH(0, 0, 1, 1),
     );
     check(pixels.data).deepEquals([
       0xFFFFFFFF,
@@ -338,9 +338,9 @@ void main() {
 
   test('fillWith (rect, clamped)', () {
     final pixels = IntPixels(2, 2);
-    pixels.fillWith(
+    pixels.fillFrom(
       [0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF],
-      target: Rect.fromLTWH(1, 1, 2, 2),
+      Rect.fromLTWH(1, 1, 2, 2),
     );
     check(pixels.data).deepEquals([
       0x00000000,
@@ -352,9 +352,9 @@ void main() {
 
   test('fillWith (rect, insufficient data)', () {
     final pixels = IntPixels(2, 2);
-    pixels.fillWith(
+    pixels.fillFrom(
       [0xFFFFFFFF],
-      target: Rect.fromLTWH(0, 0, 2, 2),
+      Rect.fromLTWH(0, 0, 2, 2),
     );
     check(pixels.data).deepEquals([
       0xFFFFFFFF,
@@ -366,9 +366,9 @@ void main() {
 
   test('fillWith (rect, too much data)', () {
     final pixels = IntPixels(2, 2);
-    pixels.fillWith(
+    pixels.fillFrom(
       [0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF],
-      target: Rect.fromLTWH(1, 1, 1, 1),
+      Rect.fromLTWH(1, 1, 1, 1),
     );
     check(pixels.data).deepEquals([
       0x00000000,
@@ -376,21 +376,6 @@ void main() {
       0x00000000,
       0xFFFFFFFF,
     ]);
-  });
-
-  test('getRange', () {
-    final pixels = IntPixels(
-      2,
-      2,
-      data: Uint32List.fromList([
-        abgr8888.red,
-        abgr8888.green,
-        abgr8888.blue,
-        abgr8888.cyan,
-      ]),
-    );
-    final range = pixels.getRange(Pos(1, 0), Pos(0, 1));
-    check(range).deepEquals([abgr8888.green, abgr8888.blue]);
   });
 
   group('getRectUnsafe', () {

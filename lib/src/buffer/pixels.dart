@@ -19,18 +19,6 @@ abstract final class Pixels<T> with Buffer<T> {
   })  : assert(width > 0, 'Width must be greater than zero.'),
         assert(height > 0, 'Height must be greater than zero.');
 
-  /// Raw bytes of pixel data.
-  ///
-  /// This type is exposed for operations that require direct access to the
-  /// underlying memory, such as [copying pixel data to a canvas][1], or
-  /// [transferring bytes to an isolate][2]; in most cases the other methods
-  /// provided by [Pixels] will be used instead.
-  ///
-  /// [1]: https://pub.dev/documentation/web/latest/web/ImageData/ImageData.html
-  /// [2]: https://api.dart.dev/stable/3.5.1/dart-isolate/TransferableTypedData-class.html
-  @override
-  TypedDataList<T> get data;
-
   @override
   final PixelFormat<T, void> format;
 
@@ -40,28 +28,15 @@ abstract final class Pixels<T> with Buffer<T> {
   @override
   final int height;
 
-  int _indexAtUnsafe(Pos pos) => pos.y * width + pos.x;
-
-  @override
-  @unsafeNoBoundsChecks
-  T getUnsafe(Pos pos) => data[_indexAtUnsafe(pos)];
-
   /// Sets the pixel at the given position.
   ///
   /// If outside the bounds of the buffer, does nothing.
-  void set(Pos pos, T pixel) {
-    if (contains(pos)) {
-      setUnsafe(pos, pixel);
-    }
-  }
+  void set(Pos pos, T pixel);
 
   /// Sets the pixel at the given position **without bounds checking**.
   ///
   /// If outside the bounds of the buffer, the behavior is undefined.
-  @unsafeNoBoundsChecks
-  void setUnsafe(Pos pos, T pixel) {
-    data[_indexAtUnsafe(pos)] = pixel;
-  }
+  void setUnsafe(Pos pos, T pixel);
 
   /// Clears the buffer to the [PixelFormat.zero] value.
   ///
@@ -76,11 +51,9 @@ abstract final class Pixels<T> with Buffer<T> {
   /// ```dart
   /// final pixels = IntPixels(2, 2);
   /// pixels.clear();
-  /// pixels.clear(target: Rect.fromLTWH(1, 0, 1, 2));
+  /// pixels.clear(Rect.fromLTWH(1, 0, 1, 2));
   /// ```
-  void clear({Rect? target}) {
-    fill(format.zero, target: target);
-  }
+  void clear([Rect? target]);
 
   /// Clears the buffer to the [PixelFormat.zero] value.
   ///
@@ -96,12 +69,9 @@ abstract final class Pixels<T> with Buffer<T> {
   /// ```dart
   /// final pixels = IntPixels(2, 2);
   /// pixels.clearUnsafe();
-  /// pixels.clearUnsafe(target: Rect.fromLTWH(1, 0, 1, 2));
+  /// pixels.clearUnsafe(Rect.fromLTWH(1, 0, 1, 2));
   /// ```
-  @unsafeNoBoundsChecks
-  void clearUnsafe({Rect? target}) {
-    fillUnsafe(format.zero, target: target);
-  }
+  void clearUnsafe([Rect? target]);
 
   /// Fill the buffer with the given [pixel].
   ///
@@ -116,14 +86,9 @@ abstract final class Pixels<T> with Buffer<T> {
   /// ```dart
   /// final pixels = IntPixels(2, 2);
   /// pixels.fill(0xFFFFFFFF);
-  /// pixels.fill(0x00000000, target: Rect.fromLTWH(1, 0, 1, 2));
+  /// pixels.fill(0x00000000,  Rect.fromLTWH(1, 0, 1, 2));
   /// ```
-  void fill(T pixel, {Rect? target}) {
-    if (target != null) {
-      target = target.intersect(bounds);
-    }
-    return fillUnsafe(pixel, target: target);
-  }
+  void fill(T pixel, [Rect? target]);
 
   /// Fill the buffer with the given [pixel].
   ///
@@ -138,33 +103,10 @@ abstract final class Pixels<T> with Buffer<T> {
   /// ```dart
   /// final pixels = IntPixels(2, 2);
   /// pixels.fillUnsafe(0xFFFFFFFF);
-  /// pixels.fillUnsafe(0x00000000, target: Rect.fromLTWH(1, 0, 1, 2));
+  /// pixels.fillUnsafe(0x00000000, Rect.fromLTWH(1, 0, 1, 2));
   /// ```
   @unsafeNoBoundsChecks
-  void fillUnsafe(T pixel, {Rect? target}) {
-    if (target == null) {
-      return data.fillRange(
-        0,
-        data.length,
-        pixel,
-      );
-    }
-    if (target.width == width) {
-      return data.fillRange(
-        target.top * width,
-        target.bottom * width,
-        pixel,
-      );
-    }
-    for (var y = target.top; y < target.bottom; y++) {
-      final x = y * width;
-      data.fillRange(
-        x + target.left,
-        x + target.right,
-        pixel,
-      );
-    }
-  }
+  void fillUnsafe(T pixel, [Rect? target]);
 
   /// Fill the buffer with the given [pixels].
   ///
@@ -181,27 +123,9 @@ abstract final class Pixels<T> with Buffer<T> {
   /// ```dart
   /// final pixels = IntPixels(2, 2);
   /// pixels.fillWith([0xFFFFFFFF, 0x00000000]);
-  /// pixels.fillWith([0x00000000, 0xFFFFFFFF], target: Rect.fromLTWH(1, 0, 1, 2));
+  /// pixels.fillWith([0x00000000, 0xFFFFFFFF], Rect.fromLTWH(1, 0, 1, 2));
   /// ```
-  void fillWith(
-    Iterable<T> pixels, {
-    Rect? target,
-  }) {
-    if (target == null) {
-      target = bounds;
-    } else {
-      target = target.intersect(bounds);
-    }
-    if (pixels.length < target.area) {
-      pixels = pixels.followedBy(
-        Iterable.generate(
-          target.area - pixels.length,
-          (_) => format.zero,
-        ),
-      );
-    }
-    return fillWithUnsafe(pixels, target: target);
-  }
+  void fillFrom(Iterable<T> pixels, [Rect? target]);
 
   /// Fill the buffer with the given [pixels].
   ///
@@ -221,44 +145,7 @@ abstract final class Pixels<T> with Buffer<T> {
   /// pixels.fillWithUnsafe([0x00000000, 0xFFFFFFFF], target: Rect.fromLTWH(1, 0, 1, 2));
   /// ```
   @unsafeNoBoundsChecks
-  void fillWithUnsafe(
-    Iterable<T> pixels, {
-    Rect? target,
-  }) {
-    if (target == null) {
-      return data.setAll(0, pixels);
-    }
-    var skip = 0;
-    for (var y = target.top; y < target.bottom; y++) {
-      final x = y * width;
-      data.setRange(
-        x + target.left,
-        x + target.right,
-        pixels.skip(skip),
-      );
-      skip += target.width;
-    }
-  }
-
-  @override
-  Iterable<T> getRangeUnsafe(Pos start, Pos end) {
-    final s = _indexAtUnsafe(start);
-    final e = _indexAtUnsafe(end);
-    return data.getRange(s, e + 1);
-  }
-
-  @override
-  Iterable<T> getRectUnsafe(Rect rect) {
-    // TODO: Consider a custom Iterable.
-    return Iterable.generate(
-      rect.height,
-      (y) {
-        final start = _indexAtUnsafe(Pos(rect.left, rect.top + y));
-        final end = start + rect.width;
-        return data.getRange(start, end);
-      },
-    ).expand((e) => e);
-  }
+  void fillFromUnsafe(Iterable<T> pixels, [Rect? target]);
 
   /// Copies the pixel data from a source buffer to `this` buffer.
   ///
@@ -293,31 +180,7 @@ abstract final class Pixels<T> with Buffer<T> {
     Buffer<T> from, {
     Rect? source,
     Pos? target,
-  }) {
-    if (source == null) {
-      if (target == null) {
-        return copyFromUnsafe(from);
-      }
-      source = from.bounds;
-    } else {
-      source = source.intersect(from.bounds);
-    }
-    target ??= Pos.zero;
-    final clipped = Rect.fromTLBR(
-      target,
-      target + source.size,
-    ).intersect(bounds);
-    if (clipped.isEmpty) {
-      return;
-    }
-    source = Rect.fromLTWH(
-      source.left,
-      source.top,
-      clipped.width,
-      clipped.height,
-    );
-    return copyFromUnsafe(from, source: source, target: target);
-  }
+  });
 
   /// Copies the pixel data from a source buffer to `this` buffer.
   ///
@@ -351,59 +214,7 @@ abstract final class Pixels<T> with Buffer<T> {
     Buffer<T> from, {
     Rect? source,
     Pos? target,
-  }) {
-    if (from is Pixels<T>) {
-      _copyFromUnsafeFast(from, source: source, target: target);
-    } else {
-      _copyFromUnsafeSlow(from, source: source, target: target);
-    }
-  }
-
-  void _copyFromUnsafeSlow(
-    Buffer<T> from, {
-    Rect? source,
-    Pos? target,
-  }) {
-    // Use the slow path if the source is not a framebuffer.
-    final pixels = source == null ? from.data : from.getRectUnsafe(source);
-    fillWithUnsafe(
-      pixels,
-      target: target == null
-          ? null
-          : Rect.fromTLBR(
-              target,
-              target + from.bounds.size - const Pos(1, 1),
-            ),
-    );
-  }
-
-  void _copyFromUnsafeFast(
-    Pixels<T> from, {
-    Rect? source,
-    Pos? target,
-  }) {
-    // Use the fast path if the source is a framebuffer.
-    if (source == null) {
-      final index = target == null ? 0 : _indexAtUnsafe(target);
-      return data.setAll(index, from.data);
-    }
-
-    // Use multiple setRange calls if the source is a framebuffer.
-    target ??= Pos.zero;
-    final src = from.data;
-    final dst = this.data;
-    var srcIdx = from._indexAtUnsafe(source.topLeft);
-    var dstIdx = _indexAtUnsafe(target);
-    for (var y = source.top; y < source.bottom; y++) {
-      dst.setRange(
-        dstIdx,
-        dstIdx + source.width,
-        src.getRange(srcIdx, srcIdx + source.width),
-      );
-      srcIdx += from.width;
-      dstIdx += width;
-    }
-  }
+  });
 
   /// Blits, or copies with blending, the pixel data from a source buffer to
   /// `this` buffer.
@@ -439,31 +250,7 @@ abstract final class Pixels<T> with Buffer<T> {
     Rect? source,
     Pos? target,
     BlendMode blend = BlendMode.srcOver,
-  }) {
-    if (source == null) {
-      if (target == null) {
-        return blitUnsafe(from, blend: blend);
-      }
-      source = from.bounds;
-    } else {
-      source = source.intersect(from.bounds);
-    }
-    target ??= Pos.zero;
-    final clipped = Rect.fromTLBR(
-      target,
-      target + source.size,
-    ).intersect(bounds);
-    if (clipped.isEmpty) {
-      return;
-    }
-    source = Rect.fromLTWH(
-      source.left,
-      source.top,
-      clipped.width,
-      clipped.height,
-    );
-    return blitUnsafe(from, source: source, target: target, blend: blend);
-  }
+  });
 
   /// Blits, or copies with blending, the pixel data from a source buffer to
   /// `this` buffer.
@@ -497,6 +284,184 @@ abstract final class Pixels<T> with Buffer<T> {
     Rect? source,
     Pos? target,
     BlendMode blend = BlendMode.srcOver,
+  });
+}
+
+base mixin _Pixels<T> implements Pixels<T> {
+  int _indexAtUnsafe(Pos pos) => pos.y * width + pos.x;
+
+  @override
+  @unsafeNoBoundsChecks
+  T getUnsafe(Pos pos) => data[_indexAtUnsafe(pos)];
+
+  /// Raw bytes of pixel data.
+  ///
+  /// This type is exposed for operations that require direct access to the
+  /// underlying memory, such as [copying pixel data to a canvas][1], or
+  /// [transferring bytes to an isolate][2]; in most cases the other methods
+  /// provided by [Pixels] will be used instead.
+  ///
+  /// [1]: https://pub.dev/documentation/web/latest/web/ImageData/ImageData.html
+  /// [2]: https://api.dart.dev/stable/3.5.1/dart-isolate/TransferableTypedData-class.html
+  @override
+  TypedDataList<T> get data;
+
+  @override
+  void set(Pos pos, T pixel) {
+    if (contains(pos)) {
+      setUnsafe(pos, pixel);
+    }
+  }
+
+  @unsafeNoBoundsChecks
+  @override
+  void setUnsafe(Pos pos, T pixel) {
+    data[_indexAtUnsafe(pos)] = pixel;
+  }
+
+  @override
+  void clear([Rect? target]) {
+    target = target?.intersect(bounds);
+    lodim.fillRectLinear(data, format.zero, width: width, bounds: target);
+  }
+
+  @override
+  void clearUnsafe([Rect? target]) {
+    lodim.fillRectLinear(data, format.zero, width: width, bounds: target);
+  }
+
+  @override
+  void fill(T pixel, [Rect? target]) {
+    target = target?.intersect(bounds);
+    lodim.fillRectLinear(data, pixel, width: width, bounds: target);
+  }
+
+  @override
+  void fillUnsafe(T pixel, [Rect? target]) {
+    lodim.fillRectLinear(data, pixel, width: width, bounds: target);
+  }
+
+  @override
+  void fillFrom(Iterable<T> pixels, [Rect? target]) {
+    if (target == null) {
+      target = bounds;
+    } else {
+      target = target.intersect(bounds);
+    }
+    lodim.fillRectFromLinear(data, pixels, width: width, bounds: target);
+  }
+
+  @override
+  void fillFromUnsafe(Iterable<T> pixels, [Rect? target]) {
+    lodim.fillRectFromLinear(data, pixels, width: width, bounds: target);
+  }
+
+  @override
+  Iterable<T> getRect(Rect rect) {
+    rect = rect.intersect(bounds);
+    return lodim.getRectLinear(data, width: width, bounds: rect);
+  }
+
+  @override
+  Iterable<T> getRectUnsafe(Rect rect) {
+    return lodim.getRectLinear(data, width: width, bounds: rect);
+  }
+
+  @override
+  void copyFrom(
+    Buffer<T> from, {
+    Rect? source,
+    Pos? target,
+  }) {
+    if (source == null) {
+      if (target == null) {
+        return copyFromUnsafe(from);
+      }
+      source = from.bounds;
+    } else {
+      source = source.intersect(from.bounds);
+    }
+    target ??= Pos.zero;
+    final clipped = Rect.fromTLBR(
+      target,
+      target + source.size,
+    ).intersect(bounds);
+    if (clipped.isEmpty) {
+      return;
+    }
+    source = Rect.fromLTWH(
+      source.left,
+      source.top,
+      clipped.width,
+      clipped.height,
+    );
+    return copyFromUnsafe(from, source: source, target: target);
+  }
+
+  @override
+  void copyFromUnsafe(
+    Buffer<T> from, {
+    Rect? source,
+    Pos? target,
+  }) {
+    final src = from;
+    final dst = this;
+    if (src is _Pixels<T>) {
+      return lodim.copyRectLinear(
+        src.data,
+        dst.data,
+        srcWidth: src.width,
+        dstWidth: dst.width,
+        source: source,
+        target: target ?? Pos.zero,
+      );
+    }
+    return lodim.copyRect(
+      source ?? src.bounds,
+      src.getUnsafe,
+      dst.setUnsafe,
+      target: target ?? Pos.zero,
+    );
+  }
+
+  @override
+  void blit<S>(
+    Buffer<S> from, {
+    Rect? source,
+    Pos? target,
+    BlendMode blend = BlendMode.srcOver,
+  }) {
+    if (source == null) {
+      if (target == null) {
+        return blitUnsafe(from, blend: blend);
+      }
+      source = from.bounds;
+    } else {
+      source = source.intersect(from.bounds);
+    }
+    target ??= Pos.zero;
+    final clipped = Rect.fromTLBR(
+      target,
+      target + source.size,
+    ).intersect(bounds);
+    if (clipped.isEmpty) {
+      return;
+    }
+    source = Rect.fromLTWH(
+      source.left,
+      source.top,
+      clipped.width,
+      clipped.height,
+    );
+    return blitUnsafe(from, source: source, target: target, blend: blend);
+  }
+
+  @override
+  void blitUnsafe<S>(
+    Buffer<S> from, {
+    Rect? source,
+    Pos? target,
+    BlendMode blend = BlendMode.srcOver,
   }) {
     target ??= Pos.zero;
     final sRect = source ?? from.bounds;
@@ -514,7 +479,7 @@ abstract final class Pixels<T> with Buffer<T> {
       tRect.height,
     );
     final fn = blend.getBlend(from.format, format);
-    if (from is Pixels<S>) {
+    if (from is _Pixels<S>) {
       _blitUnsafeFast(from, source: source, target: tRect, blend: fn);
     } else {
       _blitUnsafeSlow(from, source: source, target: tRect, blend: fn);
@@ -541,7 +506,7 @@ abstract final class Pixels<T> with Buffer<T> {
   }
 
   void _blitUnsafeFast<S>(
-    Pixels<S> from, {
+    _Pixels<S> from, {
     required T Function(S src, T dst) blend,
     required Rect source,
     required Rect target,

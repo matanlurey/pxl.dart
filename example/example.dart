@@ -18,7 +18,7 @@ void main() {
     final blue = (y / (imageHeight / 2) * 255).toInt();
     image.fill(
       abgr8888.create(blue: blue),
-      target: Rect.fromLTWH(0, y, imageWidth, 1),
+      Rect.fromLTWH(0, y, imageWidth, 1),
     );
   }
 

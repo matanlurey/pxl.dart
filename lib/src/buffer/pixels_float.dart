@@ -11,7 +11,7 @@ part of '../buffer.dart';
 /// The default [format] is [floatRgba].
 ///
 /// {@category Buffers}
-final class Float32x4Pixels extends Pixels<Float32x4> {
+final class Float32x4Pixels extends Pixels<Float32x4> with _Pixels<Float32x4> {
   /// Creates a new buffer of multi-channel floating point pixel data.
   ///
   /// Both [width] and [height] must be greater than zero.

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0-alpha+1
+
+- Upgraded to `lodim ^0.1.6`, which now hosts some of the original functionality
+  of this package in a more general-purpose way (i.e. `fill`, `copy`, ...).
+
 ## 0.1.0-alpha
 
 Initial preview release 🎉!

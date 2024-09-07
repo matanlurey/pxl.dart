@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:lodim/lodim.dart' as lodim;
 import 'package:pxl/src/blend.dart';
 import 'package:pxl/src/format.dart';
 import 'package:pxl/src/geometry.dart';
@@ -196,36 +197,6 @@ abstract base mixin class Buffer<T extends Object?> {
     return _ScaledBuffer(this, scale);
   }
 
-  /// Returns a lazy iterable of pixels in the buffer from [start] to [end].
-  ///
-  /// The returned iterable will contain all pixels in the buffer that are
-  /// within the rectangle defined by [start] and [end], inclusive.
-  ///
-  /// The provided positions are clamped to the bounds of the buffer, and yield
-  /// no pixels if `start > end`.
-  Iterable<T> getRange(Pos start, Pos end) {
-    final bottomRight = bounds.bottomRight;
-    start = start.clamp(Pos.zero, bottomRight);
-    end = end.clamp(Pos.zero, bottomRight);
-    if (Pos.byRowMajor(start, end) > 0) {
-      return const Iterable.empty();
-    }
-    return getRangeUnsafe(start, end);
-  }
-
-  /// Returns a lazy iterable of pixels in the buffer from [start] to [end].
-  ///
-  /// The returned iterable will contain all pixels in the buffer that are
-  /// within the rectangle defined by [start] and [end], inclusive.
-  ///
-  /// The provided positions must be `(0, 0) <= start <= end < (width, height)`
-  /// or the behavior is undefined.
-  Iterable<T> getRangeUnsafe(Pos start, Pos end) {
-    final iStart = start.y * width + start.x;
-    final iEnd = end.y * width + end.x;
-    return data.skip(iStart).take(iEnd - iStart + 1);
-  }
-
   /// Returns a lazy iterable of pixels in the rectangle defined by [rect].
   ///
   /// The returned iterable will contain all pixels in the buffer that are
@@ -233,7 +204,9 @@ abstract base mixin class Buffer<T extends Object?> {
   ///
   /// The provided rectangle is clamped to the bounds of the buffer and yields
   /// no pixels if the rectangle is empty.
-  Iterable<T> getRect(Rect rect) => getRectUnsafe(rect.intersect(bounds));
+  Iterable<T> getRect(Rect rect) {
+    return getRectUnsafe(rect.intersect(bounds));
+  }
 
   /// Returns a lazy iterable of pixels in the rectangle defined by [rect].
   ///
@@ -243,10 +216,7 @@ abstract base mixin class Buffer<T extends Object?> {
   /// The provided rectangle must be contained within the bounds of the buffer
   /// or the behavior is undefined.
   Iterable<T> getRectUnsafe(Rect rect) {
-    if (rect.width == width) {
-      return getRangeUnsafe(rect.topLeft, rect.bottomRight - const Pos(1, 1));
-    }
-    return rect.positions.map(getUnsafe);
+    return lodim.getRect(rect, getUnsafe);
   }
 
   @override

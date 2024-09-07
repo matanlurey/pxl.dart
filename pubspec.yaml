@@ -3,14 +3,14 @@
 name: pxl
 description: |-
   A tiny cross-platform pixel buffer and foundation for pixel-based graphics.
-version: 0.1.0-alpha
+version: 0.1.0-alpha+1
 environment:
   sdk: ^3.5.0
 
 repository: https://github.com/matanlurey/pxl.dart
 
 dependencies:
-  lodim: ^0.1.4
+  lodim: ^0.1.6+1
   meta: ^1.15.0
 
 dev_dependencies:

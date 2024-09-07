@@ -197,38 +197,6 @@ void main() {
     });
   });
 
-  test('getRange', () {
-    final pixels = IntPixels(
-      2,
-      2,
-      data: Uint32List.fromList([
-        abgr8888.red,
-        abgr8888.green,
-        abgr8888.blue,
-        abgr8888.cyan,
-      ]),
-    );
-    final buffer = pixels.map((p) => p);
-    final range = buffer.getRange(Pos(1, 0), Pos(0, 1));
-    check(range).deepEquals([abgr8888.green, abgr8888.blue]);
-  });
-
-  test('getRange out of range returns nothing', () {
-    final pixels = IntPixels(
-      2,
-      2,
-      data: Uint32List.fromList([
-        abgr8888.red,
-        abgr8888.green,
-        abgr8888.blue,
-        abgr8888.cyan,
-      ]),
-    );
-    final buffer = pixels.map((p) => p);
-    final range = buffer.getRange(Pos(1, 2), Pos(2, 1));
-    check(range).isEmpty();
-  });
-
   test('getRect', () {
     final pixels = IntPixels(
       2,

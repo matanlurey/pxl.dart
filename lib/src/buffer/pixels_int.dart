@@ -8,7 +8,7 @@ part of '../buffer.dart';
 /// The default [format] is [abgr8888].
 ///
 /// {@category Buffers}
-final class IntPixels extends Pixels<int> {
+final class IntPixels extends Pixels<int> with _Pixels<int> {
   /// Creates a new buffer of integer-based pixel data.
   ///
   /// Both [width] and [height] must be greater than zero.
